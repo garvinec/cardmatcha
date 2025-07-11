@@ -1,4 +1,4 @@
-# CredExa - Credit Card Comparison Platform
+# Credexa - Credit Card Comparison Platform
 
 A modern web application for comparing credit cards, built with Next.js, TypeScript, and Tailwind CSS.
 
@@ -95,61 +95,3 @@ credexa/
 ## 🎨 UI Components
 
 This project uses [shadcn/ui](https://ui.shadcn.com/) for consistent, accessible components. All components are located in `frontend/components/ui/`.
-
-## 🔧 Configuration
-
-### Environment Variables
-
-Create a `.env.local` file in the `frontend` directory:
-
-```env
-# Add your environment variables here
-NEXT_PUBLIC_API_URL=your_api_url
-```
-
-### Tailwind CSS
-
-The project uses Tailwind CSS for styling. Configuration is in `tailwind.config.ts`.
-
-## 📱 Responsive Design
-
-The application is built with a mobile-first approach and includes:
-
-- Responsive grid layouts
-- Mobile navigation
-- Touch-friendly interactions
-- Optimized images and assets
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🆘 Support
-
-If you encounter any issues or have questions:
-
-1. Check the [Issues](https://github.com/your-repo/issues) page
-2. Create a new issue with detailed information
-3. Contact the development team
-
-## 🔮 Roadmap
-
-- [ ] User authentication and authorization
-- [ ] Advanced filtering and sorting
-- [ ] Credit card application tracking
-- [ ] Mobile app development
-- [ ] Integration with credit card APIs
-- [ ] Advanced analytics and insights
-- [ ] Social features and reviews
-
----
-
-Built with ❤️ using Next.js, TypeScript, and Tailwind CSS
