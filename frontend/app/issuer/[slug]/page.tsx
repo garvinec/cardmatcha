@@ -7,79 +7,86 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 // Mock data - in a real app, this would come from a database
-const categoryData: Record<
+const issuerData: Record<
   string,
   { name: string; description: string; icon: string; cards: number[] }
 > = {
-  travel: {
-    name: "Travel Rewards",
+  "american-express": {
+    name: "American Express",
     description:
-      "Earn points and miles on travel purchases, with bonus rewards for flights, hotels, and travel-related expenses.",
-    icon: "✈️",
-    cards: [1, 4], // Card IDs that belong to this category
+      "Premium rewards and exclusive benefits with world-class customer service and unique card perks.",
+    icon: "💳",
+    cards: [3], // Card IDs that belong to this issuer
   },
-  cashback: {
-    name: "Cash Back",
+  barclays: {
+    name: "Barclays",
     description:
-      "Simple cash rewards on everyday spending with no complicated point systems or redemption requirements.",
-    icon: "💰",
-    cards: [2, 6],
-  },
-  dining: {
-    name: "Dining & Food",
-    description:
-      "Maximum rewards at restaurants, food delivery, and dining experiences worldwide.",
-    icon: "🍽️",
-    cards: [3],
-  },
-  gas: {
-    name: "Gas & Fuel",
-    description:
-      "Save money at gas stations and fuel purchases with specialized rewards programs.",
-    icon: "⛽",
+      "Travel and lifestyle rewards cards with competitive benefits and flexible redemption options.",
+    icon: "🏦",
     cards: [],
   },
-  groceries: {
-    name: "Groceries",
+  "bank-of-america": {
+    name: "Bank of America",
     description:
-      "Earn more on supermarket and grocery shopping with enhanced reward rates.",
-    icon: "🛒",
-    cards: [3],
+      "Cash back and travel rewards with relationship banking benefits and customizable rewards.",
+    icon: "🏛️",
+    cards: [],
   },
-  business: {
-    name: "Business Cards",
+  "capital-one": {
+    name: "Capital One",
     description:
-      "Designed for business owners and entrepreneurs with expense management tools and business rewards.",
+      "No foreign fees and flexible rewards with innovative technology and straightforward earning structures.",
     icon: "💼",
-    cards: [],
+    cards: [4],
   },
-  student: {
-    name: "Student Cards",
+  chase: {
+    name: "Chase",
     description:
-      "Perfect for building credit as a student with lower requirements and educational resources.",
-    icon: "🎓",
-    cards: [],
+      "Ultimate Rewards and premium perks with extensive transfer partners and valuable redemption options.",
+    icon: "🏃",
+    cards: [1, 6],
   },
-  "no-fee": {
-    name: "No Annual Fee",
+  citi: {
+    name: "Citi",
     description:
-      "Great rewards without the annual cost, perfect for those who want benefits without fees.",
-    icon: "🆓",
-    cards: [2, 6, 5],
-  },
-  premium: {
-    name: "Premium Cards",
-    description:
-      "Luxury perks and exclusive benefits including airport lounges, concierge services, and premium travel benefits.",
-    icon: "👑",
-    cards: [4, 3],
-  },
-  "balance-transfer": {
-    name: "Balance Transfer",
-    description:
-      "0% intro APR for debt consolidation and balance transfers to help manage existing credit card debt.",
-    icon: "🔄",
+      "ThankYou points and cash back with competitive intro offers and diverse card portfolio.",
+    icon: "🌆",
     cards: [2],
+  },
+  discover: {
+    name: "Discover",
+    description:
+      "Rotating categories and cash back with excellent customer service and unique cashback matching.",
+    icon: "🔍",
+    cards: [5],
+  },
+  synchrony: {
+    name: "Synchrony",
+    description:
+      "Store cards and financing options with promotional financing and retail partnerships.",
+    icon: "🔄",
+    cards: [],
+  },
+  td: {
+    name: "TD Bank",
+    description:
+      "Simple rewards and low fees with straightforward earning and convenient banking integration.",
+    icon: "🏢",
+    cards: [],
+  },
+  usbank: {
+    name: "US Bank",
+    description:
+      "FlexPerks and cash back rewards with solid earning rates and practical redemption options.",
+    icon: "🇺🇸",
+    cards: [],
+  },
+  "wells-fargo": {
+    name: "Wells Fargo",
+    description:
+      "Go Far rewards and cash back with relationship banking benefits and diverse card options.",
+    icon: "🐎",
+    cards: [],
   },
 };
 
@@ -216,20 +223,20 @@ const creditCards = [
   },
 ];
 
-interface CategoryPageProps {
+interface IssuerPageProps {
   params: Promise<{ slug: string }>;
 }
 
-export default async function CategoryPage({ params }: CategoryPageProps) {
+export default async function IssuerPage({ params }: IssuerPageProps) {
   const { slug } = await params;
-  const category = categoryData[slug as keyof typeof categoryData];
+  const issuer = issuerData[slug as keyof typeof issuerData];
 
-  if (!category) {
+  if (!issuer) {
     notFound();
   }
 
-  const categoryCards = creditCards.filter((card) =>
-    category.cards.includes(card.id)
+  const issuerCards = creditCards.filter((card) =>
+    issuer.cards.includes(card.id)
   );
 
   return (
@@ -251,30 +258,30 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             </Link>
           </div>
 
-          {/* Category Header */}
+          {/* Issuer Header */}
           <div className="text-center mb-12">
-            <div className="text-6xl mb-4">{category.icon}</div>
+            <div className="text-6xl mb-4">{issuer.icon}</div>
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              {category.name}
+              {issuer.name}
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              {category.description}
+              {issuer.description}
             </p>
             <div className="mt-6">
               <Badge
                 variant="secondary"
                 className="bg-blue-100 text-blue-800 text-sm px-4 py-2"
               >
-                {categoryCards.length}{" "}
-                {categoryCards.length === 1 ? "Card" : "Cards"} Available
+                {issuerCards.length}{" "}
+                {issuerCards.length === 1 ? "Card" : "Cards"} Available
               </Badge>
             </div>
           </div>
 
           {/* Cards Grid */}
-          {categoryCards.length > 0 ? (
+          {issuerCards.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {categoryCards.map((card) => (
+              {issuerCards.map((card) => (
                 <CreditCardComponent key={card.id} card={card} />
               ))}
             </div>
@@ -285,8 +292,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                 No Cards Available Yet
               </h3>
               <p className="text-gray-600 mb-8">
-                We're working on adding more {category.name.toLowerCase()} cards
-                to our database.
+                We're working on adding more {issuer.name} cards to our
+                database.
               </p>
               <Button asChild>
                 <Link href="/chat">Ask Our AI for Recommendations</Link>
