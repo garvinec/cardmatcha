@@ -7,10 +7,6 @@ A modern web application for comparing credit cards, built with Next.js, TypeScr
 - **Credit Card Comparison**: Browse and compare different credit cards
 - **Category-based Browsing**: Filter cards by categories (travel, cashback, rewards, etc.)
 - **Interactive Chat Interface**: AI-powered chatbot for card recommendations
-- **Responsive Design**: Mobile-first design that works on all devices
-- **Modern UI**: Beautiful, intuitive interface built with shadcn/ui components
-- **Real-time Search**: Fast and responsive search functionality
-- **User Profiles**: Personalized experience with user accounts
 - **Rankings**: View top-rated and popular credit cards
 
 ## 🛠️ Tech Stack
