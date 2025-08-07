@@ -16,6 +16,7 @@ export interface CreditCard {
     time_frame_months: number;
   };
   categories: string[];
+  benefits: string[];
   credit_score_required: "excellent" | "good" | "fair" | "poor";
   foreign_transaction_fee: number;
   balance_transfer_fee: number;
