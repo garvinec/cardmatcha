@@ -24,48 +24,53 @@ A modern full-stack web application for finding the right credit cards for you, 
 
 ### Backend
 
-- **Framework**: Express.js
 - **Language**: TypeScript
 - **Database**: Supabase (PostgreSQL)
-- **Authentication**: Supabase Auth
-- **Security**: Helmet, CORS, Rate Limiting
-- **Validation**: Zod schema validation
+- **Authentication**: Clerk
 
 ## 📁 Project Structure
 
 ```
 credexa/
-├── client/                    # Next.js frontend
-│   ├── app/                  # Next.js app directory
-│   │   ├── api/             # API routes (chat)
-│   │   ├── card/            # Credit card pages
-│   │   ├── category/        # Category pages
-│   │   ├── chat/            # Chat interface
-│   │   ├── profile/         # User profile
-│   │   └── rankings/        # Card rankings
-│   ├── components/          # Reusable components
-│   │   ├── ui/             # shadcn/ui components
-│   │   └── ...             # Custom components
-│   ├── hooks/              # Custom React hooks
-│   │   └── use-api.ts      # API integration hooks
-│   ├── lib/                # Utility functions
-│   │   ├── api.ts          # API client and types
-│   │   └── utils.ts        # General utilities
-│   └── public/             # Static assets
-├── server/                  # Express.js backend
-│   ├── src/
-│   │   ├── config/         # Database configuration
-│   │   ├── controllers/    # Route controllers
-│   │   ├── middleware/     # Express middleware
-│   │   ├── models/         # Data models
-│   │   ├── routes/         # API routes
-│   │   ├── services/       # Business logic
-│   │   ├── types/          # TypeScript types
-│   │   └── utils/          # Utility functions
-│   ├── tests/              # Test files
-│   └── docs/               # Documentation
-└── README.md               # This file
+├── app/                      # Next.js app directory (App Router)
+│   ├── api/                 # API routes (chat functionality)
+│   ├── card/                # Individual credit card pages
+│   ├── cards/               # Credit cards listing page
+│   ├── category/            # Category-based card pages
+│   ├── chat/                # AI chat interface
+│   ├── issuer/              # Issuer-based card pages
+│   ├── profile/             # User profile management
+│   ├── rankings/            # Credit card rankings
+│   ├── globals.css          # Global styles
+│   ├── layout.tsx           # Root layout component
+│   ├── loading.tsx          # Loading component
+│   └── page.tsx             # Homepage
+├── components/               # Reusable React components
+│   └── ui/                  # shadcn/ui component library
+├── lib/                     # Utility libraries and configurations
+│   ├── actions/             # Server actions for data fetching
+│   ├── supabase.ts          # Supabase client configuration
+│   └── utils.ts             # General utility functions
+├── types/                    # TypeScript type definitions
+│   └── index.d.ts           # Database schema types and interfaces
+├── public/                   # Static assets and images
+├── styles/                   # Additional styling files
+├── middleware.ts             # Next.js middleware configuration
+├── next.config.mjs          # Next.js configuration
+├── tailwind.config.ts       # Tailwind CSS configuration
+├── tsconfig.json            # TypeScript configuration
+└── package.json             # Dependencies and scripts
 ```
+
+## Key Technologies
+
+- **Frontend**: Next.js 15 with App Router, React 19
+- **Styling**: Tailwind CSS with shadcn/ui components
+- **Database**: Supabase (PostgreSQL)
+- **Authentication**: Clerk
+- **AI Integration**: Vercel AI SDK for chat functionality
+- **Type Safety**: TypeScript with comprehensive type definitions
+- **State Management**: React hooks and server actions
 
 ## 🚀 Getting Started
 
