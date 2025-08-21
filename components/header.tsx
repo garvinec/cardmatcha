@@ -1,14 +1,15 @@
-"use client"
-import { Search } from "lucide-react"
-import Link from "next/link"
-import { useState } from "react"
+"use client";
+import { Search } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 interface HeaderProps {
-  currentPage?: string
+  currentPage?: string;
 }
 
 export function Header({ currentPage = "home" }: HeaderProps) {
-  const [searchQuery, setSearchQuery] = useState("")
+  const [searchQuery, setSearchQuery] = useState("");
 
   return (
     <header className="bg-white shadow-sm border-b">
@@ -49,25 +50,46 @@ export function Header({ currentPage = "home" }: HeaderProps) {
           <nav className="flex-shrink-0 hidden md:flex space-x-8">
             <Link
               href="/"
-              className={`font-medium ${currentPage === "home" ? "text-blue-600" : "text-gray-700 hover:text-blue-600"}`}
+              className={`font-medium ${
+                currentPage === "home"
+                  ? "text-blue-600"
+                  : "text-gray-700 hover:text-blue-600"
+              }`}
             >
               Home
             </Link>
             <Link
               href="/chat"
-              className={`font-medium ${currentPage === "chat" ? "text-blue-600" : "text-gray-700 hover:text-blue-600"}`}
+              className={`font-medium ${
+                currentPage === "chat"
+                  ? "text-blue-600"
+                  : "text-gray-700 hover:text-blue-600"
+              }`}
             >
               Ask Credexa
             </Link>
-            <Link
-              href="/profile"
-              className={`font-medium ${currentPage === "profile" ? "text-blue-600" : "text-gray-700 hover:text-blue-600"}`}
-            >
-              Profile
-            </Link>
+            <SignedIn>
+              <Link
+                href="/profile"
+                className={`font-medium ${
+                  currentPage === "profile"
+                    ? "text-blue-600"
+                    : "text-gray-700 hover:text-blue-600"
+                }`}
+              >
+                Profile
+              </Link>
+            </SignedIn>
+            <SignedOut>
+              <SignInButton mode="modal">
+                <button className="font-medium text-gray-700 hover:text-blue-600">
+                  Sign In
+                </button>
+              </SignInButton>
+            </SignedOut>
           </nav>
         </div>
       </div>
     </header>
-  )
+  );
 }

@@ -6,6 +6,7 @@ import { CreditCardComponent } from "@/components/credit-card";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { getCards } from "@/lib/actions/cards.actions";
 
 // Mock data - replace with actual API call
 const mockCards = Array.from({ length: 47 }, (_, i) => ({
@@ -45,16 +46,41 @@ const mockCards = Array.from({ length: 47 }, (_, i) => ({
 }));
 
 const CARDS_PER_PAGE = 15;
+const INITIAL_PAGE = 1;
 
 export default function AllCardsPage() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [cards, setCards] = useState(mockCards);
+  const [currentPage, setCurrentPage] = useState(INITIAL_PAGE);
+  const [cards, setCards] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [totalPages, setTotalPages] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
 
-  const totalPages = Math.ceil(cards.length / CARDS_PER_PAGE);
+  useEffect(() => {
+    const fetchCards = async () => {
+      const { data: initialCards, totalCount } = await getCards({
+        pageNumber: INITIAL_PAGE,
+        cardsPerPage: CARDS_PER_PAGE,
+      });
+      setCards(initialCards || []);
+      setTotalPages(Math.ceil(totalCount / CARDS_PER_PAGE));
+      setTotalCount(totalCount);
+    };
+    fetchCards();
+  }, []);
+
+  useEffect(() => {
+    const fetchCards = async () => {
+      const { data: returnedCards } = await getCards({
+        pageNumber: currentPage,
+        cardsPerPage: CARDS_PER_PAGE,
+      });
+      setCards(returnedCards || []);
+    };
+    fetchCards();
+  }, [currentPage]);
+
   const startIndex = (currentPage - 1) * CARDS_PER_PAGE;
   const endIndex = startIndex + CARDS_PER_PAGE;
-  const currentCards = cards.slice(startIndex, endIndex);
 
   const handlePageChange = (page: number) => {
     setLoading(true);
@@ -130,8 +156,8 @@ export default function AllCardsPage() {
               Browse our complete collection of {cards.length} credit cards
             </p>
             <div className="text-sm text-gray-500">
-              Showing {startIndex + 1}-{Math.min(endIndex, cards.length)} of{" "}
-              {cards.length} cards
+              Showing {startIndex + 1}-{Math.min(endIndex, totalCount)} of{" "}
+              {totalCount} cards
             </div>
           </div>
 
@@ -143,7 +169,7 @@ export default function AllCardsPage() {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {currentCards.map((card) => (
+                {cards.map((card) => (
                   <CreditCardComponent key={card.id} card={card} />
                 ))}
               </div>

@@ -77,77 +77,66 @@ const issuers = [
   {
     name: "American Express",
     slug: "american-express",
-    description: "Premium rewards and exclusive benefits",
     gradient: "from-blue-500 to-blue-700",
     icon: "💳",
   },
   {
     name: "Barclays",
     slug: "barclays",
-    description: "Travel and lifestyle rewards cards",
     gradient: "from-teal-500 to-cyan-600",
     icon: "🏦",
   },
   {
     name: "Bank of America",
     slug: "bank-of-america",
-    description: "Cash back and travel rewards",
     gradient: "from-red-500 to-red-700",
     icon: "🏛️",
   },
   {
     name: "Capital One",
     slug: "capital-one",
-    description: "No foreign fees and flexible rewards",
     gradient: "from-orange-500 to-red-600",
     icon: "💼",
   },
   {
     name: "Chase",
     slug: "chase",
-    description: "Ultimate Rewards and premium perks",
     gradient: "from-blue-600 to-indigo-700",
     icon: "🏃",
   },
   {
     name: "Citi",
     slug: "citi",
-    description: "ThankYou points and cash back",
     gradient: "from-blue-400 to-blue-600",
     icon: "🌆",
   },
   {
     name: "Discover",
     slug: "discover",
-    description: "Rotating categories and cash back",
     gradient: "from-orange-400 to-orange-600",
     icon: "🔍",
   },
   {
     name: "Synchrony",
-    slug: "synchrony",
-    description: "Store cards and financing options",
+    slug: "synchrony-bank",
     gradient: "from-purple-500 to-purple-700",
     icon: "🔄",
   },
   {
     name: "TD Bank",
-    slug: "td",
-    description: "Simple rewards and low fees",
+    slug: "td-bank",
     gradient: "from-green-500 to-green-700",
     icon: "🏢",
   },
   {
     name: "US Bank",
-    slug: "usbank",
-    description: "FlexPerks and cash back rewards",
+    slug: "us-bank",
     gradient: "from-red-400 to-red-600",
     icon: "🇺🇸",
   },
   {
     name: "Wells Fargo",
     slug: "wells-fargo",
-    description: "Go Far rewards and cash back",
     gradient: "from-yellow-500 to-red-500",
     icon: "🐎",
   },
@@ -238,9 +227,6 @@ export function IssuerGrid() {
                     <h4 className="text-white font-bold text-sm mb-1 leading-tight">
                       {issuer.name}
                     </h4>
-                    <p className="text-white/80 text-xs leading-tight">
-                      {issuer.description}
-                    </p>
                   </div>
                 </div>
 

@@ -6,12 +6,11 @@ import Link from "next/link";
 
 interface CreditCardType {
   id: number;
-  name: string;
+  card_name: string;
   issuer: string;
   image: string;
-  annualFee: number;
-  signupBonus: string;
-  signupRequirement: string;
+  annual_fee: number;
+  welcome_bonus: string;
   rewards: string[];
   benefits: string[];
   category: string;
@@ -29,7 +28,9 @@ export function CreditCardComponent({ card }: CreditCardProps) {
       <CardHeader className="pb-4">
         <div className="flex justify-between items-start mb-2">
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">{card.name}</h3>
+            <h3 className="text-lg font-semibold text-gray-900">
+              {card.card_name}
+            </h3>
             <p className="text-sm text-gray-600">{card.issuer}</p>
           </div>
           <Badge variant="secondary" className="bg-blue-100 text-blue-800">
@@ -44,7 +45,7 @@ export function CreditCardComponent({ card }: CreditCardProps) {
           <div className="mt-8">
             <p className="text-xs opacity-75">Annual Fee</p>
             <p className="text-lg font-bold">
-              {card.annualFee === 0 ? "No Fee" : `$${card.annualFee}`}
+              {card.annual_fee === 0 ? "No Fee" : `$${card.annual_fee}`}
             </p>
           </div>
         </div>
@@ -52,13 +53,13 @@ export function CreditCardComponent({ card }: CreditCardProps) {
 
       <CardContent className="flex-1 flex flex-col">
         {/* Rating */}
-        <div className="flex items-center mb-3">
+        {/* <div className="flex items-center mb-3">
           <div className="flex items-center">
             <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
             <span className="ml-1 text-sm font-medium">{card.rating}</span>
           </div>
           <span className="ml-2 text-xs text-gray-500">Expert Rating</span>
-        </div>
+        </div> */}
 
         {/* Signup Bonus */}
         <div className="bg-green-50 border border-green-200 rounded-lg p-3 mb-4">
@@ -69,13 +70,12 @@ export function CreditCardComponent({ card }: CreditCardProps) {
             </span>
           </div>
           <p className="text-sm text-green-700 font-semibold">
-            {card.signupBonus}
+            {card.welcome_bonus}
           </p>
-          <p className="text-xs text-green-600">{card.signupRequirement}</p>
         </div>
 
         {/* Rewards */}
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <h4 className="text-sm font-medium text-gray-900 mb-2 flex items-center">
             <DollarSign className="h-4 w-4 mr-1" />
             Rewards
@@ -91,10 +91,10 @@ export function CreditCardComponent({ card }: CreditCardProps) {
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
 
         {/* Benefits */}
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <h4 className="text-sm font-medium text-gray-900 mb-2">
             Key Benefits
           </h4>
@@ -109,13 +109,13 @@ export function CreditCardComponent({ card }: CreditCardProps) {
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
 
         {/* Best For */}
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <p className="text-xs text-gray-500 mb-1">Best for:</p>
           <p className="text-sm text-gray-700 font-medium">{card.bestFor}</p>
-        </div>
+        </div> */}
 
         {/* Action Button */}
         <div className="mt-auto">

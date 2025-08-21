@@ -2,15 +2,15 @@ import { CreditCardGrid } from "@/components/credit-card-grid";
 import { Header } from "@/components/header";
 import { Button } from "@/components/ui/button";
 import { CreditCard, MessageCircle, TrendingUp } from "lucide-react";
-import { TopPopularCards } from "@/components/top-popular-cards";
+import { MostPopularCards } from "@/components/most-popular-cards";
 import { CategoryGrid, IssuerGrid } from "@/components/browse-by-grid";
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       <Header currentPage="home" />
-
       {/* Hero Section */}
+      {/* TODO: Update Hero section UI Design */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-5xl font-bold text-gray-900 mb-6">
@@ -24,10 +24,14 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               size="lg"
-              className="bg-blue-600 hover:bg-blue-700 text-white"
+              variant="outline"
+              className="bg-blue-600 text-white border-blue-600 hover:bg-blue-50"
+              asChild
             >
-              <TrendingUp className="mr-2 h-5 w-5" />
-              Find My Perfect Card
+              <a href="#most-popular-cards">
+                <TrendingUp className="mr-2 h-5 w-5" />
+                Find My Perfect Card
+              </a>
             </Button>
             <Button
               size="lg"
@@ -43,10 +47,10 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* Top 5 Most Popular Cards */}
-      <TopPopularCards />
-
+      <section id="most-popular-cards">
+        <MostPopularCards />
+      </section>
       {/* Credit Cards Grid */}
       <section id="cards" className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -74,13 +78,10 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* Credit Card Categories */}
       <CategoryGrid />
-
       {/* Card Issuers */}
       <IssuerGrid />
-
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getCardsByIssuer } from "@/lib/actions/cards.actions";
 
 // Mock data - in a real app, this would come from a database
 const issuerData: Record<
@@ -229,15 +230,13 @@ interface IssuerPageProps {
 
 export default async function IssuerPage({ params }: IssuerPageProps) {
   const { slug } = await params;
-  const issuer = issuerData[slug as keyof typeof issuerData];
+  console.log(slug);
+  const { cardsByIssuer, issuerName } = await getCardsByIssuer(slug);
+  console.log(cardsByIssuer, issuerName);
 
-  if (!issuer) {
+  if (!cardsByIssuer) {
     notFound();
   }
-
-  const issuerCards = creditCards.filter((card) =>
-    issuer.cards.includes(card.id)
-  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -260,28 +259,25 @@ export default async function IssuerPage({ params }: IssuerPageProps) {
 
           {/* Issuer Header */}
           <div className="text-center mb-12">
-            <div className="text-6xl mb-4">{issuer.icon}</div>
+            {/* <div className="text-6xl mb-4">{issuer.icon}</div> */}
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              {issuer.name}
+              {issuerName}
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              {issuer.description}
-            </p>
             <div className="mt-6">
               <Badge
                 variant="secondary"
                 className="bg-blue-100 text-blue-800 text-sm px-4 py-2"
               >
-                {issuerCards.length}{" "}
-                {issuerCards.length === 1 ? "Card" : "Cards"} Available
+                {cardsByIssuer.length}{" "}
+                {cardsByIssuer.length === 1 ? "Card" : "Cards"} Available
               </Badge>
             </div>
           </div>
 
           {/* Cards Grid */}
-          {issuerCards.length > 0 ? (
+          {cardsByIssuer.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {issuerCards.map((card) => (
+              {cardsByIssuer.map((card) => (
                 <CreditCardComponent key={card.id} card={card} />
               ))}
             </div>
@@ -292,8 +288,7 @@ export default async function IssuerPage({ params }: IssuerPageProps) {
                 No Cards Available Yet
               </h3>
               <p className="text-gray-600 mb-8">
-                We're working on adding more {issuer.name} cards to our
-                database.
+                We're working on adding more {issuerName} cards to our database.
               </p>
               <Button asChild>
                 <Link href="/chat">Ask Our AI for Recommendations</Link>

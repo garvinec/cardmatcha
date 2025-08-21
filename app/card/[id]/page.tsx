@@ -1,10 +1,20 @@
-import { Header } from "@/components/header"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { ArrowLeft, Star, DollarSign, Gift, Shield, AlertCircle, CheckCircle, XCircle } from "lucide-react"
-import Link from "next/link"
-import { notFound } from "next/navigation"
+import { Header } from "@/components/header";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  ArrowLeft,
+  Star,
+  DollarSign,
+  Gift,
+  Shield,
+  AlertCircle,
+  CheckCircle,
+  XCircle,
+} from "lucide-react";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { getCardById } from "@/lib/actions/card.actions";
 
 // Extended credit card data
 const creditCardsData = {
@@ -45,7 +55,11 @@ const creditCardsData = {
       "Strong travel protections",
       "No foreign transaction fees",
     ],
-    cons: ["Annual fee of $95", "Limited bonus categories", "High APR for carrying balances"],
+    cons: [
+      "Annual fee of $95",
+      "Limited bonus categories",
+      "High APR for carrying balances",
+    ],
     detailedRewards: {
       Travel: "2x points",
       Dining: "2x points",
@@ -60,8 +74,15 @@ const creditCardsData = {
     annualFee: 0,
     signupBonus: "$200 cash back",
     signupRequirement: "$1,500 in 6 months",
-    rewards: ["2% cash back on all purchases", "1% when you buy, 1% when you pay"],
-    benefits: ["No annual fee", "No category restrictions", "0% intro APR for 18 months on balance transfers"],
+    rewards: [
+      "2% cash back on all purchases",
+      "1% when you buy, 1% when you pay",
+    ],
+    benefits: [
+      "No annual fee",
+      "No category restrictions",
+      "0% intro APR for 18 months on balance transfers",
+    ],
     category: "Cash Back",
     rating: 4.6,
     bestFor: "Simple cash back without category tracking",
@@ -78,25 +99,28 @@ const creditCardsData = {
       "No rotating categories to track",
       "0% intro APR on balance transfers",
     ],
-    cons: ["Foreign transaction fees", "No signup bonus for purchases", "Cash back earned only when you pay"],
+    cons: [
+      "Foreign transaction fees",
+      "No signup bonus for purchases",
+      "Cash back earned only when you pay",
+    ],
     detailedRewards: {
       "All purchases": "2% cash back (1% when you buy + 1% when you pay)",
     },
   },
   // Add more cards as needed
-}
+};
 
 interface CardPageProps {
-  params: Promise<{ id: string }>
+  params: Promise<{ id: string }>;
 }
 
 export default async function CardPage({ params }: CardPageProps) {
-  const { id } = await params
-  const cardId = Number.parseInt(id)
-  const card = creditCardsData[cardId as keyof typeof creditCardsData]
+  const { id } = await params;
+  const card = await getCardById(id);
 
   if (!card) {
-    notFound()
+    notFound();
   }
 
   return (
@@ -109,7 +133,10 @@ export default async function CardPage({ params }: CardPageProps) {
           {/* Back Button */}
           <div className="mb-6">
             <Link href="/">
-              <Button variant="ghost" className="text-gray-600 hover:text-gray-900">
+              <Button
+                variant="ghost"
+                className="text-gray-600 hover:text-gray-900"
+              >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Cards
               </Button>
@@ -122,7 +149,11 @@ export default async function CardPage({ params }: CardPageProps) {
               {/* Card Image */}
               <Card>
                 <CardContent className="p-6">
-                  <img src={card.image || "/placeholder.svg"} alt={card.name} className="w-full rounded-lg shadow-lg" />
+                  <img
+                    src={card.image || "/placeholder.svg"}
+                    alt={card.name}
+                    className="w-full rounded-lg shadow-lg"
+                  />
                 </CardContent>
               </Card>
 
@@ -132,39 +163,47 @@ export default async function CardPage({ params }: CardPageProps) {
                   <CardTitle className="text-lg">Quick Stats</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="flex justify-between items-center">
+                  {/* <div className="flex justify-between items-center">
                     <span className="text-gray-600">Rating</span>
                     <div className="flex items-center">
                       <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-1" />
                       <span className="font-semibold">{card.rating}</span>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="flex justify-between items-center">
                     <span className="text-gray-600">Annual Fee</span>
-                    <span className="font-semibold">{card.annualFee === 0 ? "No Fee" : `$${card.annualFee}`}</span>
+                    <span className="font-semibold">
+                      {card.annual_fee === 0 ? "No Fee" : `$${card.annual_fee}`}
+                    </span>
                   </div>
-                  <div className="flex justify-between items-center">
+                  {/* <div className="flex justify-between items-center">
                     <span className="text-gray-600">Credit Score</span>
-                    <span className="font-semibold text-sm">{card.creditScoreNeeded}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
+                    <span className="font-semibold text-sm">
+                      {card.creditScoreNeeded}
+                    </span>
+                  </div> */}
+                  {/* <div className="flex justify-between items-center">
                     <span className="text-gray-600">Category</span>
                     <Badge variant="secondary">{card.category}</Badge>
-                  </div>
+                  </div> */}
                 </CardContent>
               </Card>
 
               {/* Apply Button */}
-              <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3">Apply Now</Button>
+              <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3">
+                Apply Now
+              </Button>
             </div>
 
             {/* Right Column - Detailed Information */}
             <div className="lg:col-span-2 space-y-6">
               {/* Header */}
               <div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">{card.name}</h1>
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                  {card.card_name}
+                </h1>
                 <p className="text-lg text-gray-600 mb-4">{card.issuer}</p>
-                <p className="text-gray-700">{card.bestFor}</p>
+                {/* <p className="text-gray-700">{card.best_for}</p> */}
               </div>
 
               {/* Sign-up Bonus */}
@@ -177,14 +216,18 @@ export default async function CardPage({ params }: CardPageProps) {
                 </CardHeader>
                 <CardContent>
                   <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                    <p className="text-lg font-semibold text-green-800 mb-1">{card.signupBonus}</p>
-                    <p className="text-sm text-green-700">After spending {card.signupRequirement}</p>
+                    <p className="text-lg font-semibold text-green-800 mb-1">
+                      {card.welcome_bonus}
+                    </p>
+                    {/* <p className="text-sm text-green-700">
+                      After spending {card.welcome_bonus_requirement}
+                    </p> */}
                   </div>
                 </CardContent>
               </Card>
 
               {/* Rewards Structure */}
-              <Card>
+              {/* <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <DollarSign className="mr-2 h-5 w-5" />
@@ -193,18 +236,27 @@ export default async function CardPage({ params }: CardPageProps) {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    {Object.entries(card.detailedRewards).map(([category, rate]) => (
-                      <div key={category} className="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
-                        <span className="font-medium text-gray-900">{category}</span>
-                        <span className="font-semibold text-blue-600">{rate}</span>
-                      </div>
-                    ))}
+                    {Object.entries(card.detailedRewards).map(
+                      ([category, rate]) => (
+                        <div
+                          key={category}
+                          className="flex justify-between items-center p-3 bg-blue-50 rounded-lg"
+                        >
+                          <span className="font-medium text-gray-900">
+                            {category}
+                          </span>
+                          <span className="font-semibold text-blue-600">
+                            {rate}
+                          </span>
+                        </div>
+                      )
+                    )}
                   </div>
                 </CardContent>
-              </Card>
+              </Card> */}
 
               {/* Benefits */}
-              <Card>
+              {/* <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <Shield className="mr-2 h-5 w-5" />
@@ -221,10 +273,10 @@ export default async function CardPage({ params }: CardPageProps) {
                     ))}
                   </div>
                 </CardContent>
-              </Card>
+              </Card> */}
 
               {/* Pros and Cons */}
-              <div className="grid md:grid-cols-2 gap-6">
+              {/* <div className="grid md:grid-cols-2 gap-6">
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center text-green-700">
@@ -262,10 +314,10 @@ export default async function CardPage({ params }: CardPageProps) {
                     </ul>
                   </CardContent>
                 </Card>
-              </div>
+              </div> */}
 
               {/* Rates and Fees */}
-              <Card>
+              {/* <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <AlertCircle className="mr-2 h-5 w-5" />
@@ -276,39 +328,61 @@ export default async function CardPage({ params }: CardPageProps) {
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-3">
                       <div>
-                        <p className="text-sm font-medium text-gray-900">Regular APR</p>
-                        <p className="text-sm text-gray-600">{card.regularAPR}</p>
+                        <p className="text-sm font-medium text-gray-900">
+                          Regular APR
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          {card.regularAPR}
+                        </p>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-gray-900">Intro APR</p>
+                        <p className="text-sm font-medium text-gray-900">
+                          Intro APR
+                        </p>
                         <p className="text-sm text-gray-600">{card.introAPR}</p>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-gray-900">Balance Transfer APR</p>
-                        <p className="text-sm text-gray-600">{card.balanceTransferAPR}</p>
+                        <p className="text-sm font-medium text-gray-900">
+                          Balance Transfer APR
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          {card.balanceTransferAPR}
+                        </p>
                       </div>
                     </div>
                     <div className="space-y-3">
                       <div>
-                        <p className="text-sm font-medium text-gray-900">Cash Advance APR</p>
-                        <p className="text-sm text-gray-600">{card.cashAdvanceAPR}</p>
+                        <p className="text-sm font-medium text-gray-900">
+                          Cash Advance APR
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          {card.cashAdvanceAPR}
+                        </p>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-gray-900">Late Payment Fee</p>
-                        <p className="text-sm text-gray-600">{card.latePaymentFee}</p>
+                        <p className="text-sm font-medium text-gray-900">
+                          Late Payment Fee
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          {card.latePaymentFee}
+                        </p>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-gray-900">Foreign Transaction Fee</p>
-                        <p className="text-sm text-gray-600">{card.foreignTransactionFee}</p>
+                        <p className="text-sm font-medium text-gray-900">
+                          Foreign Transaction Fee
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          {card.foreignTransactionFee}
+                        </p>
                       </div>
                     </div>
                   </div>
                 </CardContent>
-              </Card>
+              </Card> */}
             </div>
           </div>
         </div>
       </main>
     </div>
-  )
+  );
 }
