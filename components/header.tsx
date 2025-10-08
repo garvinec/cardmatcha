@@ -2,7 +2,6 @@
 import { Search } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 interface HeaderProps {
   currentPage?: string;
@@ -12,19 +11,17 @@ export function Header({ currentPage = "home" }: HeaderProps) {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <header className="bg-white shadow-sm border-b">
+    <header className="bg-white/80 backdrop-blur-md shadow-sm border-b border-green-100/50 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
+        <div className="flex justify-between items-center py-6">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/">
               <h1
-                className="text-2xl font-bold text-gray-900"
+                className="text-2xl font-light text-green-900 tracking-wide"
                 style={{
                   fontFamily:
                     "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif",
-                  letterSpacing: "-0.02em",
-                  fontWeight: "700",
                 }}
               >
                 Credexa
@@ -33,60 +30,51 @@ export function Header({ currentPage = "home" }: HeaderProps) {
           </div>
 
           {/* Centered Search Bar */}
-          <div className="flex-1 max-w-2xl mx-8">
+          <div className="flex-1 max-w-xl mx-12">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-green-400 h-5 w-5" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search credit cards..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                placeholder="Search cards..."
+                className="w-full pl-12 pr-4 py-3 border border-green-100 rounded-full focus:ring-2 focus:ring-green-500/20 focus:border-green-300 text-sm bg-green-50/30 placeholder:text-green-600/50 transition-all duration-300"
               />
             </div>
           </div>
 
           {/* Navigation */}
-          <nav className="flex-shrink-0 hidden md:flex space-x-8">
+          <nav className="flex-shrink-0 hidden md:flex space-x-10">
             <Link
               href="/"
-              className={`font-medium ${
+              className={`font-light text-base transition-all duration-300 ${
                 currentPage === "home"
-                  ? "text-blue-600"
-                  : "text-gray-700 hover:text-blue-600"
+                  ? "text-green-900"
+                  : "text-gray-600 hover:text-green-700"
               }`}
             >
               Home
             </Link>
             <Link
               href="/chat"
-              className={`font-medium ${
+              className={`font-light text-base transition-all duration-300 ${
                 currentPage === "chat"
-                  ? "text-blue-600"
-                  : "text-gray-700 hover:text-blue-600"
+                  ? "text-green-900"
+                  : "text-gray-600 hover:text-green-700"
               }`}
             >
-              Ask Credexa
+              Ask AI
             </Link>
-            <SignedIn>
-              <Link
-                href="/profile"
-                className={`font-medium ${
-                  currentPage === "profile"
-                    ? "text-blue-600"
-                    : "text-gray-700 hover:text-blue-600"
-                }`}
-              >
-                Profile
-              </Link>
-            </SignedIn>
-            <SignedOut>
-              <SignInButton mode="modal">
-                <button className="font-medium text-gray-700 hover:text-blue-600">
-                  Sign In
-                </button>
-              </SignInButton>
-            </SignedOut>
+            <Link
+              href="/profile"
+              className={`font-light text-base transition-all duration-300 ${
+                currentPage === "profile"
+                  ? "text-green-900"
+                  : "text-gray-600 hover:text-green-700"
+              }`}
+            >
+              Profile
+            </Link>
           </nav>
         </div>
       </div>

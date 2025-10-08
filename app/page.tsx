@@ -1,110 +1,84 @@
 import { CreditCardGrid } from "@/components/credit-card-grid";
 import { Header } from "@/components/header";
 import { Button } from "@/components/ui/button";
-import { CreditCard, MessageCircle, TrendingUp } from "lucide-react";
-import { MostPopularCards } from "@/components/most-popular-cards";
-import { CategoryGrid, IssuerGrid } from "@/components/browse-by-grid";
+import { MessageCircle } from "lucide-react";
+import { TopPopularCards } from "@/components/most-popular-cards";
+import { CategoryGrid } from "@/components/browse-by-grid";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-b from-green-50/30 via-white to-lime-50/20">
       <Header currentPage="home" />
+
       {/* Hero Section */}
-      {/* TODO: Update Hero section UI Design */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
+      <section className="py-32 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-5xl font-bold text-gray-900 mb-6">
-            Maximize Your Credit Card Rewards
+          <h2 className="text-6xl md:text-7xl font-light text-green-900 mb-8 tracking-tight leading-tight">
+            Find Your Perfect Card
           </h2>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Discover the perfect credit cards for your spending habits and
-            unlock maximum rewards, cashback, and benefits with our AI-powered
-            recommendations.
+          <p className="text-xl md:text-2xl text-green-800/70 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
+            Discover credit cards that align with your lifestyle. Maximize
+            rewards naturally, effortlessly.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Button
               size="lg"
-              variant="outline"
-              className="bg-blue-600 text-white border-blue-600 hover:bg-blue-50"
-              asChild
+              className="bg-green-800 hover:bg-green-900 text-white rounded-full px-8 py-6 text-lg font-light shadow-lg hover:shadow-xl transition-all duration-300"
             >
-              <a href="#most-popular-cards">
-                <TrendingUp className="mr-2 h-5 w-5" />
-                Find My Perfect Card
-              </a>
+              Explore Cards
             </Button>
             <Button
               size="lg"
               variant="outline"
-              className="bg-white text-blue-600 border-blue-600 hover:bg-blue-50"
+              className="bg-white/80 backdrop-blur text-green-800 border-green-200 hover:bg-green-50 rounded-full px-8 py-6 text-lg font-light shadow-lg hover:shadow-xl transition-all duration-300"
               asChild
             >
               <a href="/chat">
                 <MessageCircle className="mr-2 h-5 w-5" />
-                Chat with AI Advisor
+                Ask Our AI
               </a>
             </Button>
           </div>
         </div>
       </section>
+
       {/* Top 5 Most Popular Cards */}
-      <section id="most-popular-cards">
-        <MostPopularCards />
+      <section className="py-20">
+        <TopPopularCards />
       </section>
+
       {/* Credit Cards Grid */}
-      <section id="cards" className="py-16 bg-gray-50">
+      <section id="cards" className="py-20 bg-white/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-gray-900 mb-4">
-              Featured Credit Cards
+          <div className="text-center mb-16">
+            <h3 className="text-4xl md:text-5xl font-light text-green-900 mb-6 tracking-tight">
+              Featured Cards
             </h3>
-            <p className="text-lg text-gray-600">
-              Browse our curated selection of top-performing credit cards
+            <p className="text-lg md:text-xl text-green-800/70 font-light">
+              Curated selections for mindful spending
             </p>
           </div>
           <CreditCardGrid />
-          <div className="text-center mt-12">
-            <Button
-              size="lg"
-              variant="outline"
-              className="bg-white text-blue-600 border-blue-600 hover:bg-blue-50"
-              asChild
-            >
-              <a href="/cards">
-                <CreditCard className="mr-2 h-5 w-5" />
-                View All Cards
-              </a>
-            </Button>
-          </div>
         </div>
       </section>
+
       {/* Credit Card Categories */}
-      <CategoryGrid />
-      {/* Card Issuers */}
-      <IssuerGrid />
+      <section className="py-20">
+        <CategoryGrid />
+      </section>
+
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
+      <footer className="bg-green-900/95 text-white py-16 mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <div className="flex items-center justify-center space-x-2 mb-4">
-              <span
-                className="text-xl font-bold"
-                style={{
-                  fontFamily:
-                    "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif",
-                  letterSpacing: "-0.02em",
-                  fontWeight: "700",
-                }}
-              >
-                Credexa
-              </span>
+            <div className="flex items-center justify-center space-x-2 mb-6">
+              <span className="text-2xl font-light tracking-wide">Credexa</span>
             </div>
-            <p className="text-gray-400 mb-4">
-              Maximizing your credit card rewards, one recommendation at a time.
+            <p className="text-green-200/80 mb-6 font-light text-lg">
+              Mindful credit, maximized rewards.
             </p>
-            <p className="text-sm text-gray-500">
-              © 2025 Credexa. All rights reserved. Credit card offers subject to
-              approval.
+            <p className="text-sm text-green-300/60 font-light">
+              © 2025 Credexa. Credit card offers subject to approval.
             </p>
           </div>
         </div>

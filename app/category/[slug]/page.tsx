@@ -7,10 +7,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 // Mock data - in a real app, this would come from a database
-const categoryData: Record<
-  string,
-  { name: string; description: string; icon: string; cards: number[] }
-> = {
+const categoryData = {
   travel: {
     name: "Travel Rewards",
     description:
@@ -233,17 +230,17 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-b from-green-50/30 via-white to-lime-50/20">
       <Header />
 
-      <main className="py-8 px-4 sm:px-6 lg:px-8">
+      <main className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Back Button */}
-          <div className="mb-6">
+          <div className="mb-8">
             <Link href="/">
               <Button
                 variant="ghost"
-                className="text-gray-600 hover:text-gray-900"
+                className="text-gray-600 hover:text-gray-900 hover:bg-green-50 rounded-full px-6 transition-all duration-300"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Home
@@ -252,18 +249,18 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           </div>
 
           {/* Category Header */}
-          <div className="text-center mb-12">
-            <div className="text-6xl mb-4">{category.icon}</div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-16">
+            <div className="text-7xl mb-6">{category.icon}</div>
+            <h1 className="text-5xl font-light text-gray-900 mb-6 tracking-tight">
               {category.name}
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-green-800/70 max-w-3xl mx-auto font-light leading-relaxed">
               {category.description}
             </p>
-            <div className="mt-6">
+            <div className="mt-8">
               <Badge
                 variant="secondary"
-                className="bg-blue-100 text-blue-800 text-sm px-4 py-2"
+                className="bg-green-100 text-green-800 text-sm px-6 py-2 rounded-full border-0"
               >
                 {categoryCards.length}{" "}
                 {categoryCards.length === 1 ? "Card" : "Cards"} Available
@@ -273,22 +270,27 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
           {/* Cards Grid */}
           {categoryCards.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {categoryCards.map((card) => (
                 <CreditCardComponent key={card.id} card={card} />
               ))}
             </div>
           ) : (
-            <div className="text-center py-16">
-              <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-2xl font-semibold text-gray-900 mb-4">
-                No Cards Available Yet
+            <div className="text-center py-20">
+              <div className="w-24 h-24 bg-gradient-to-br from-green-100 to-green-200 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-lg">
+                <div className="text-5xl">🔍</div>
+              </div>
+              <h3 className="text-3xl font-light text-gray-900 mb-6">
+                Coming Soon
               </h3>
-              <p className="text-gray-600 mb-8">
-                We're working on adding more {category.name.toLowerCase()} cards
-                to our database.
+              <p className="text-gray-600 mb-10 font-light text-lg max-w-md mx-auto leading-relaxed">
+                We're curating the best {category.name.toLowerCase()} cards for
+                you.
               </p>
-              <Button asChild>
+              <Button
+                asChild
+                className="bg-green-800 hover:bg-green-900 text-white rounded-full px-8 py-6 font-light shadow-lg hover:shadow-xl transition-all duration-300"
+              >
                 <Link href="/chat">Ask Our AI for Recommendations</Link>
               </Button>
             </div>

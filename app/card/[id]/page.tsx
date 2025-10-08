@@ -14,7 +14,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getCardById } from "@/lib/actions/card.actions";
 
 // Extended credit card data
 const creditCardsData = {
@@ -108,7 +107,198 @@ const creditCardsData = {
       "All purchases": "2% cash back (1% when you buy + 1% when you pay)",
     },
   },
-  // Add more cards as needed
+  3: {
+    id: 3,
+    name: "American Express Gold",
+    issuer: "American Express",
+    image: "/placeholder.svg?height=300&width=480",
+    annualFee: 250,
+    signupBonus: "60,000 points",
+    signupRequirement: "$4,000 in 6 months",
+    rewards: [
+      "4x points at restaurants worldwide",
+      "4x points at U.S. supermarkets (up to $25,000/year)",
+      "3x points on flights",
+    ],
+    benefits: [
+      "$120 dining credit annually",
+      "$120 Uber Cash annually",
+      "No foreign transaction fees",
+      "Purchase protection",
+      "Extended warranty",
+      "Baggage insurance plan",
+    ],
+    category: "Dining",
+    rating: 4.7,
+    bestFor: "Heavy restaurant and grocery spenders",
+    creditScoreNeeded: "Good to Excellent (690+)",
+    introAPR: "None",
+    regularAPR: "19.49% - 26.49% Variable",
+    balanceTransferAPR: "19.49% - 26.49% Variable",
+    cashAdvanceAPR: "29.99% Variable",
+    latePaymentFee: "Up to $40",
+    foreignTransactionFee: "None",
+    pros: [
+      "Excellent dining and grocery rewards",
+      "$240 in annual credits",
+      "No foreign transaction fees",
+      "Strong purchase protections",
+    ],
+    cons: [
+      "High annual fee of $250",
+      "Credits require specific spending",
+      "Limited bonus categories",
+    ],
+    detailedRewards: {
+      "Restaurants worldwide": "4x points",
+      "U.S. supermarkets": "4x points (up to $25k/year)",
+      Flights: "3x points",
+      "All other purchases": "1x points",
+    },
+  },
+  4: {
+    id: 4,
+    name: "Capital One Venture X",
+    issuer: "Capital One",
+    image: "/placeholder.svg?height=300&width=480",
+    annualFee: 395,
+    signupBonus: "75,000 miles",
+    signupRequirement: "$4,000 in 3 months",
+    rewards: [
+      "2x miles on all purchases",
+      "5x miles on hotels and rental cars (through Capital One Travel)",
+      "10x miles on thousands of hotels",
+    ],
+    benefits: [
+      "$300 annual travel credit",
+      "Priority Pass Select lounge access",
+      "TSA PreCheck/Global Entry credit",
+      "Capital One Travel portal access",
+      "Annual anniversary bonus miles",
+      "Premium rental car benefits",
+    ],
+    category: "Premium Travel",
+    rating: 4.9,
+    bestFor: "Frequent travelers who want premium perks",
+    creditScoreNeeded: "Excellent (750+)",
+    introAPR: "None",
+    regularAPR: "21.49% - 28.49% Variable",
+    balanceTransferAPR: "21.49% - 28.49% Variable",
+    cashAdvanceAPR: "29.99% Variable",
+    latePaymentFee: "Up to $40",
+    foreignTransactionFee: "None",
+    pros: [
+      "Premium travel benefits",
+      "$300 annual travel credit effectively reduces fee",
+      "Airport lounge access",
+      "Strong flat-rate earning",
+    ],
+    cons: [
+      "High annual fee of $395",
+      "Requires excellent credit",
+      "Benefits best for frequent travelers",
+    ],
+    detailedRewards: {
+      "All purchases": "2x miles",
+      "Hotels & rental cars (Capital One Travel)": "5x miles",
+      "Thousands of hotels": "10x miles",
+    },
+  },
+  5: {
+    id: 5,
+    name: "Discover it Cash Back",
+    issuer: "Discover",
+    image: "/placeholder.svg?height=300&width=480",
+    annualFee: 0,
+    signupBonus: "Cashback Match",
+    signupRequirement: "All cashback earned in first year matched",
+    rewards: [
+      "5% cash back on rotating quarterly categories (up to $1,500)",
+      "1% cash back on all other purchases",
+    ],
+    benefits: [
+      "No annual fee",
+      "Cashback Match for first year",
+      "Free FICO credit score",
+      "0% intro APR for 15 months",
+      "No foreign transaction fees",
+      "Freeze account feature",
+    ],
+    category: "Rotating Categories",
+    rating: 4.5,
+    bestFor: "Category optimization and building credit",
+    creditScoreNeeded: "Good (670+)",
+    introAPR: "0% for 15 months on purchases and balance transfers",
+    regularAPR: "17.99% - 26.99% Variable",
+    balanceTransferAPR: "17.99% - 26.99% Variable",
+    cashAdvanceAPR: "29.99% Variable",
+    latePaymentFee: "Up to $41",
+    foreignTransactionFee: "None",
+    pros: [
+      "No annual fee",
+      "Cashback Match doubles first year rewards",
+      "5% rotating categories",
+      "Great for building credit",
+    ],
+    cons: [
+      "Must activate quarterly categories",
+      "5% limited to $1,500 per quarter",
+      "Not widely accepted internationally",
+    ],
+    detailedRewards: {
+      "Rotating quarterly categories":
+        "5% cash back (up to $1,500 per quarter)",
+      "All other purchases": "1% cash back",
+    },
+  },
+  6: {
+    id: 6,
+    name: "Chase Freedom Unlimited",
+    issuer: "Chase",
+    image: "/placeholder.svg?height=300&width=480",
+    annualFee: 0,
+    signupBonus: "$200 cash back",
+    signupRequirement: "$500 in 3 months",
+    rewards: [
+      "1.5% cash back on all purchases",
+      "5% on travel through Chase Ultimate Rewards",
+      "3% on dining and drugstores",
+    ],
+    benefits: [
+      "No annual fee",
+      "0% intro APR for 15 months",
+      "No foreign transaction fees",
+      "Cell phone protection",
+      "Purchase protection",
+      "Extended warranty",
+    ],
+    category: "Flat Rate",
+    rating: 4.4,
+    bestFor: "Simple earning with Chase ecosystem benefits",
+    creditScoreNeeded: "Good (670+)",
+    introAPR: "0% for 15 months on purchases and balance transfers",
+    regularAPR: "19.74% - 28.49% Variable",
+    balanceTransferAPR: "19.74% - 28.49% Variable",
+    cashAdvanceAPR: "29.99% Variable",
+    latePaymentFee: "Up to $40",
+    foreignTransactionFee: "None",
+    pros: [
+      "No annual fee",
+      "Simple flat-rate earning",
+      "Integrates with Chase Ultimate Rewards",
+      "Good intro APR period",
+    ],
+    cons: [
+      "Lower earning rate than category cards",
+      "Requires Chase ecosystem for best value",
+      "Basic travel benefits",
+    ],
+    detailedRewards: {
+      "Travel through Chase Ultimate Rewards": "5% cash back",
+      "Dining and drugstores": "3% cash back",
+      "All other purchases": "1.5% cash back",
+    },
+  },
 };
 
 interface CardPageProps {
@@ -117,25 +307,26 @@ interface CardPageProps {
 
 export default async function CardPage({ params }: CardPageProps) {
   const { id } = await params;
-  const card = await getCardById(id);
+  const cardId = Number.parseInt(id);
+  const card = creditCardsData[cardId as keyof typeof creditCardsData];
 
   if (!card) {
     notFound();
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-b from-green-50/30 via-white to-lime-50/20">
       <Header />
 
       {/* Main Content */}
-      <main className="py-8 px-4 sm:px-6 lg:px-8">
+      <main className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           {/* Back Button */}
-          <div className="mb-6">
+          <div className="mb-8">
             <Link href="/">
               <Button
                 variant="ghost"
-                className="text-gray-600 hover:text-gray-900"
+                className="text-gray-600 hover:text-gray-900 hover:bg-green-50 rounded-full px-6 transition-all duration-300"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Cards
@@ -147,105 +338,118 @@ export default async function CardPage({ params }: CardPageProps) {
             {/* Left Column - Card Image and Basic Info */}
             <div className="lg:col-span-1 space-y-6">
               {/* Card Image */}
-              <Card>
-                <CardContent className="p-6">
+              <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
+                <CardContent className="p-8">
                   <img
                     src={card.image || "/placeholder.svg"}
                     alt={card.name}
-                    className="w-full rounded-lg shadow-lg"
+                    className="w-full rounded-2xl shadow-lg"
                   />
                 </CardContent>
               </Card>
 
               {/* Quick Stats */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Quick Stats</CardTitle>
+              <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
+                <CardHeader className="p-6">
+                  <CardTitle className="text-lg font-light text-gray-900">
+                    Quick Stats
+                  </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  {/* <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Rating</span>
+                <CardContent className="space-y-4 px-6 pb-6">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600 font-light">Rating</span>
                     <div className="flex items-center">
                       <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-1" />
-                      <span className="font-semibold">{card.rating}</span>
+                      <span className="font-normal">{card.rating}</span>
                     </div>
-                  </div> */}
+                  </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Annual Fee</span>
-                    <span className="font-semibold">
-                      {card.annual_fee === 0 ? "No Fee" : `$${card.annual_fee}`}
+                    <span className="text-gray-600 font-light">Annual Fee</span>
+                    <span className="font-normal">
+                      {card.annualFee === 0 ? "No Fee" : `$${card.annualFee}`}
                     </span>
                   </div>
-                  {/* <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Credit Score</span>
-                    <span className="font-semibold text-sm">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600 font-light">
+                      Credit Score
+                    </span>
+                    <span className="font-normal text-sm">
                       {card.creditScoreNeeded}
                     </span>
-                  </div> */}
-                  {/* <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Category</span>
-                    <Badge variant="secondary">{card.category}</Badge>
-                  </div> */}
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600 font-light">Category</span>
+                    <Badge
+                      variant="secondary"
+                      className="bg-green-100 text-green-800 border-0 rounded-full font-light"
+                    >
+                      {card.category}
+                    </Badge>
+                  </div>
                 </CardContent>
               </Card>
 
               {/* Apply Button */}
-              <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3">
+              <Button className="w-full bg-green-800 hover:bg-green-900 text-white py-6 rounded-full font-light text-base shadow-lg hover:shadow-xl transition-all duration-300">
                 Apply Now
               </Button>
             </div>
 
             {/* Right Column - Detailed Information */}
-            <div className="lg:col-span-2 space-y-6">
+            <div className="lg:col-span-2 space-y-8">
               {/* Header */}
               <div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                  {card.card_name}
+                <h1 className="text-4xl font-light text-gray-900 mb-3 tracking-tight">
+                  {card.name}
                 </h1>
-                <p className="text-lg text-gray-600 mb-4">{card.issuer}</p>
-                {/* <p className="text-gray-700">{card.best_for}</p> */}
+                <p className="text-lg text-gray-600 mb-4 font-light">
+                  {card.issuer}
+                </p>
+                <p className="text-gray-700 font-light leading-relaxed">
+                  {card.bestFor}
+                </p>
               </div>
 
               {/* Sign-up Bonus */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center text-green-700">
-                    <Gift className="mr-2 h-5 w-5" />
-                    Sign-up Bonus
+              <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
+                <CardHeader className="p-6">
+                  <CardTitle className="flex items-center text-green-800 font-light text-xl">
+                    <Gift className="mr-3 h-5 w-5" />
+                    Welcome Bonus
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                    <p className="text-lg font-semibold text-green-800 mb-1">
-                      {card.welcome_bonus}
+                <CardContent className="px-6 pb-6">
+                  <div className="bg-gradient-to-r from-green-50 to-lime-50 border border-green-200/50 rounded-2xl p-6">
+                    <p className="text-lg font-normal text-green-800 mb-2">
+                      {card.signupBonus}
                     </p>
-                    {/* <p className="text-sm text-green-700">
-                      After spending {card.welcome_bonus_requirement}
-                    </p> */}
+                    <p className="text-sm text-green-700/80 font-light">
+                      After spending {card.signupRequirement}
+                    </p>
                   </div>
                 </CardContent>
               </Card>
 
               {/* Rewards Structure */}
-              {/* <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <DollarSign className="mr-2 h-5 w-5" />
+              <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
+                <CardHeader className="p-6">
+                  <CardTitle className="flex items-center font-light text-xl">
+                    <DollarSign className="mr-3 h-5 w-5 text-green-800" />
                     Rewards Structure
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="px-6 pb-6">
                   <div className="space-y-3">
                     {Object.entries(card.detailedRewards).map(
                       ([category, rate]) => (
                         <div
                           key={category}
-                          className="flex justify-between items-center p-3 bg-blue-50 rounded-lg"
+                          className="flex justify-between items-center p-4 bg-gradient-to-r from-green-50/50 to-lime-50/50 rounded-2xl border border-green-100/50"
                         >
-                          <span className="font-medium text-gray-900">
+                          <span className="font-light text-gray-900">
                             {category}
                           </span>
-                          <span className="font-semibold text-blue-600">
+                          <span className="font-normal text-green-800">
                             {rate}
                           </span>
                         </div>
@@ -253,132 +457,140 @@ export default async function CardPage({ params }: CardPageProps) {
                     )}
                   </div>
                 </CardContent>
-              </Card> */}
+              </Card>
 
               {/* Benefits */}
-              {/* <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Shield className="mr-2 h-5 w-5" />
+              <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
+                <CardHeader className="p-6">
+                  <CardTitle className="flex items-center font-light text-xl">
+                    <Shield className="mr-3 h-5 w-5 text-green-800" />
                     Key Benefits
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="grid md:grid-cols-2 gap-3">
+                <CardContent className="px-6 pb-6">
+                  <div className="grid md:grid-cols-2 gap-4">
                     {card.benefits.map((benefit, index) => (
-                      <div key={index} className="flex items-start space-x-2">
-                        <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
-                        <span className="text-sm text-gray-700">{benefit}</span>
+                      <div key={index} className="flex items-start space-x-3">
+                        <CheckCircle className="h-4 w-4 text-green-700 mt-0.5 flex-shrink-0" />
+                        <span className="text-sm text-gray-700 font-light leading-relaxed">
+                          {benefit}
+                        </span>
                       </div>
                     ))}
                   </div>
                 </CardContent>
-              </Card> */}
+              </Card>
 
               {/* Pros and Cons */}
-              {/* <div className="grid md:grid-cols-2 gap-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center text-green-700">
-                      <CheckCircle className="mr-2 h-5 w-5" />
+              <div className="grid md:grid-cols-2 gap-6">
+                <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
+                  <CardHeader className="p-6">
+                    <CardTitle className="flex items-center text-green-800 font-light text-lg">
+                      <CheckCircle className="mr-3 h-5 w-5" />
                       Pros
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2">
+                  <CardContent className="px-6 pb-6">
+                    <ul className="space-y-3">
                       {card.pros.map((pro, index) => (
-                        <li key={index} className="flex items-start space-x-2">
-                          <div className="w-1.5 h-1.5 bg-green-600 rounded-full mt-2 flex-shrink-0"></div>
-                          <span className="text-sm text-gray-700">{pro}</span>
+                        <li key={index} className="flex items-start space-x-3">
+                          <div className="w-1.5 h-1.5 bg-green-700 rounded-full mt-2 flex-shrink-0"></div>
+                          <span className="text-sm text-gray-700 font-light leading-relaxed">
+                            {pro}
+                          </span>
                         </li>
                       ))}
                     </ul>
                   </CardContent>
                 </Card>
 
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center text-red-700">
-                      <XCircle className="mr-2 h-5 w-5" />
+                <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
+                  <CardHeader className="p-6">
+                    <CardTitle className="flex items-center text-red-700 font-light text-lg">
+                      <XCircle className="mr-3 h-5 w-5" />
                       Cons
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2">
+                  <CardContent className="px-6 pb-6">
+                    <ul className="space-y-3">
                       {card.cons.map((con, index) => (
-                        <li key={index} className="flex items-start space-x-2">
+                        <li key={index} className="flex items-start space-x-3">
                           <div className="w-1.5 h-1.5 bg-red-600 rounded-full mt-2 flex-shrink-0"></div>
-                          <span className="text-sm text-gray-700">{con}</span>
+                          <span className="text-sm text-gray-700 font-light leading-relaxed">
+                            {con}
+                          </span>
                         </li>
                       ))}
                     </ul>
                   </CardContent>
                 </Card>
-              </div> */}
+              </div>
 
               {/* Rates and Fees */}
-              {/* <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <AlertCircle className="mr-2 h-5 w-5" />
+              <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
+                <CardHeader className="p-6">
+                  <CardTitle className="flex items-center font-light text-xl">
+                    <AlertCircle className="mr-3 h-5 w-5 text-green-800" />
                     Rates & Fees
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-3">
+                <CardContent className="px-6 pb-6">
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="space-y-4">
                       <div>
-                        <p className="text-sm font-medium text-gray-900">
+                        <p className="text-sm font-light text-gray-500 mb-1">
                           Regular APR
                         </p>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-gray-800 font-normal">
                           {card.regularAPR}
                         </p>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-gray-900">
+                        <p className="text-sm font-light text-gray-500 mb-1">
                           Intro APR
                         </p>
-                        <p className="text-sm text-gray-600">{card.introAPR}</p>
+                        <p className="text-sm text-gray-800 font-normal">
+                          {card.introAPR}
+                        </p>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-gray-900">
+                        <p className="text-sm font-light text-gray-500 mb-1">
                           Balance Transfer APR
                         </p>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-gray-800 font-normal">
                           {card.balanceTransferAPR}
                         </p>
                       </div>
                     </div>
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                       <div>
-                        <p className="text-sm font-medium text-gray-900">
+                        <p className="text-sm font-light text-gray-500 mb-1">
                           Cash Advance APR
                         </p>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-gray-800 font-normal">
                           {card.cashAdvanceAPR}
                         </p>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-gray-900">
+                        <p className="text-sm font-light text-gray-500 mb-1">
                           Late Payment Fee
                         </p>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-gray-800 font-normal">
                           {card.latePaymentFee}
                         </p>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-gray-900">
+                        <p className="text-sm font-light text-gray-500 mb-1">
                           Foreign Transaction Fee
                         </p>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-gray-800 font-normal">
                           {card.foreignTransactionFee}
                         </p>
                       </div>
                     </div>
                   </div>
                 </CardContent>
-              </Card> */}
+              </Card>
             </div>
           </div>
         </div>

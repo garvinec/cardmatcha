@@ -1,9 +1,9 @@
-import { Header } from "@/components/header"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Star, TrendingUp } from "lucide-react"
-import Link from "next/link"
+import { Header } from "@/components/header";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Star, TrendingUp } from "lucide-react";
+import Link from "next/link";
 
 const fullRankings = [
   {
@@ -78,103 +78,137 @@ const fullRankings = [
     popularityScore: 84,
     monthlySearches: "32K",
   },
-]
+];
 
 function getRankIcon(rank: number) {
   switch (rank) {
     case 1:
       return (
-        <div className="w-6 h-6 bg-yellow-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
+        <div className="w-14 h-14 bg-gradient-to-br from-yellow-400 to-yellow-600 text-white rounded-2xl flex items-center justify-center text-lg font-light shadow-lg">
           {rank}
         </div>
-      )
+      );
     case 2:
       return (
-        <div className="w-6 h-6 bg-gray-400 text-white rounded-full flex items-center justify-center text-sm font-bold">
+        <div className="w-14 h-14 bg-gradient-to-br from-gray-300 to-gray-500 text-white rounded-2xl flex items-center justify-center text-lg font-light shadow-lg">
           {rank}
         </div>
-      )
+      );
     case 3:
       return (
-        <div className="w-6 h-6 bg-yellow-700 text-white rounded-full flex items-center justify-center text-sm font-bold">
+        <div className="w-14 h-14 bg-gradient-to-br from-yellow-700 to-yellow-900 text-white rounded-2xl flex items-center justify-center text-lg font-light shadow-lg">
           {rank}
         </div>
-      )
+      );
     default:
       return (
-        <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
+        <div className="w-14 h-14 bg-gradient-to-br from-green-700 to-green-900 text-white rounded-2xl flex items-center justify-center text-lg font-light shadow-lg">
           {rank}
         </div>
-      )
+      );
   }
 }
 
 export default function RankingsPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-b from-green-50/30 via-white to-lime-50/20">
       <Header />
 
-      <main className="py-8 px-4 sm:px-6 lg:px-8">
+      <main className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-12">
-            <div className="flex items-center justify-center mb-4">
-              <TrendingUp className="h-10 w-10 text-blue-600 mr-3" />
-              <h1 className="text-4xl font-bold text-gray-900">Credit Card Rankings</h1>
+          <div className="text-center mb-16">
+            <div className="flex items-center justify-center mb-6">
+              <TrendingUp className="h-12 w-12 text-green-800 mr-4" />
+              <h1 className="text-5xl font-light text-gray-900 tracking-tight">
+                Rankings
+              </h1>
             </div>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Complete rankings based on user popularity, expert ratings, and search volume
+            <p className="text-xl text-green-800/70 max-w-2xl mx-auto font-light leading-relaxed">
+              Discover the most popular cards, based on expert ratings and user
+              preferences
             </p>
           </div>
 
           {/* Rankings List */}
-          <div className="space-y-4">
+          <div className="space-y-6">
             {fullRankings.map((card) => (
-              <Card key={card.id} className="hover:shadow-lg transition-shadow duration-200">
-                <CardContent className="p-6">
+              <Card
+                key={card.id}
+                className="hover:shadow-2xl transition-all duration-500 border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden"
+              >
+                <CardContent className="p-8">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-6">
                       {/* Rank Icon */}
-                      <div className="flex-shrink-0">{getRankIcon(card.rank)}</div>
+                      <div className="flex-shrink-0">
+                        {getRankIcon(card.rank)}
+                      </div>
 
                       {/* Card Info */}
                       <div className="flex-1">
-                        <div className="flex items-center space-x-3 mb-2">
-                          <h3 className="text-xl font-semibold text-gray-900">{card.name}</h3>
-                          <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+                        <div className="flex items-center space-x-4 mb-3">
+                          <h3 className="text-xl font-light text-gray-900">
+                            {card.name}
+                          </h3>
+                          <Badge
+                            variant="secondary"
+                            className="bg-green-100/80 text-green-800 border-0 rounded-full px-3 py-1 font-light"
+                          >
                             {card.category}
                           </Badge>
                         </div>
-                        <p className="text-gray-600 mb-3">{card.issuer}</p>
+                        <p className="text-gray-600 mb-4 font-light">
+                          {card.issuer}
+                        </p>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                           <div className="flex items-center">
-                            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-1" />
-                            <span className="font-medium">{card.rating} Rating</span>
-                          </div>
-                          <div>
-                            <span className="text-gray-600">Annual Fee: </span>
-                            <span className="font-medium">
-                              {card.annualFee === 0 ? "No Fee" : `$${card.annualFee}`}
+                            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-2" />
+                            <span className="font-light">
+                              {card.rating} Rating
                             </span>
                           </div>
                           <div>
-                            <span className="text-gray-600">Searches: </span>
-                            <span className="font-medium">{card.monthlySearches}/month</span>
+                            <span className="text-gray-500 font-light">
+                              Annual Fee:{" "}
+                            </span>
+                            <span className="font-normal">
+                              {card.annualFee === 0
+                                ? "No Fee"
+                                : `$${card.annualFee}`}
+                            </span>
                           </div>
                           <div>
-                            <span className="text-gray-600">Popularity: </span>
-                            <span className="font-medium text-green-600">{card.popularityScore}/100</span>
+                            <span className="text-gray-500 font-light">
+                              Searches:{" "}
+                            </span>
+                            <span className="font-normal">
+                              {card.monthlySearches}/month
+                            </span>
+                          </div>
+                          <div>
+                            <span className="text-gray-500 font-light">
+                              Popularity:{" "}
+                            </span>
+                            <span className="font-normal text-green-700">
+                              {card.popularityScore}/100
+                            </span>
                           </div>
                         </div>
-                        <div className="mt-2">
-                          <span className="text-green-600 font-medium text-sm">{card.signupBonus}</span>
+                        <div className="mt-3">
+                          <span className="text-green-800 font-normal text-sm">
+                            {card.signupBonus}
+                          </span>
                         </div>
                       </div>
                     </div>
 
                     {/* Action Button */}
                     <div className="flex-shrink-0">
-                      <Button asChild>
+                      <Button
+                        asChild
+                        className="bg-green-800 hover:bg-green-900 text-white rounded-full px-6 py-5 font-light shadow-lg hover:shadow-xl transition-all duration-300"
+                      >
                         <Link href={`/card/${card.id}`}>View Details</Link>
                       </Button>
                     </div>
@@ -185,21 +219,37 @@ export default function RankingsPage() {
           </div>
 
           {/* Methodology */}
-          <Card className="mt-12">
-            <CardContent className="p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Ranking Methodology</h3>
-              <div className="grid md:grid-cols-3 gap-6 text-sm text-gray-600">
+          <Card className="mt-16 border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
+            <CardContent className="p-8">
+              <h3 className="text-2xl font-light text-gray-900 mb-8">
+                Ranking Methodology
+              </h3>
+              <div className="grid md:grid-cols-3 gap-8 text-sm text-gray-600">
                 <div>
-                  <h4 className="font-medium text-gray-900 mb-2">User Popularity (40%)</h4>
-                  <p>Based on user searches, applications, and engagement metrics</p>
+                  <h4 className="font-normal text-gray-900 mb-3 text-base">
+                    User Popularity (40%)
+                  </h4>
+                  <p className="font-light leading-relaxed">
+                    Based on user searches, applications, and engagement metrics
+                  </p>
                 </div>
                 <div>
-                  <h4 className="font-medium text-gray-900 mb-2">Expert Rating (35%)</h4>
-                  <p>Professional analysis of rewards, benefits, and overall value</p>
+                  <h4 className="font-normal text-gray-900 mb-3 text-base">
+                    Expert Rating (35%)
+                  </h4>
+                  <p className="font-light leading-relaxed">
+                    Professional analysis of rewards, benefits, and overall
+                    value
+                  </p>
                 </div>
                 <div>
-                  <h4 className="font-medium text-gray-900 mb-2">Market Performance (25%)</h4>
-                  <p>Application approval rates, customer satisfaction, and market trends</p>
+                  <h4 className="font-normal text-gray-900 mb-3 text-base">
+                    Market Performance (25%)
+                  </h4>
+                  <p className="font-light leading-relaxed">
+                    Application approval rates, customer satisfaction, and
+                    market trends
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -207,5 +257,5 @@ export default function RankingsPage() {
         </div>
       </main>
     </div>
-  )
+  );
 }

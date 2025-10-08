@@ -1,33 +1,32 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Star, TrendingUp, ArrowRight } from "lucide-react";
+import { Star, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { getMostPopularCards } from "@/lib/actions/cards.actions";
 
 function getRankIcon(rank: number) {
   switch (rank) {
     case 1:
       return (
-        <div className="w-12 h-12 bg-yellow-500 text-white rounded-full flex items-center justify-center font-bold text-lg">
+        <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-yellow-600 text-white rounded-full flex items-center justify-center font-light text-lg shadow-lg">
           {rank}
         </div>
       );
     case 2:
       return (
-        <div className="w-12 h-12 bg-gray-400 text-white rounded-full flex items-center justify-center font-bold text-lg">
+        <div className="w-12 h-12 bg-gradient-to-br from-gray-300 to-gray-500 text-white rounded-full flex items-center justify-center font-light text-lg shadow-lg">
           {rank}
         </div>
       );
     case 3:
       return (
-        <div className="w-12 h-12 bg-yellow-700 text-white rounded-full flex items-center justify-center font-bold text-lg">
+        <div className="w-12 h-12 bg-gradient-to-br from-yellow-700 to-yellow-900 text-white rounded-full flex items-center justify-center font-light text-lg shadow-lg">
           {rank}
         </div>
       );
     default:
       return (
-        <div className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg">
+        <div className="w-12 h-12 bg-gradient-to-br from-green-700 to-green-900 text-white rounded-full flex items-center justify-center font-light text-lg shadow-lg">
           {rank}
         </div>
       );
@@ -68,97 +67,78 @@ const topCards = [
     signupBonus: "$200 cash back",
     popularityScore: 92,
   },
-  {
-    id: 3,
-    rank: 4,
-    name: "American Express Gold",
-    issuer: "American Express",
-    rating: 4.7,
-    category: "Dining",
-    annualFee: 250,
-    signupBonus: "60,000 points",
-    popularityScore: 89,
-  },
-  {
-    id: 6,
-    rank: 5,
-    name: "Chase Freedom Unlimited",
-    issuer: "Chase",
-    rating: 4.4,
-    category: "Flat Rate",
-    annualFee: 0,
-    signupBonus: "$200 cash back",
-    popularityScore: 87,
-  },
 ];
 
-export async function MostPopularCards() {
-  const popularCards = await getMostPopularCards();
-  console.log(popularCards);
+export function TopPopularCards() {
   return (
-    <section className="py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center mb-4">
-            <TrendingUp className="h-8 w-8 text-blue-600 mr-3" />
-            <h3 className="text-3xl font-bold text-gray-900">
-              Most Popular Credit Cards
-            </h3>
-          </div>
-          <p className="text-lg text-gray-600">
-            Top-rated cards chosen by thousands of users
+    <section className="py-4">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h3 className="text-4xl md:text-5xl font-light text-green-900 mb-4 tracking-tight">
+            Most Popular
+          </h3>
+          <p className="text-lg text-green-800/70 font-light">
+            Cards chosen by thousands
           </p>
         </div>
 
-        <div className="space-y-4 mb-8">
-          {popularCards.map((card, idx) => (
+        <div className="space-y-6 mb-12">
+          {topCards.map((card) => (
             <Card
               key={card.id}
-              className="hover:shadow-md transition-shadow duration-200"
+              className="hover:shadow-2xl transition-all duration-500 border-0 bg-white/80 backdrop-blur rounded-3xl overflow-hidden"
             >
-              <CardContent className="p-6">
+              <CardContent className="p-8">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-6">
                     {/* Rank Badge */}
-                    <div className="flex-shrink-0">{getRankIcon(idx + 1)}</div>
+                    <div className="flex-shrink-0">
+                      {getRankIcon(card.rank)}
+                    </div>
 
                     {/* Card Info */}
                     <div className="flex-1">
-                      <div className="flex items-center space-x-3 mb-2">
-                        <h4 className="text-lg font-semibold text-gray-900">
-                          {card.card_name}
+                      <div className="flex items-center space-x-4 mb-3">
+                        <h4 className="text-xl font-light text-gray-900">
+                          {card.name}
                         </h4>
-                        {/* TODO: Add category later */}
-                        {/* <Badge
+                        <Badge
                           variant="secondary"
-                          className="bg-blue-100 text-blue-800"
+                          className="bg-green-100/80 text-green-800 border-0 rounded-full px-3 py-1 font-light"
                         >
                           {card.category}
-                        </Badge> */}
+                        </Badge>
                       </div>
-                      <p className="text-sm text-gray-600 mb-2">
+                      <p className="text-sm text-gray-500 mb-4 font-light">
                         {card.issuer}
                       </p>
-                      <div className="flex items-center space-x-4 text-sm text-gray-600">
-                        <span>
-                          Annual Fee:{" "}
-                          {card.annual_fee === 0
-                            ? "No Fee"
-                            : `$${card.annual_fee}`}
+                      <div className="flex items-center space-x-6 text-sm text-gray-600">
+                        <div className="flex items-center">
+                          <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-2" />
+                          <span className="font-light">{card.rating}</span>
+                        </div>
+                        <span className="text-gray-300">•</span>
+                        <span className="font-light">
+                          {card.annualFee === 0
+                            ? "No Annual Fee"
+                            : `$${card.annualFee}/year`}
                         </span>
-                        {/* TODO: Add welcome bonus later */}
-                        {/* <span>•</span>
-                        <span className="text-green-600 font-medium">
-                          {card.welcome_bonus}
-                        </span> */}
+                        <span className="text-gray-300">•</span>
+                        <span className="text-green-700 font-normal">
+                          {card.signupBonus}
+                        </span>
                       </div>
                     </div>
                   </div>
 
                   {/* Action Button */}
                   <div className="flex-shrink-0">
-                    <Button variant="outline" asChild>
-                      <Link href={`/card/${card.id}`}>View Details</Link>
+                    <Button
+                      variant="outline"
+                      className="rounded-full px-6 py-5 border-green-200 hover:bg-green-50 font-light transition-all duration-300 bg-transparent"
+                      asChild
+                    >
+                      <Link href={`/card/${card.id}`}>Details</Link>
                     </Button>
                   </div>
                 </div>
@@ -172,11 +152,11 @@ export async function MostPopularCards() {
           <Button
             size="lg"
             variant="outline"
-            className="bg-white text-blue-600 border-blue-600 hover:bg-blue-50"
+            className="bg-white/80 backdrop-blur text-green-800 border-green-200 hover:bg-green-50 rounded-full px-8 py-6 font-light text-base shadow-lg hover:shadow-xl transition-all duration-300"
             asChild
           >
             <Link href="/rankings">
-              View Full Rankings
+              View All Rankings
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
