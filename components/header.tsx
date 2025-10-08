@@ -24,7 +24,7 @@ export function Header({ currentPage = "home" }: HeaderProps) {
                     "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif",
                 }}
               >
-                Credexa
+                CardMatcha
               </h1>
             </Link>
           </div>

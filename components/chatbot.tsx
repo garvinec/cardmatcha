@@ -36,7 +36,7 @@ export function Chatbot() {
               <div className="text-center text-gray-500 py-8">
                 <Bot className="mx-auto h-12 w-12 text-green-700 mb-4" />
                 <p className="text-lg font-medium mb-2">
-                  Welcome to Credexa AI!
+                  Welcome to CardMatcha!
                 </p>
                 <p className="text-sm">
                   Ask me anything about credit cards, rewards, or which card

@@ -221,7 +221,7 @@ export function ModernChatInterface() {
                   </div>
                   <div>
                     <h2 className="font-light text-xl text-gray-900">
-                      Credexa AI
+                      CardMatcha AI
                     </h2>
                     <p className="text-sm text-gray-500 font-light">
                       Your credit card advisor
@@ -300,7 +300,7 @@ export function ModernChatInterface() {
                             </div>
                             <div className="flex-1">
                               <p className="text-xs font-light text-gray-500 mb-2">
-                                Credexa AI
+                                CardMatcha AI
                               </p>
                               <div className="bg-white/80 backdrop-blur border border-green-100/50 rounded-3xl p-5 shadow-sm">
                                 <div className="prose prose-sm max-w-none">
@@ -357,7 +357,7 @@ export function ModernChatInterface() {
                         </div>
                         <div className="flex-1">
                           <p className="text-xs font-light text-gray-500 mb-2">
-                            Credexa AI
+                            CardMatcha AI
                           </p>
                           <div className="bg-white/80 backdrop-blur border border-green-100/50 rounded-3xl p-5 shadow-sm">
                             <div className="flex items-center space-x-3">

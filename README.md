@@ -1,4 +1,4 @@
-# Credexa - Credit Card Comparison Platform
+# CardMatcha - Credit Card Comparison Platform
 
 A modern full-stack web application for finding the right credit cards for you, built with Next.js frontend and Express.js backend.
 
@@ -31,7 +31,7 @@ A modern full-stack web application for finding the right credit cards for you, 
 ## 📁 Project Structure
 
 ```
-credexa/
+cardmatcha/
 ├── app/                      # Next.js app directory (App Router)
 │   ├── api/                 # API routes (chat functionality)
 │   ├── card/                # Individual credit card pages
@@ -86,7 +86,7 @@ credexa/
 
    ```bash
    git clone <repository-url>
-   cd credexa
+   cd cardmatcha
    ```
 
 2. **Set up the backend**

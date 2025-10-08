@@ -72,13 +72,15 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-6">
-              <span className="text-2xl font-light tracking-wide">Credexa</span>
+              <span className="text-2xl font-light tracking-wide">
+                CardMatcha
+              </span>
             </div>
             <p className="text-green-200/80 mb-6 font-light text-lg">
               Mindful credit, maximized rewards.
             </p>
             <p className="text-sm text-green-300/60 font-light">
-              © 2025 Credexa. Credit card offers subject to approval.
+              © 2025 CardMatcha. Credit card offers subject to approval.
             </p>
           </div>
         </div>
