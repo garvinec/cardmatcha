@@ -1,3 +1,7 @@
+"use client";
+
+import { use, useEffect, useState } from "react";
+
 import { Header } from "@/components/header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -14,6 +18,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getCardById } from "@/lib/actions/card.actions";
 
 // Extended credit card data
 const creditCardsData = {
@@ -305,10 +310,32 @@ interface CardPageProps {
   params: Promise<{ id: string }>;
 }
 
-export default async function CardPage({ params }: CardPageProps) {
-  const { id } = await params;
-  const cardId = Number.parseInt(id);
-  const card = creditCardsData[cardId as keyof typeof creditCardsData];
+export default function CardPage({ params }: CardPageProps) {
+  const { id } = use(params);
+  const [card, setCard] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCards = async () => {
+      setIsLoading(true);
+      const cardData = await getCardById(id);
+      setCard(cardData || null);
+      console.log(cardData);
+      setIsLoading(false);
+    };
+    fetchCards();
+  }, [id]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-green-50/30 via-white to-lime-50/20">
+        <Header />
+        <div className="flex items-center justify-center py-12">
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!card) {
     notFound();
@@ -396,8 +423,7 @@ export default async function CardPage({ params }: CardPageProps) {
             </div>
 
             {/* Right Column - Detailed Information */}
-            <div className="lg:col-span-2 space-y-8">
-              {/* Header */}
+            {/* <div className="lg:col-span-2 space-y-8">
               <div>
                 <h1 className="text-4xl font-light text-gray-900 mb-3 tracking-tight">
                   {card.name}
@@ -410,7 +436,6 @@ export default async function CardPage({ params }: CardPageProps) {
                 </p>
               </div>
 
-              {/* Sign-up Bonus */}
               <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
                 <CardHeader className="p-6">
                   <CardTitle className="flex items-center text-green-800 font-light text-xl">
@@ -430,7 +455,7 @@ export default async function CardPage({ params }: CardPageProps) {
                 </CardContent>
               </Card>
 
-              {/* Rewards Structure */}
+              Rewards Structure
               <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
                 <CardHeader className="p-6">
                   <CardTitle className="flex items-center font-light text-xl">
@@ -459,7 +484,6 @@ export default async function CardPage({ params }: CardPageProps) {
                 </CardContent>
               </Card>
 
-              {/* Benefits */}
               <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
                 <CardHeader className="p-6">
                   <CardTitle className="flex items-center font-light text-xl">
@@ -481,7 +505,6 @@ export default async function CardPage({ params }: CardPageProps) {
                 </CardContent>
               </Card>
 
-              {/* Pros and Cons */}
               <div className="grid md:grid-cols-2 gap-6">
                 <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
                   <CardHeader className="p-6">
@@ -526,7 +549,6 @@ export default async function CardPage({ params }: CardPageProps) {
                 </Card>
               </div>
 
-              {/* Rates and Fees */}
               <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
                 <CardHeader className="p-6">
                   <CardTitle className="flex items-center font-light text-xl">
@@ -591,7 +613,7 @@ export default async function CardPage({ params }: CardPageProps) {
                   </div>
                 </CardContent>
               </Card>
-            </div>
+            </div> */}
           </div>
         </div>
       </main>

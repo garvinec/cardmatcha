@@ -163,43 +163,39 @@ export function CategoryGrid() {
 
 export function IssuerGrid() {
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h3 className="text-3xl font-bold text-gray-900 mb-4">
+    <section className="py-4">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h3 className="text-4xl md:text-5xl font-light text-green-900 mb-4 tracking-tight">
             Browse by Card Issuer
           </h3>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-green-800/70 font-light">
             Explore cards from your preferred financial institution
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
           {issuers.map((issuer) => (
             <Link key={issuer.slug} href={`/issuer/${issuer.slug}`}>
               <div
-                className={`relative overflow-hidden rounded-2xl p-6 h-32 bg-gradient-to-br ${issuer.gradient} hover:scale-105 transition-transform duration-200 cursor-pointer group`}
+                className={`relative overflow-hidden rounded-3xl p-8 h-48 bg-gradient-to-br ${issuer.gradient} hover:scale-105 transition-all duration-500 cursor-pointer group shadow-lg hover:shadow-2xl`}
               >
-                {/* Decorative Elements */}
-                <div className="absolute top-2 right-2 opacity-20">
-                  <div className="w-16 h-16 bg-white rounded-lg transform rotate-12"></div>
-                </div>
-                <div className="absolute -bottom-4 -right-4 opacity-10">
-                  <div className="w-20 h-20 bg-white rounded-full"></div>
-                </div>
+                {/* Decorative blur circles */}
+                <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/20 rounded-full blur-2xl"></div>
+                <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
 
                 {/* Content */}
                 <div className="relative z-10 h-full flex flex-col justify-between">
-                  <div className="text-2xl mb-2">{issuer.icon}</div>
+                  <div className="text-4xl mb-3">{issuer.icon}</div>
                   <div>
-                    <h4 className="text-white font-bold text-sm mb-1 leading-tight">
+                    <h4 className="text-white font-light text-lg mb-1 leading-tight">
                       {issuer.name}
                     </h4>
                   </div>
                 </div>
 
                 {/* Hover Effect */}
-                <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+                <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
             </Link>
           ))}

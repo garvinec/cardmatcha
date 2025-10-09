@@ -50,6 +50,7 @@ const INITIAL_PAGE = 1;
 
 export default function AllCardsPage() {
   const [currentPage, setCurrentPage] = useState(INITIAL_PAGE);
+  // TODO: Change the type later
   const [cards, setCards] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [totalPages, setTotalPages] = useState(0);

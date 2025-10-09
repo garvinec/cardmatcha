@@ -6,17 +6,17 @@ import Link from "next/link";
 
 interface CreditCardType {
   id: number;
-  name: string;
+  card_name: string;
   issuer: string;
   image: string;
-  annualFee: number;
-  signupBonus: string;
-  signupRequirement: string;
+  annual_fee: number;
+  welcome_bonus: string;
+  signup_requirement: string;
   rewards: string[];
   benefits: string[];
   category: string;
   rating: number;
-  bestFor: string;
+  best_for: string;
 }
 
 interface CreditCardProps {
@@ -30,7 +30,7 @@ export function CreditCardComponent({ card }: CreditCardProps) {
         <div className="flex justify-between items-start mb-6">
           <div>
             <h3 className="text-xl font-light text-gray-900 mb-1">
-              {card.name}
+              {card.card_name}
             </h3>
             <p className="text-sm text-gray-500 font-light">{card.issuer}</p>
           </div>
@@ -47,7 +47,7 @@ export function CreditCardComponent({ card }: CreditCardProps) {
           <div className="relative z-10 mt-8">
             <p className="text-xs opacity-75 mb-1 font-light">Annual Fee</p>
             <p className="text-2xl font-light">
-              {card.annualFee === 0 ? "No Fee" : `$${card.annualFee}`}
+              {card.annual_fee === 0 ? "No Fee" : `$${card.annual_fee}`}
             </p>
           </div>
         </div>
@@ -74,10 +74,10 @@ export function CreditCardComponent({ card }: CreditCardProps) {
             </span>
           </div>
           <p className="text-base text-green-800 font-normal mb-1">
-            {card.signupBonus}
+            {card.welcome_bonus}
           </p>
           <p className="text-xs text-green-600/70 font-light">
-            {card.signupRequirement}
+            {card.signup_requirement}
           </p>
         </div>
 
@@ -85,7 +85,7 @@ export function CreditCardComponent({ card }: CreditCardProps) {
         <div className="mb-8">
           <p className="text-xs text-gray-400 mb-2 font-light">Best for</p>
           <p className="text-sm text-gray-700 font-light leading-relaxed">
-            {card.bestFor}
+            {card.best_for}
           </p>
         </div>
 

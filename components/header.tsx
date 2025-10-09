@@ -1,6 +1,7 @@
 "use client";
 import { Search } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 
 interface HeaderProps {
@@ -17,15 +18,14 @@ export function Header({ currentPage = "home" }: HeaderProps) {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/">
-              <h1
-                className="text-2xl font-light text-green-900 tracking-wide"
-                style={{
-                  fontFamily:
-                    "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif",
-                }}
-              >
-                CardMatcha
-              </h1>
+              <Image
+                src="/cardmatcha_logo_transparent.png"
+                alt="CardMatcha"
+                width={150}
+                height={40}
+                className="h-20 w-auto"
+                priority
+              />
             </Link>
           </div>
 

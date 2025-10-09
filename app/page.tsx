@@ -1,9 +1,10 @@
 import { CreditCardGrid } from "@/components/credit-card-grid";
 import { Header } from "@/components/header";
 import { Button } from "@/components/ui/button";
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, ArrowRight, Search } from "lucide-react";
 import { TopPopularCards } from "@/components/most-popular-cards";
-import { CategoryGrid } from "@/components/browse-by-grid";
+import { CategoryGrid, IssuerGrid } from "@/components/browse-by-grid";
+import Link from "next/link";
 
 export default function HomePage() {
   return (
@@ -24,8 +25,16 @@ export default function HomePage() {
             <Button
               size="lg"
               className="bg-green-800 hover:bg-green-900 text-white rounded-full px-8 py-6 text-lg font-light shadow-lg hover:shadow-xl transition-all duration-300"
+              asChild
             >
-              Explore Cards
+              <Link href="/cards">
+                <span className="inline-flex items-center">
+                  <svg className="hidden" />{" "}
+                  {/* for hydration warning prevention */}
+                  <Search className="mr-2 h-5 w-5" />
+                  Explore Cards
+                </span>
+              </Link>
             </Button>
             <Button
               size="lg"
@@ -59,12 +68,30 @@ export default function HomePage() {
             </p>
           </div>
           <CreditCardGrid />
+          <div className="text-center mt-12">
+            <Button
+              size="lg"
+              variant="outline"
+              className="bg-white/80 backdrop-blur text-green-800 border-green-200 hover:bg-green-50 rounded-full px-8 py-6 font-light text-base shadow-lg hover:shadow-xl transition-all duration-300"
+              asChild
+            >
+              <Link href="/cards">
+                View All Cards
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
 
       {/* Credit Card Categories */}
       <section className="py-20">
         <CategoryGrid />
+      </section>
+
+      {/* Credit Card Issuers */}
+      <section className="py-20">
+        <IssuerGrid />
       </section>
 
       {/* Footer */}
