@@ -226,7 +226,7 @@ export default function ProfilePage() {
       `}</style>
 
       {/* Main Content */}
-      <main className="py-12 px-4 sm:px-6 lg:px-8">
+      <main className="pt-48 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto space-y-10">
           {/* Page Title */}
           <div className="text-center mb-12">

@@ -12,9 +12,9 @@ export function Header({ currentPage = "home" }: HeaderProps) {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <header className="bg-white/80 backdrop-blur-md shadow-sm border-b border-green-100/50 sticky top-0 z-50">
+    <header className="bg-white/50 backdrop-blur-md shadow-sm border border-green-100/30 fixed top-0 left-0 right-0 z-50 rounded-full mx-4 mt-4">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-6">
+        <div className="flex justify-between items-center py-8">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/">

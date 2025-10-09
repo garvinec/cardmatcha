@@ -88,10 +88,8 @@ export default function AllCardsPage() {
     setCurrentPage(page);
     // Simulate loading delay
     setTimeout(() => setLoading(false), 300);
-    // Scroll to top of cards section
-    document
-      .getElementById("cards-grid")
-      ?.scrollIntoView({ behavior: "smooth" });
+    // Scroll to top of the page
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const generatePageNumbers = () => {
@@ -134,7 +132,7 @@ export default function AllCardsPage() {
       <Header currentPage="cards" />
 
       {/* Page Header */}
-      <section className="py-8 px-4 sm:px-6 lg:px-8">
+      <section className="pt-48 pb-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Back Button */}
           <div className="mb-6">

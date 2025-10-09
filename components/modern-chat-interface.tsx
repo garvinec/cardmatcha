@@ -1,5 +1,5 @@
 "use client";
-import { useChat } from "ai/react";
+// import { useChat } from "ai/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -52,10 +52,10 @@ export function ModernChatInterface() {
   const [activeChat, setActiveChat] = useState<string>("1");
   const [editingTitle, setEditingTitle] = useState<string | null>(null);
   const [newTitle, setNewTitle] = useState("");
-  const { messages, input, handleInputChange, handleSubmit, isLoading } =
-    useChat({
-      api: "/api/chat",
-    });
+  // const { messages, input, handleInputChange, handleSubmit, isLoading } =
+  //   useChat({
+  //     api: "/api/chat",
+  //   });
 
   const createNewChat = () => {
     const newChatId = Date.now().toString();
