@@ -4,7 +4,20 @@ export const getCardById = async (id: string) => {
   const supabase = createSupabaseClient();
   const { data, error } = await supabase
     .from("credit_cards")
-    .select("*")
+    .select(
+      `*,
+      card_rewards:card_rewards (
+        id,
+        reward_rate,
+        reward_type,
+        reward_description,
+        reward_categories:reward_categories ( category_name )
+      ),
+      card_benefits:card_benefits (
+        id,
+        description
+      )`
+    )
     .eq("id", id)
     .single();
 

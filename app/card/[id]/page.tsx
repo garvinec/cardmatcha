@@ -456,7 +456,7 @@ export default function CardPage({ params }: CardPageProps) {
               </Card>
 
               {/* Rewards Structure */}
-              {/* <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
+              <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
                 <CardHeader className="p-6">
                   <CardTitle className="flex items-center font-light text-xl">
                     <DollarSign className="mr-3 h-5 w-5 text-green-800" />
@@ -465,26 +465,52 @@ export default function CardPage({ params }: CardPageProps) {
                 </CardHeader>
                 <CardContent className="px-6 pb-6">
                   <div className="space-y-3">
-                    {Object.entries(card.detailedRewards).map(
-                      ([category, rate]) => (
-                        <div
-                          key={category}
-                          className="flex justify-between items-center p-4 bg-gradient-to-r from-green-50/50 to-lime-50/50 rounded-2xl border border-green-100/50"
-                        >
-                          <span className="font-light text-gray-900">
-                            {category}
-                          </span>
-                          <span className="font-normal text-green-800">
-                            {rate as string}
-                          </span>
-                        </div>
-                      )
+                    {card.card_rewards?.length ? (
+                      card.card_rewards.map((reward: any) => {
+                        const categoryName =
+                          reward?.reward_categories?.category_name ||
+                          reward?.category?.category_name ||
+                          reward?.category_name ||
+                          "All other purchases";
+
+                        const rewardRate = (() => {
+                          const rate = reward?.reward_rate;
+                          if (rate === null || rate === undefined || rate === "") {
+                            return "Details coming soon";
+                          }
+
+                          const numericRate = Number(rate);
+                          if (Number.isFinite(numericRate)) {
+                            return `${numericRate}x`;
+                          }
+
+                          return `${rate}`;
+                        })();
+
+                        return (
+                          <div
+                            key={reward.id || categoryName}
+                            className="flex items-center justify-between rounded-2xl border border-green-100/50 bg-gradient-to-r from-green-50/50 to-lime-50/50 p-4"
+                          >
+                            <span className="font-light text-gray-900">
+                              {categoryName}
+                            </span>
+                            <span className="font-medium text-green-800">
+                              {rewardRate}
+                            </span>
+                          </div>
+                        );
+                      })
+                    ) : (
+                      <div className="p-4 bg-white/60 rounded-2xl border border-green-100 text-sm text-gray-600 font-light">
+                        Reward details will be available soon.
+                      </div>
                     )}
                   </div>
                 </CardContent>
-              </Card> */}
+              </Card>
 
-              {/* <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
+              <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
                 <CardHeader className="p-6">
                   <CardTitle className="flex items-center font-light text-xl">
                     <Shield className="mr-3 h-5 w-5 text-green-800" />
@@ -492,18 +518,27 @@ export default function CardPage({ params }: CardPageProps) {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="px-6 pb-6">
-                  <div className="grid md:grid-cols-2 gap-4">
-                    {card.benefits.map((benefit: string, index: number) => (
-                      <div key={index} className="flex items-start space-x-3">
-                        <CheckCircle className="h-4 w-4 text-green-700 mt-0.5 flex-shrink-0" />
-                        <span className="text-sm text-gray-700 font-light leading-relaxed">
-                          {benefit}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
+                  {card.card_benefits?.length ? (
+                    <div className="grid md:grid-cols-2 gap-4">
+                      {card.card_benefits.map((benefit: any) => (
+                        <div
+                          key={benefit.id || benefit.description}
+                          className="flex items-start space-x-3"
+                        >
+                          <CheckCircle className="h-4 w-4 text-green-700 mt-0.5 flex-shrink-0" />
+                          <span className="text-sm text-gray-700 font-light leading-relaxed">
+                            {benefit.description || "Benefit details coming soon"}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="p-4 bg-white/60 rounded-2xl border border-green-100 text-sm text-gray-600 font-light">
+                      Benefit details will be available soon.
+                    </div>
+                  )}
                 </CardContent>
-              </Card> */}
+              </Card>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
