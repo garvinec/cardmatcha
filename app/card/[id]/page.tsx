@@ -471,37 +471,32 @@ export default function CardPage({ params }: CardPageProps) {
                           reward?.reward_categories?.category_name ||
                           reward?.category?.category_name ||
                           reward?.category_name ||
-                          "Other purchases";
-                        const rewardLabel = (() => {
-                          if (reward?.reward_description) {
-                            return reward.reward_description;
+                          "All other purchases";
+
+                        const rewardRate = (() => {
+                          const rate = reward?.reward_rate;
+                          if (rate === null || rate === undefined || rate === "") {
+                            return "Details coming soon";
                           }
 
-                          if (reward?.reward_rate && reward?.reward_type) {
-                            const rateValue = Number(reward.reward_rate);
-                            const formattedRate = Number.isFinite(rateValue)
-                              ? `${rateValue}x`
-                              : `${reward.reward_rate}`;
-                            return `${formattedRate} ${reward.reward_type}`.trim();
+                          const numericRate = Number(rate);
+                          if (Number.isFinite(numericRate)) {
+                            return `${numericRate}x`;
                           }
 
-                          if (reward?.reward_rate) {
-                            return `${reward.reward_rate}`;
-                          }
-
-                          return "Details coming soon";
+                          return `${rate}`;
                         })();
 
                         return (
                           <div
                             key={reward.id || categoryName}
-                            className="flex justify-between items-center p-4 bg-gradient-to-r from-green-50/50 to-lime-50/50 rounded-2xl border border-green-100/50"
+                            className="flex items-center justify-between rounded-2xl border border-green-100/50 bg-gradient-to-r from-green-50/50 to-lime-50/50 p-4"
                           >
                             <span className="font-light text-gray-900">
                               {categoryName}
                             </span>
-                            <span className="font-normal text-green-800">
-                              {rewardLabel}
+                            <span className="font-medium text-green-800">
+                              {rewardRate}
                             </span>
                           </div>
                         );
