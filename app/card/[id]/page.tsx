@@ -393,17 +393,17 @@ export default function CardPage({ params }: CardPageProps) {
                   <div className="flex justify-between items-center">
                     <span className="text-gray-600 font-light">Annual Fee</span>
                     <span className="font-normal">
-                      {card.annualFee === 0 ? "No Fee" : `$${card.annualFee}`}
+                      {card.annual_fee === 0 ? "No Fee" : `$${card.annual_fee}`}
                     </span>
                   </div>
-                  <div className="flex justify-between items-center">
+                  {/* <div className="flex justify-between items-center">
                     <span className="text-gray-600 font-light">
                       Credit Score
                     </span>
                     <span className="font-normal text-sm">
                       {card.creditScoreNeeded}
                     </span>
-                  </div>
+                  </div> */}
                   <div className="flex justify-between items-center">
                     <span className="text-gray-600 font-light">Category</span>
                     <Badge
@@ -423,16 +423,16 @@ export default function CardPage({ params }: CardPageProps) {
             </div>
 
             {/* Right Column - Detailed Information */}
-            {/* <div className="lg:col-span-2 space-y-8">
+            <div className="lg:col-span-2 space-y-8">
               <div>
                 <h1 className="text-4xl font-light text-gray-900 mb-3 tracking-tight">
-                  {card.name}
+                  {card.card_name}
                 </h1>
                 <p className="text-lg text-gray-600 mb-4 font-light">
                   {card.issuer}
                 </p>
                 <p className="text-gray-700 font-light leading-relaxed">
-                  {card.bestFor}
+                  {card.best_for}
                 </p>
               </div>
 
@@ -446,17 +446,17 @@ export default function CardPage({ params }: CardPageProps) {
                 <CardContent className="px-6 pb-6">
                   <div className="bg-gradient-to-r from-green-50 to-lime-50 border border-green-200/50 rounded-2xl p-6">
                     <p className="text-lg font-normal text-green-800 mb-2">
-                      {card.signupBonus}
+                      {card.welcome_bonus}
                     </p>
                     <p className="text-sm text-green-700/80 font-light">
-                      After spending {card.signupRequirement}
+                      After spending {card.signup_requirement}
                     </p>
                   </div>
                 </CardContent>
               </Card>
 
-              Rewards Structure
-              <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
+              {/* Rewards Structure */}
+              {/* <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
                 <CardHeader className="p-6">
                   <CardTitle className="flex items-center font-light text-xl">
                     <DollarSign className="mr-3 h-5 w-5 text-green-800" />
@@ -475,16 +475,16 @@ export default function CardPage({ params }: CardPageProps) {
                             {category}
                           </span>
                           <span className="font-normal text-green-800">
-                            {rate}
+                            {rate as string}
                           </span>
                         </div>
                       )
                     )}
                   </div>
                 </CardContent>
-              </Card>
+              </Card> */}
 
-              <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
+              {/* <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
                 <CardHeader className="p-6">
                   <CardTitle className="flex items-center font-light text-xl">
                     <Shield className="mr-3 h-5 w-5 text-green-800" />
@@ -493,7 +493,7 @@ export default function CardPage({ params }: CardPageProps) {
                 </CardHeader>
                 <CardContent className="px-6 pb-6">
                   <div className="grid md:grid-cols-2 gap-4">
-                    {card.benefits.map((benefit, index) => (
+                    {card.benefits.map((benefit: string, index: number) => (
                       <div key={index} className="flex items-start space-x-3">
                         <CheckCircle className="h-4 w-4 text-green-700 mt-0.5 flex-shrink-0" />
                         <span className="text-sm text-gray-700 font-light leading-relaxed">
@@ -503,7 +503,7 @@ export default function CardPage({ params }: CardPageProps) {
                     ))}
                   </div>
                 </CardContent>
-              </Card>
+              </Card> */}
 
               <div className="grid md:grid-cols-2 gap-6">
                 <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
@@ -515,7 +515,7 @@ export default function CardPage({ params }: CardPageProps) {
                   </CardHeader>
                   <CardContent className="px-6 pb-6">
                     <ul className="space-y-3">
-                      {card.pros.map((pro, index) => (
+                      {card.pros.map((pro: string, index: number) => (
                         <li key={index} className="flex items-start space-x-3">
                           <div className="w-1.5 h-1.5 bg-green-700 rounded-full mt-2 flex-shrink-0"></div>
                           <span className="text-sm text-gray-700 font-light leading-relaxed">
@@ -536,7 +536,7 @@ export default function CardPage({ params }: CardPageProps) {
                   </CardHeader>
                   <CardContent className="px-6 pb-6">
                     <ul className="space-y-3">
-                      {card.cons.map((con, index) => (
+                      {card.cons.map((con: string, index: number) => (
                         <li key={index} className="flex items-start space-x-3">
                           <div className="w-1.5 h-1.5 bg-red-600 rounded-full mt-2 flex-shrink-0"></div>
                           <span className="text-sm text-gray-700 font-light leading-relaxed">
@@ -549,7 +549,7 @@ export default function CardPage({ params }: CardPageProps) {
                 </Card>
               </div>
 
-              <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
+              {/* <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
                 <CardHeader className="p-6">
                   <CardTitle className="flex items-center font-light text-xl">
                     <AlertCircle className="mr-3 h-5 w-5 text-green-800" />
@@ -612,8 +612,8 @@ export default function CardPage({ params }: CardPageProps) {
                     </div>
                   </div>
                 </CardContent>
-              </Card>
-            </div> */}
+              </Card> */}
+            </div>
           </div>
         </div>
       </main>
