@@ -3,7 +3,7 @@ import { Header } from "@/components/header";
 
 export default function ChatPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-matcha-cream">
       <Header currentPage="chat" />
       <div className="pt-48">
         <ModernChatInterface />

@@ -209,17 +209,17 @@ export default async function CardPageDemo({ params }: CardPageProps) {
               {/* Sign-up Bonus */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center text-green-700">
+                  <CardTitle className="flex items-center text-matcha-700">
                     <Gift className="mr-2 h-5 w-5" />
                     Sign-up Bonus
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                    <p className="text-lg font-semibold text-green-800 mb-1">
+                  <div className="bg-matcha-50 border border-matcha-200 rounded-lg p-4">
+                    <p className="text-lg font-semibold text-matcha-800 mb-1">
                       {card.signupBonus}
                     </p>
-                    <p className="text-sm text-green-700">
+                    <p className="text-sm text-matcha-700">
                       After spending {card.signupRequirement}
                     </p>
                   </div>
@@ -267,7 +267,7 @@ export default async function CardPageDemo({ params }: CardPageProps) {
                   <div className="grid md:grid-cols-2 gap-3">
                     {card.benefits.map((benefit, index) => (
                       <div key={index} className="flex items-start space-x-2">
-                        <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-matcha-600 mt-0.5 flex-shrink-0" />
                         <span className="text-sm text-gray-700">{benefit}</span>
                       </div>
                     ))}
@@ -279,7 +279,7 @@ export default async function CardPageDemo({ params }: CardPageProps) {
               <div className="grid md:grid-cols-2 gap-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle className="flex items-center text-green-700">
+                    <CardTitle className="flex items-center text-matcha-700">
                       <CheckCircle className="mr-2 h-5 w-5" />
                       Pros
                     </CardTitle>
@@ -288,7 +288,7 @@ export default async function CardPageDemo({ params }: CardPageProps) {
                     <ul className="space-y-2">
                       {card.pros.map((pro, index) => (
                         <li key={index} className="flex items-start space-x-2">
-                          <div className="w-1.5 h-1.5 bg-green-600 rounded-full mt-2 flex-shrink-0"></div>
+                          <div className="w-1.5 h-1.5 bg-matcha-600 rounded-full mt-2 flex-shrink-0"></div>
                           <span className="text-sm text-gray-700">{pro}</span>
                         </li>
                       ))}
