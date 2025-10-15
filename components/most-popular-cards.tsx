@@ -77,7 +77,7 @@ export function TopPopularCards() {
           <h3 className="text-4xl md:text-5xl font-light text-matcha-900 mb-4 tracking-tight">
             Most Popular
           </h3>
-          <p className="text-lg text-matcha-800/70 font-light">
+          <p className="text-lg text-matcha-800/80 font-light">
             Cards chosen by thousands
           </p>
         </div>
@@ -86,7 +86,7 @@ export function TopPopularCards() {
           {topCards.map((card) => (
             <Card
               key={card.id}
-              className="hover:shadow-2xl transition-all duration-500 border-0 bg-matcha-cream/80 backdrop-blur rounded-3xl overflow-hidden"
+              className="hover:shadow-2xl transition-all duration-500 border-0 bg-matcha-50/80 backdrop-blur rounded-3xl overflow-hidden"
             >
               <CardContent className="p-8">
                 <div className="flex items-center justify-between">
@@ -152,7 +152,7 @@ export function TopPopularCards() {
           <Button
             size="lg"
             variant="outline"
-            className="bg-matcha-cream/80 backdrop-blur text-matcha-800 border-matcha-200 hover:bg-matcha-50 rounded-full px-8 py-6 font-light text-base shadow-lg hover:shadow-xl transition-all duration-300"
+            className="bg-matcha-50/80 backdrop-blur text-matcha-800 border-matcha-200 hover:bg-matcha-100 rounded-full px-8 py-6 font-light text-base shadow-lg hover:shadow-xl transition-all duration-300"
             asChild
           >
             <Link href="/rankings">

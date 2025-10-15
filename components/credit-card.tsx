@@ -25,7 +25,7 @@ interface CreditCardProps {
 
 export function CreditCardComponent({ card }: CreditCardProps) {
   return (
-    <Card className="h-full flex flex-col hover:shadow-2xl transition-all duration-500 border-0 bg-matcha-cream/80 backdrop-blur rounded-3xl overflow-hidden group">
+    <Card className="h-full flex flex-col hover:shadow-2xl transition-all duration-500 border-0 bg-matcha-50/80 backdrop-blur rounded-3xl overflow-hidden group">
       <CardHeader className="pb-6 pt-8 px-8">
         <div className="flex justify-between items-start mb-6">
           <div>
@@ -42,8 +42,8 @@ export function CreditCardComponent({ card }: CreditCardProps) {
           </Badge>
         </div>
 
-        <div className="bg-gradient-to-br from-matcha-800 to-matcha-600 rounded-2xl p-6 text-white relative overflow-hidden shadow-lg">
-          <div className="absolute -top-10 -right-10 w-32 h-32 bg-matcha-cream/10 rounded-full blur-2xl"></div>
+        <div className="bg-gradient-to-br from-matcha-700 to-matcha-600 rounded-2xl p-6 text-white relative overflow-hidden shadow-lg">
+          <div className="absolute -top-10 -right-10 w-32 h-32 bg-matcha-50/20 rounded-full blur-2xl"></div>
           <div className="relative z-10 mt-8">
             <p className="text-xs opacity-75 mb-1 font-light">Annual Fee</p>
             <p className="text-2xl font-light">
@@ -66,7 +66,7 @@ export function CreditCardComponent({ card }: CreditCardProps) {
         </div>
 
         {/* Signup Bonus */}
-        <div className="bg-matcha-50/50 rounded-2xl p-5 mb-6 border border-matcha-100/50">
+        <div className="bg-matcha-50/50 rounded-2xl p-5 mb-6 border border-matcha-200/50">
           <div className="flex items-center mb-2">
             <Gift className="h-4 w-4 text-matcha-700 mr-2" />
             <span className="text-sm font-light text-matcha-900">
@@ -92,7 +92,7 @@ export function CreditCardComponent({ card }: CreditCardProps) {
         {/* Action Button */}
         <div className="mt-auto">
           <Button
-            className="w-full bg-matcha-800 hover:bg-matcha-900 text-white rounded-full py-6 font-light text-base shadow-lg hover:shadow-xl transition-all duration-300"
+            className="w-full bg-matcha-700 hover:bg-matcha-800 text-white rounded-full py-6 font-light text-base shadow-lg hover:shadow-xl transition-all duration-300"
             asChild
           >
             <Link href={`/card/${card.id}`}>View Details</Link>

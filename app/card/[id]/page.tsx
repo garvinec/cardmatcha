@@ -328,7 +328,7 @@ export default function CardPage({ params }: CardPageProps) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-matcha-50/30 via-matcha-cream to-matcha-50/20">
+      <div className="min-h-screen bg-gradient-to-b from-matcha-50/40 via-matcha-100 to-matcha-200/40">
         <Header />
         <div className="flex items-center justify-center py-12">
           <p>Loading...</p>
@@ -342,7 +342,7 @@ export default function CardPage({ params }: CardPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-matcha-50/30 via-matcha-cream to-matcha-50/20">
+    <div className="min-h-screen bg-gradient-to-b from-matcha-50/40 via-matcha-100 to-matcha-200/40">
       <Header />
 
       {/* Main Content */}
@@ -365,7 +365,7 @@ export default function CardPage({ params }: CardPageProps) {
             {/* Left Column - Card Image and Basic Info */}
             <div className="lg:col-span-1 space-y-6">
               {/* Card Image */}
-              <Card className="border-0 shadow-xl rounded-3xl bg-matcha-cream/80 backdrop-blur overflow-hidden">
+              <Card className="border-0 shadow-xl rounded-3xl bg-matcha-50/80 backdrop-blur overflow-hidden">
                 <CardContent className="p-8">
                   <img
                     src={card.image || "/placeholder.svg"}
@@ -376,7 +376,7 @@ export default function CardPage({ params }: CardPageProps) {
               </Card>
 
               {/* Quick Stats */}
-              <Card className="border-0 shadow-xl rounded-3xl bg-matcha-cream/80 backdrop-blur overflow-hidden">
+              <Card className="border-0 shadow-xl rounded-3xl bg-matcha-50/80 backdrop-blur overflow-hidden">
                 <CardHeader className="p-6">
                   <CardTitle className="text-lg font-light text-gray-900">
                     Quick Stats
@@ -417,7 +417,7 @@ export default function CardPage({ params }: CardPageProps) {
               </Card>
 
               {/* Apply Button */}
-              <Button className="w-full bg-matcha-800 hover:bg-matcha-900 text-white py-6 rounded-full font-light text-base shadow-lg hover:shadow-xl transition-all duration-300">
+              <Button className="w-full bg-matcha-700 hover:bg-matcha-800 text-white py-6 rounded-full font-light text-base shadow-lg hover:shadow-xl transition-all duration-300">
                 Apply Now
               </Button>
             </div>
@@ -436,7 +436,7 @@ export default function CardPage({ params }: CardPageProps) {
                 </p>
               </div>
 
-              <Card className="border-0 shadow-xl rounded-3xl bg-matcha-cream/80 backdrop-blur overflow-hidden">
+              <Card className="border-0 shadow-xl rounded-3xl bg-matcha-50/80 backdrop-blur overflow-hidden">
                 <CardHeader className="p-6">
                   <CardTitle className="flex items-center text-matcha-800 font-light text-xl">
                     <Gift className="mr-3 h-5 w-5" />
@@ -444,7 +444,7 @@ export default function CardPage({ params }: CardPageProps) {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="px-6 pb-6">
-                  <div className="bg-gradient-to-r from-matcha-50 to-matcha-50 border border-matcha-200/50 rounded-2xl p-6">
+                  <div className="bg-gradient-to-r from-matcha-50 to-matcha-100 border border-matcha-200/50 rounded-2xl p-6">
                     <p className="text-lg font-normal text-matcha-800 mb-2">
                       {card.welcome_bonus}
                     </p>
@@ -456,7 +456,7 @@ export default function CardPage({ params }: CardPageProps) {
               </Card>
 
               {/* Rewards Structure */}
-              <Card className="border-0 shadow-xl rounded-3xl bg-matcha-cream/80 backdrop-blur overflow-hidden">
+              <Card className="border-0 shadow-xl rounded-3xl bg-matcha-50/80 backdrop-blur overflow-hidden">
                 <CardHeader className="p-6">
                   <CardTitle className="flex items-center font-light text-xl">
                     <DollarSign className="mr-3 h-5 w-5 text-matcha-800" />
@@ -490,7 +490,7 @@ export default function CardPage({ params }: CardPageProps) {
                         return (
                           <div
                             key={reward.id || categoryName}
-                            className="flex items-center justify-between rounded-2xl border border-matcha-100/50 bg-gradient-to-r from-matcha-50/50 to-matcha-50/50 p-4"
+                            className="flex items-center justify-between rounded-2xl border border-matcha-200/50 bg-gradient-to-r from-matcha-50/60 to-matcha-100/60 p-4"
                           >
                             <span className="font-light text-gray-900">
                               {categoryName}
@@ -502,7 +502,7 @@ export default function CardPage({ params }: CardPageProps) {
                         );
                       })
                     ) : (
-                      <div className="p-4 bg-matcha-cream/60 rounded-2xl border border-matcha-100 text-sm text-gray-600 font-light">
+                      <div className="p-4 bg-matcha-50/70 rounded-2xl border border-matcha-200 text-sm text-gray-600 font-light">
                         Reward details will be available soon.
                       </div>
                     )}
@@ -510,9 +510,9 @@ export default function CardPage({ params }: CardPageProps) {
                 </CardContent>
               </Card>
 
-              <Card className="border-0 shadow-xl rounded-3xl bg-matcha-cream/80 backdrop-blur overflow-hidden">
+              <Card className="border-0 shadow-xl rounded-3xl bg-matcha-50/80 backdrop-blur overflow-hidden">
                 <CardHeader className="p-6">
-                  <CardTitle className="flex items-center font-light text-xl">
+                    <CardTitle className="flex items-center font-light text-xl">
                     <Shield className="mr-3 h-5 w-5 text-matcha-800" />
                     Key Benefits
                   </CardTitle>
@@ -533,7 +533,7 @@ export default function CardPage({ params }: CardPageProps) {
                       ))}
                     </div>
                   ) : (
-                    <div className="p-4 bg-matcha-cream/60 rounded-2xl border border-matcha-100 text-sm text-gray-600 font-light">
+                    <div className="p-4 bg-matcha-50/70 rounded-2xl border border-matcha-200 text-sm text-gray-600 font-light">
                       Benefit details will be available soon.
                     </div>
                   )}
@@ -541,7 +541,7 @@ export default function CardPage({ params }: CardPageProps) {
               </Card>
 
               <div className="grid md:grid-cols-2 gap-6">
-                <Card className="border-0 shadow-xl rounded-3xl bg-matcha-cream/80 backdrop-blur overflow-hidden">
+                <Card className="border-0 shadow-xl rounded-3xl bg-matcha-50/80 backdrop-blur overflow-hidden">
                   <CardHeader className="p-6">
                     <CardTitle className="flex items-center text-matcha-800 font-light text-lg">
                       <CheckCircle className="mr-3 h-5 w-5" />
@@ -562,7 +562,7 @@ export default function CardPage({ params }: CardPageProps) {
                   </CardContent>
                 </Card>
 
-                <Card className="border-0 shadow-xl rounded-3xl bg-matcha-cream/80 backdrop-blur overflow-hidden">
+                <Card className="border-0 shadow-xl rounded-3xl bg-matcha-50/80 backdrop-blur overflow-hidden">
                   <CardHeader className="p-6">
                     <CardTitle className="flex items-center text-red-700 font-light text-lg">
                       <XCircle className="mr-3 h-5 w-5" />
@@ -584,7 +584,7 @@ export default function CardPage({ params }: CardPageProps) {
                 </Card>
               </div>
 
-              {/* <Card className="border-0 shadow-xl rounded-3xl bg-matcha-cream/80 backdrop-blur overflow-hidden">
+              {/* <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
                 <CardHeader className="p-6">
                   <CardTitle className="flex items-center font-light text-xl">
                     <AlertCircle className="mr-3 h-5 w-5 text-matcha-800" />

@@ -142,10 +142,10 @@ export function HeaderSearch({ className }: HeaderSearchProps) {
         onChange={(event) => setSearchQuery(event.target.value)}
         onKeyDown={handleKeyDown}
         placeholder="Search cards..."
-        className="w-full pl-12 pr-4 py-3 border border-matcha-100 rounded-full focus:ring-2 focus:ring-matcha-500/20 focus:border-matcha-300 text-sm bg-matcha-50/30 placeholder:text-matcha-600/50 transition-all duration-300"
+        className="w-full pl-12 pr-4 py-3 border border-matcha-200 rounded-full focus:ring-2 focus:ring-matcha-500/20 focus:border-matcha-300 text-sm bg-matcha-50/40 placeholder:text-matcha-600/60 transition-all duration-300"
       />
       {isDropdownVisible && suggestions.length > 0 && (
-        <div className="absolute left-0 right-0 mt-2 bg-matcha-cream/90 backdrop-blur-md border border-matcha-100/60 rounded-3xl shadow-lg overflow-hidden">
+        <div className="absolute left-0 right-0 mt-2 bg-matcha-50/90 backdrop-blur-md border border-matcha-200/60 rounded-3xl shadow-lg overflow-hidden">
           <ul className="py-2">
             {suggestions.map((card, index) => (
               <li

@@ -230,7 +230,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-matcha-50/30 via-matcha-cream to-matcha-50/20">
+    <div className="min-h-screen bg-gradient-to-b from-matcha-50/40 via-matcha-100 to-matcha-200/40">
       <Header />
 
       <main className="py-12 px-4 sm:px-6 lg:px-8">
@@ -254,7 +254,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             <h1 className="text-5xl font-light text-gray-900 mb-6 tracking-tight">
               {category.name}
             </h1>
-            <p className="text-xl text-matcha-800/70 max-w-3xl mx-auto font-light leading-relaxed">
+            <p className="text-xl text-matcha-800/80 max-w-3xl mx-auto font-light leading-relaxed">
               {category.description}
             </p>
             <div className="mt-8">
@@ -289,7 +289,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               </p>
               <Button
                 asChild
-                className="bg-matcha-800 hover:bg-matcha-900 text-white rounded-full px-8 py-6 font-light shadow-lg hover:shadow-xl transition-all duration-300"
+                className="bg-matcha-700 hover:bg-matcha-800 text-white rounded-full px-8 py-6 font-light shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 <Link href="/chat">Ask Our AI for Recommendations</Link>
               </Button>

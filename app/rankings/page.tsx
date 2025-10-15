@@ -111,7 +111,7 @@ function getRankIcon(rank: number) {
 
 export default function RankingsPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-matcha-50/30 via-matcha-cream to-matcha-50/20">
+    <div className="min-h-screen bg-gradient-to-b from-matcha-50/40 via-matcha-100 to-matcha-200/40">
       <Header />
 
       <main className="py-12 px-4 sm:px-6 lg:px-8">
@@ -124,7 +124,7 @@ export default function RankingsPage() {
                 Rankings
               </h1>
             </div>
-            <p className="text-xl text-matcha-800/70 max-w-2xl mx-auto font-light leading-relaxed">
+            <p className="text-xl text-matcha-800/80 max-w-2xl mx-auto font-light leading-relaxed">
               Discover the most popular cards, based on expert ratings and user
               preferences
             </p>
@@ -135,7 +135,7 @@ export default function RankingsPage() {
             {fullRankings.map((card) => (
               <Card
                 key={card.id}
-                className="hover:shadow-2xl transition-all duration-500 border-0 shadow-xl rounded-3xl bg-matcha-cream/80 backdrop-blur overflow-hidden"
+                className="hover:shadow-2xl transition-all duration-500 border-0 shadow-xl rounded-3xl bg-matcha-50/80 backdrop-blur overflow-hidden"
               >
                 <CardContent className="p-8">
                   <div className="flex items-center justify-between">
@@ -207,7 +207,7 @@ export default function RankingsPage() {
                     <div className="flex-shrink-0">
                       <Button
                         asChild
-                        className="bg-matcha-800 hover:bg-matcha-900 text-white rounded-full px-6 py-5 font-light shadow-lg hover:shadow-xl transition-all duration-300"
+                        className="bg-matcha-700 hover:bg-matcha-800 text-white rounded-full px-6 py-5 font-light shadow-lg hover:shadow-xl transition-all duration-300"
                       >
                         <Link href={`/card/${card.id}`}>View Details</Link>
                       </Button>
@@ -219,7 +219,7 @@ export default function RankingsPage() {
           </div>
 
           {/* Methodology */}
-          <Card className="mt-16 border-0 shadow-xl rounded-3xl bg-matcha-cream/80 backdrop-blur overflow-hidden">
+          <Card className="mt-16 border-0 shadow-xl rounded-3xl bg-matcha-50/80 backdrop-blur overflow-hidden">
             <CardContent className="p-8">
               <h3 className="text-2xl font-light text-gray-900 mb-8">
                 Ranking Methodology

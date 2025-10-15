@@ -202,28 +202,28 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-matcha-50/30 via-matcha-cream to-matcha-50/20">
+    <div className="min-h-screen bg-gradient-to-b from-matcha-50/40 via-matcha-100 to-matcha-200/40">
       <Header currentPage="profile" />
-      <style jsx>{`
-        .slider::-webkit-slider-thumb {
-          appearance: none;
-          width: 20px;
-          height: 20px;
-          border-radius: 50%;
-          background: #15803d;
-          cursor: pointer;
-          box-shadow: 0 2px 8px rgba(21, 128, 61, 0.3);
-        }
-        .slider::-moz-range-thumb {
-          width: 20px;
-          height: 20px;
-          border-radius: 50%;
-          background: #15803d;
-          cursor: pointer;
-          border: none;
-          box-shadow: 0 2px 8px rgba(21, 128, 61, 0.3);
-        }
-      `}</style>
+        <style jsx>{`
+          .slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #6d9a51;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(109, 154, 81, 0.3);
+          }
+          .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #6d9a51;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 8px rgba(109, 154, 81, 0.3);
+          }
+        `}</style>
 
       {/* Main Content */}
       <main className="pt-48 pb-12 px-4 sm:px-6 lg:px-8">
@@ -233,13 +233,13 @@ export default function ProfilePage() {
             <h1 className="text-5xl font-light text-matcha-900 mb-4 tracking-tight">
               Your Profile
             </h1>
-            <p className="text-lg text-matcha-800/70 font-light">
+            <p className="text-lg text-matcha-800/80 font-light">
               Manage your cards and optimize your rewards
             </p>
           </div>
 
           {/* Current Credit Cards */}
-          <Card className="border-0 shadow-xl rounded-3xl bg-matcha-cream/80 backdrop-blur overflow-hidden">
+          <Card className="border-0 shadow-xl rounded-3xl bg-matcha-50/80 backdrop-blur overflow-hidden">
             <CardHeader className="p-8">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-2xl font-light text-gray-900">
@@ -250,7 +250,7 @@ export default function ProfilePage() {
                 </CardTitle>
                 <Button
                   onClick={() => setShowAddModal(true)}
-                  className="bg-matcha-800 hover:bg-matcha-900 text-white rounded-full px-6 py-5 font-light shadow-lg hover:shadow-xl transition-all duration-300"
+                  className="bg-matcha-700 hover:bg-matcha-800 text-white rounded-full px-6 py-5 font-light shadow-lg hover:shadow-xl transition-all duration-300"
                 >
                   <Plus className="mr-2 h-4 w-4" />
                   Add Card
@@ -262,7 +262,7 @@ export default function ProfilePage() {
                 {currentCards.map((card) => (
                   <div
                     key={card.id}
-                    className="border border-matcha-100/50 rounded-2xl p-6 bg-gradient-to-br from-matcha-cream to-matcha-50/30 relative shadow-sm hover:shadow-lg transition-all duration-300"
+                    className="border border-matcha-200/50 rounded-2xl p-6 bg-gradient-to-br from-matcha-50 to-matcha-100/30 relative shadow-sm hover:shadow-lg transition-all duration-300"
                   >
                     <div className="absolute top-4 right-4">
                       <button
@@ -277,7 +277,7 @@ export default function ProfilePage() {
                       </button>
 
                       {activeCardMenu === card.id && (
-                        <div className="absolute right-0 top-10 bg-matcha-cream border border-matcha-200/50 rounded-2xl shadow-xl py-2 z-10 min-w-[130px]">
+                        <div className="absolute right-0 top-10 bg-matcha-50 border border-matcha-200/50 rounded-2xl shadow-xl py-2 z-10 min-w-[130px]">
                           <button
                             onClick={() => editCard(card.id)}
                             className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-matcha-50 flex items-center font-light transition-colors duration-300"
@@ -352,7 +352,7 @@ export default function ProfilePage() {
           </Card>
 
           {/* Best Cards by Category */}
-          <Card className="border-0 shadow-xl rounded-3xl bg-matcha-cream/80 backdrop-blur overflow-hidden">
+          <Card className="border-0 shadow-xl rounded-3xl bg-matcha-50/80 backdrop-blur overflow-hidden">
             <CardHeader className="p-8">
               <CardTitle className="flex items-center text-2xl font-light text-gray-900">
                 <Trophy className="mr-3 h-6 w-6 text-matcha-800" />
@@ -364,7 +364,7 @@ export default function ProfilePage() {
                 {Object.entries(userData.bestCards).map(([category, info]) => (
                   <div
                     key={category}
-                    className="border border-matcha-100/50 rounded-2xl p-6 bg-gradient-to-br from-matcha-cream to-matcha-50/30 shadow-sm hover:shadow-lg transition-all duration-300"
+                    className="border border-matcha-200/50 rounded-2xl p-6 bg-gradient-to-br from-matcha-50 to-matcha-100/30 shadow-sm hover:shadow-lg transition-all duration-300"
                   >
                     <div className="flex justify-between items-start mb-3">
                       <h3 className="font-normal text-gray-900">{category}</h3>
@@ -394,7 +394,7 @@ export default function ProfilePage() {
           </Card>
 
           {/* Estimated Savings */}
-          <Card className="border-0 shadow-xl rounded-3xl bg-matcha-cream/80 backdrop-blur overflow-hidden">
+          <Card className="border-0 shadow-xl rounded-3xl bg-matcha-50/80 backdrop-blur overflow-hidden">
             <CardHeader className="p-8">
               <CardTitle className="flex items-center text-2xl font-light text-gray-900">
                 <Calculator className="mr-3 h-6 w-6 text-matcha-800" />
@@ -460,11 +460,11 @@ export default function ProfilePage() {
                             }
                             className="w-full h-2 bg-matcha-200/50 rounded-full appearance-none cursor-pointer slider"
                             style={{
-                              background: `linear-gradient(to right, #15803d 0%, #15803d ${
+                              background: `linear-gradient(to right, #6d9a51 0%, #6d9a51 ${
                                 (category.amount / 2000) * 100
-                              }%, #dcfce7 ${
+                              }%, #d3ddc5 ${
                                 (category.amount / 2000) * 100
-                              }%, #dcfce7 100%)`,
+                              }%, #d3ddc5 100%)`,
                             }}
                           />
                         </div>
@@ -485,7 +485,7 @@ export default function ProfilePage() {
                   ))}
                 </div>
 
-                <div className="bg-gradient-to-r from-matcha-800 to-matcha-700 text-white rounded-2xl p-6 text-center shadow-lg">
+                <div className="bg-gradient-to-r from-matcha-700 to-matcha-600 text-white rounded-2xl p-6 text-center shadow-lg">
                   <p className="text-sm font-light mb-1 opacity-90">
                     Estimated monthly rewards
                   </p>
@@ -498,7 +498,7 @@ export default function ProfilePage() {
           </Card>
 
           {/* Recommended Actions */}
-          <Card className="border-0 shadow-xl rounded-3xl bg-matcha-cream/80 backdrop-blur overflow-hidden">
+          <Card className="border-0 shadow-xl rounded-3xl bg-matcha-50/80 backdrop-blur overflow-hidden">
             <CardHeader className="p-8">
               <CardTitle className="text-2xl font-light text-gray-900">
                 Recommendations
@@ -509,7 +509,7 @@ export default function ProfilePage() {
                 {userData.recommendedActions.map((action, index) => (
                   <div
                     key={index}
-                    className="flex items-start space-x-4 p-5 bg-gradient-to-r from-matcha-50/50 to-matcha-50/50 rounded-2xl border border-matcha-100/50"
+                    className="flex items-start space-x-4 p-5 bg-gradient-to-r from-matcha-50/50 to-matcha-100/50 rounded-2xl border border-matcha-200/50"
                   >
                     <div className="w-2 h-2 bg-matcha-700 rounded-full mt-2 flex-shrink-0"></div>
                     <p className="text-sm text-gray-700 font-light leading-relaxed">
@@ -526,7 +526,7 @@ export default function ProfilePage() {
       {/* Add Card Modal */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-matcha-cream rounded-3xl shadow-2xl w-full max-w-md">
+          <div className="bg-matcha-50 rounded-3xl shadow-2xl w-full max-w-md">
             <div className="p-8">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl font-light text-gray-900">
@@ -558,7 +558,7 @@ export default function ProfilePage() {
                 </div>
 
                 {filteredCards.length > 0 && (
-                  <div className="absolute top-full left-0 right-0 mt-2 bg-matcha-cream border border-gray-200 rounded-2xl shadow-xl z-10 max-h-60 overflow-y-auto">
+                  <div className="absolute top-full left-0 right-0 mt-2 bg-matcha-50 border border-gray-200 rounded-2xl shadow-xl z-10 max-h-60 overflow-y-auto">
                     {filteredCards.map((card) => (
                       <button
                         key={card.id}
@@ -587,7 +587,7 @@ export default function ProfilePage() {
                 )}
 
                 {searchQuery && filteredCards.length === 0 && (
-                  <div className="absolute top-full left-0 right-0 mt-2 bg-matcha-cream border border-gray-200 rounded-2xl shadow-xl p-5 text-center text-gray-500 text-sm font-light">
+                  <div className="absolute top-full left-0 right-0 mt-2 bg-matcha-50 border border-gray-200 rounded-2xl shadow-xl p-5 text-center text-gray-500 text-sm font-light">
                     No cards found matching "{searchQuery}"
                   </div>
                 )}

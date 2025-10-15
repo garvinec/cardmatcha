@@ -9,7 +9,7 @@ import Image from "next/image";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-matcha-50/30 via-matcha-cream to-matcha-50/20 overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-matcha-50/40 via-matcha-100 to-matcha-200/40 overflow-x-hidden">
       <Header currentPage="home" />
 
       {/* Hero Section */}
@@ -21,14 +21,14 @@ export default function HomePage() {
               <h2 className="text-6xl md:text-7xl font-light text-matcha-900 mb-8 tracking-tight leading-tight">
                 Find Your Perfect Card
               </h2>
-              <p className="text-xl md:text-2xl text-matcha-800/70 mb-12 max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed">
+              <p className="text-xl md:text-2xl text-matcha-800/80 mb-12 max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed">
                 Discover credit cards that align with your lifestyle. Maximize
                 rewards naturally, effortlessly.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
                 <Button
                   size="lg"
-                  className="bg-matcha-800 hover:bg-matcha-900 text-white rounded-full px-8 py-6 text-lg font-light shadow-lg hover:shadow-xl transition-all duration-300"
+                  className="bg-matcha-700 hover:bg-matcha-800 text-white rounded-full px-8 py-6 text-lg font-light shadow-lg hover:shadow-xl transition-all duration-300"
                   asChild
                 >
                   <Link href="/cards">
@@ -43,7 +43,7 @@ export default function HomePage() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="bg-matcha-cream/80 backdrop-blur text-matcha-800 border-matcha-200 hover:bg-matcha-50 rounded-full px-8 py-6 text-lg font-light shadow-lg hover:shadow-xl transition-all duration-300"
+                  className="bg-matcha-50/80 backdrop-blur text-matcha-800 border-matcha-200 hover:bg-matcha-100 rounded-full px-8 py-6 text-lg font-light shadow-lg hover:shadow-xl transition-all duration-300"
                   asChild
                 >
                   <a href="/chat">
@@ -77,13 +77,13 @@ export default function HomePage() {
       </section>
 
       {/* Credit Cards Grid */}
-      <section id="cards" className="py-20 bg-matcha-cream/40">
+      <section id="cards" className="py-20 bg-matcha-50/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h3 className="text-4xl md:text-5xl font-light text-matcha-900 mb-6 tracking-tight">
               Featured Cards
             </h3>
-            <p className="text-lg md:text-xl text-matcha-800/70 font-light">
+            <p className="text-lg md:text-xl text-matcha-800/80 font-light">
               Curated selections for mindful spending
             </p>
           </div>
@@ -92,7 +92,7 @@ export default function HomePage() {
             <Button
               size="lg"
               variant="outline"
-              className="bg-matcha-cream/80 backdrop-blur text-matcha-800 border-matcha-200 hover:bg-matcha-50 rounded-full px-8 py-6 font-light text-base shadow-lg hover:shadow-xl transition-all duration-300"
+              className="bg-matcha-50/80 backdrop-blur text-matcha-800 border-matcha-200 hover:bg-matcha-100 rounded-full px-8 py-6 font-light text-base shadow-lg hover:shadow-xl transition-all duration-300"
               asChild
             >
               <Link href="/cards">
@@ -115,7 +115,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-matcha-900/95 text-white py-16 mt-20">
+      <footer className="bg-matcha-900 text-white py-16 mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-6">
@@ -126,7 +126,7 @@ export default function HomePage() {
             <p className="text-matcha-200/80 mb-6 font-light text-lg">
               Mindful credit, maximized rewards.
             </p>
-            <p className="text-sm text-matcha-300/60 font-light">
+            <p className="text-sm text-matcha-200/70 font-light">
               © 2025 CardMatcha. Credit card offers subject to approval.
             </p>
           </div>

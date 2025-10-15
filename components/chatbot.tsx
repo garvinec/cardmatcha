@@ -97,7 +97,7 @@ export function Chatbot() {
                     key={index}
                     variant="outline"
                     size="sm"
-                    className="text-xs bg-matcha-cream text-gray-700 border-gray-300 hover:bg-matcha-50"
+                    className="text-xs bg-matcha-50 text-gray-700 border-gray-300 hover:bg-matcha-100"
                     onClick={() => {
                       handleInputChange({ target: { value: question } } as any);
                     }}

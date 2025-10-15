@@ -10,7 +10,7 @@ interface HeaderProps {
 
 export function Header({ currentPage = "home" }: HeaderProps) {
   return (
-    <header className="bg-matcha-cream/50 backdrop-blur-md shadow-sm border border-matcha-100/30 fixed top-0 left-0 right-0 z-50 rounded-full mx-4 mt-4">
+    <header className="bg-matcha-50/70 backdrop-blur-md shadow-sm border border-matcha-200/60 fixed top-0 left-0 right-0 z-50 rounded-full mx-4 mt-4">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-8">
           {/* Logo */}
