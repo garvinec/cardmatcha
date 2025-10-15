@@ -102,7 +102,7 @@ function getRankIcon(rank: number) {
       );
     default:
       return (
-        <div className="w-14 h-14 bg-gradient-to-br from-green-700 to-green-900 text-white rounded-2xl flex items-center justify-center text-lg font-light shadow-lg">
+        <div className="w-14 h-14 bg-gradient-to-br from-matcha-dark to-matcha-deep text-offwhite rounded-2xl flex items-center justify-center text-lg font-light shadow-lg">
           {rank}
         </div>
       );
@@ -111,20 +111,20 @@ function getRankIcon(rank: number) {
 
 export default function RankingsPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50/30 via-white to-lime-50/20">
+    <div className="min-h-screen bg-gradient-to-b from-offwhite via-matcha-muted/40 to-offwhite">
       <Header />
 
       <main className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 text-matcha-foreground">
             <div className="flex items-center justify-center mb-6">
-              <TrendingUp className="h-12 w-12 text-green-800 mr-4" />
-              <h1 className="text-5xl font-light text-gray-900 tracking-tight">
+              <TrendingUp className="h-12 w-12 text-matcha-dark mr-4" />
+              <h1 className="text-5xl font-light text-matcha-deep tracking-tight">
                 Rankings
               </h1>
             </div>
-            <p className="text-xl text-green-800/70 max-w-2xl mx-auto font-light leading-relaxed">
+            <p className="text-xl text-matcha-foreground/80 max-w-2xl mx-auto font-light leading-relaxed">
               Discover the most popular cards, based on expert ratings and user
               preferences
             </p>
@@ -135,7 +135,7 @@ export default function RankingsPage() {
             {fullRankings.map((card) => (
               <Card
                 key={card.id}
-                className="hover:shadow-2xl transition-all duration-500 border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden"
+                className="hover:shadow-2xl transition-all duration-500 border border-matcha-muted/40 shadow-xl rounded-3xl bg-offwhite/80 backdrop-blur overflow-hidden"
               >
                 <CardContent className="p-8">
                   <div className="flex items-center justify-between">
@@ -148,17 +148,17 @@ export default function RankingsPage() {
                       {/* Card Info */}
                       <div className="flex-1">
                         <div className="flex items-center space-x-4 mb-3">
-                          <h3 className="text-xl font-light text-gray-900">
+                          <h3 className="text-xl font-light text-matcha-deep">
                             {card.name}
                           </h3>
                           <Badge
                             variant="secondary"
-                            className="bg-green-100/80 text-green-800 border-0 rounded-full px-3 py-1 font-light"
+                            className="bg-matcha-muted/70 text-matcha-foreground border-0 rounded-full px-3 py-1 font-light"
                           >
                             {card.category}
                           </Badge>
                         </div>
-                        <p className="text-gray-600 mb-4 font-light">
+                        <p className="text-matcha-foreground/80 mb-4 font-light">
                           {card.issuer}
                         </p>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
@@ -169,7 +169,7 @@ export default function RankingsPage() {
                             </span>
                           </div>
                           <div>
-                            <span className="text-gray-500 font-light">
+                            <span className="text-matcha-foreground/70 font-light">
                               Annual Fee:{" "}
                             </span>
                             <span className="font-normal">
@@ -179,7 +179,7 @@ export default function RankingsPage() {
                             </span>
                           </div>
                           <div>
-                            <span className="text-gray-500 font-light">
+                            <span className="text-matcha-foreground/70 font-light">
                               Searches:{" "}
                             </span>
                             <span className="font-normal">
@@ -187,16 +187,16 @@ export default function RankingsPage() {
                             </span>
                           </div>
                           <div>
-                            <span className="text-gray-500 font-light">
+                            <span className="text-matcha-foreground/70 font-light">
                               Popularity:{" "}
                             </span>
-                            <span className="font-normal text-green-700">
+                            <span className="font-normal text-matcha-dark">
                               {card.popularityScore}/100
                             </span>
                           </div>
                         </div>
                         <div className="mt-3">
-                          <span className="text-green-800 font-normal text-sm">
+                          <span className="text-matcha-dark font-normal text-sm">
                             {card.signupBonus}
                           </span>
                         </div>
@@ -207,7 +207,7 @@ export default function RankingsPage() {
                     <div className="flex-shrink-0">
                       <Button
                         asChild
-                        className="bg-green-800 hover:bg-green-900 text-white rounded-full px-6 py-5 font-light shadow-lg hover:shadow-xl transition-all duration-300"
+                        className="bg-matcha text-matcha-foreground hover:bg-matcha-dark/80 rounded-full px-6 py-5 font-light shadow-lg hover:shadow-xl transition-all duration-300"
                       >
                         <Link href={`/card/${card.id}`}>View Details</Link>
                       </Button>
@@ -219,14 +219,14 @@ export default function RankingsPage() {
           </div>
 
           {/* Methodology */}
-          <Card className="mt-16 border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
+          <Card className="mt-16 border border-matcha-muted/40 shadow-xl rounded-3xl bg-offwhite/85 backdrop-blur overflow-hidden">
             <CardContent className="p-8">
-              <h3 className="text-2xl font-light text-gray-900 mb-8">
+              <h3 className="text-2xl font-light text-matcha-deep mb-8">
                 Ranking Methodology
               </h3>
-              <div className="grid md:grid-cols-3 gap-8 text-sm text-gray-600">
+              <div className="grid md:grid-cols-3 gap-8 text-sm text-matcha-foreground/80">
                 <div>
-                  <h4 className="font-normal text-gray-900 mb-3 text-base">
+                  <h4 className="font-normal text-matcha-deep mb-3 text-base">
                     User Popularity (40%)
                   </h4>
                   <p className="font-light leading-relaxed">
@@ -234,7 +234,7 @@ export default function RankingsPage() {
                   </p>
                 </div>
                 <div>
-                  <h4 className="font-normal text-gray-900 mb-3 text-base">
+                  <h4 className="font-normal text-matcha-deep mb-3 text-base">
                     Expert Rating (35%)
                   </h4>
                   <p className="font-light leading-relaxed">
@@ -243,7 +243,7 @@ export default function RankingsPage() {
                   </p>
                 </div>
                 <div>
-                  <h4 className="font-normal text-gray-900 mb-3 text-base">
+                  <h4 className="font-normal text-matcha-deep mb-3 text-base">
                     Market Performance (25%)
                   </h4>
                   <p className="font-light leading-relaxed">

@@ -1,5 +1,15 @@
 import type { Config } from "tailwindcss";
 
+const withOpacityValue = (variable: string) => {
+        return ({ opacityValue }: { opacityValue?: string }) => {
+                if (opacityValue !== undefined) {
+                        return `hsl(var(${variable}) / ${opacityValue})`;
+                }
+
+                return `hsl(var(${variable}))`;
+        };
+};
+
 // all in fixtures is set to tailwind v3 as interims solutions
 
 const config: Config = {
@@ -12,12 +22,12 @@ const config: Config = {
   ],
   theme: {
   	extend: {
-  		colors: {
-  			background: 'hsl(var(--background))',
-  			foreground: 'hsl(var(--foreground))',
-  			card: {
-  				DEFAULT: 'hsl(var(--card))',
-  				foreground: 'hsl(var(--card-foreground))'
+                colors: {
+                        background: 'hsl(var(--background))',
+                        foreground: 'hsl(var(--foreground))',
+                        card: {
+                                DEFAULT: 'hsl(var(--card))',
+                                foreground: 'hsl(var(--card-foreground))'
   			},
   			popover: {
   				DEFAULT: 'hsl(var(--popover))',
@@ -45,10 +55,16 @@ const config: Config = {
   			},
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
-  			ring: 'hsl(var(--ring))',
-  			chart: {
-  				'1': 'hsl(var(--chart-1))',
-  				'2': 'hsl(var(--chart-2))',
+                        ring: 'hsl(var(--ring))',
+                        offwhite: withOpacityValue('--off-white'),
+                        matcha: withOpacityValue('--matcha'),
+                        'matcha-muted': withOpacityValue('--matcha-muted'),
+                        'matcha-dark': withOpacityValue('--matcha-dark'),
+                        'matcha-deep': withOpacityValue('--matcha-deep'),
+                        'matcha-foreground': withOpacityValue('--matcha-foreground'),
+                        chart: {
+                                '1': 'hsl(var(--chart-1))',
+                                '2': 'hsl(var(--chart-2))',
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'

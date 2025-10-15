@@ -135,17 +135,17 @@ export function HeaderSearch({ className }: HeaderSearchProps) {
 
   return (
     <div className={cn("relative", className)}>
-      <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-green-400 h-5 w-5" />
+      <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-matcha h-5 w-5" />
       <input
         type="text"
         value={searchQuery}
         onChange={(event) => setSearchQuery(event.target.value)}
         onKeyDown={handleKeyDown}
         placeholder="Search cards..."
-        className="w-full pl-12 pr-4 py-3 border border-green-100 rounded-full focus:ring-2 focus:ring-green-500/20 focus:border-green-300 text-sm bg-green-50/30 placeholder:text-green-600/50 transition-all duration-300"
+        className="w-full pl-12 pr-4 py-3 border border-matcha-muted rounded-full focus:ring-2 focus:ring-matcha/20 focus:border-matcha text-sm bg-matcha-muted/30 placeholder:text-matcha-foreground/50 transition-all duration-300"
       />
       {isDropdownVisible && suggestions.length > 0 && (
-        <div className="absolute left-0 right-0 mt-2 bg-white/90 backdrop-blur-md border border-green-100/60 rounded-3xl shadow-lg overflow-hidden">
+        <div className="absolute left-0 right-0 mt-2 bg-offwhite/95 backdrop-blur-md border border-matcha-muted/60 rounded-3xl shadow-lg overflow-hidden">
           <ul className="py-2">
             {suggestions.map((card, index) => (
               <li
@@ -153,8 +153,8 @@ export function HeaderSearch({ className }: HeaderSearchProps) {
                 className={cn(
                   "px-4 py-2 cursor-pointer text-sm transition-colors duration-200",
                   highlightedIndex === index
-                    ? "bg-green-100/70 text-green-900"
-                    : "text-green-900 hover:bg-green-50/80"
+                    ? "bg-matcha-muted/60 text-matcha-deep"
+                    : "text-matcha-foreground hover:bg-matcha-muted/40"
                 )}
                 onMouseDown={(event) => handleSuggestionMouseDown(event, card.id)}
                 onMouseEnter={() => setHighlightedIndex(index)}

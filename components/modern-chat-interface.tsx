@@ -105,17 +105,17 @@ export function ModernChatInterface() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50/30 via-white to-lime-50/20 p-6">
+    <div className="min-h-screen bg-gradient-to-b from-offwhite via-matcha-muted/40 to-offwhite p-6">
       <div className="max-w-7xl mx-auto">
-        <div className="bg-white/80 backdrop-blur-md rounded-3xl shadow-2xl overflow-hidden h-[calc(100vh-3rem)]">
+        <div className="bg-offwhite/85 backdrop-blur-md border border-matcha-muted/60 rounded-3xl shadow-2xl overflow-hidden h-[calc(100vh-3rem)]">
           <div className="flex h-full">
             {/* Left Sidebar */}
-            <div className="w-80 bg-gradient-to-b from-green-50/50 to-white border-r border-green-100/50 flex flex-col">
+            <div className="w-80 bg-gradient-to-b from-offwhite/80 to-matcha-muted/40 border-r border-matcha-muted/50 flex flex-col">
               {/* Header */}
-              <div className="p-8 border-b border-green-100/50">
+              <div className="p-8 border-b border-matcha-muted/50">
                 <Button
                   onClick={createNewChat}
-                  className="w-full bg-green-800 hover:bg-green-900 text-white rounded-full h-12 font-light shadow-lg hover:shadow-xl transition-all duration-300"
+                  className="w-full bg-matcha text-matcha-foreground hover:bg-matcha-dark/80 rounded-full h-12 font-light shadow-lg hover:shadow-xl transition-all duration-300"
                 >
                   <Plus className="mr-2 h-4 w-4" />
                   New chat
@@ -145,12 +145,12 @@ export function ModernChatInterface() {
                         key={chat.id}
                         className={`group flex items-center p-4 rounded-2xl cursor-pointer transition-all duration-300 ${
                           activeChat === chat.id
-                            ? "bg-green-100/60 border border-green-200/50 shadow-sm"
-                            : "hover:bg-green-50/50"
+                            ? "bg-matcha-muted/60 border border-matcha-muted/70 shadow-sm"
+                            : "hover:bg-matcha-muted/30"
                         }`}
                       >
-                        <div className="w-9 h-9 bg-gradient-to-br from-green-200 to-green-300 rounded-xl flex items-center justify-center mr-3 flex-shrink-0">
-                          <MessageSquare className="h-4 w-4 text-green-800" />
+                        <div className="w-9 h-9 bg-gradient-to-br from-matcha to-matcha-dark rounded-xl flex items-center justify-center mr-3 flex-shrink-0">
+                          <MessageSquare className="h-4 w-4 text-offwhite" />
                         </div>
 
                         <div
@@ -171,12 +171,12 @@ export function ModernChatInterface() {
                                   cancelEditing();
                                 }
                               }}
-                              className="w-full text-sm font-light bg-white border border-green-300 rounded-xl px-3 py-1 focus:outline-none focus:ring-2 focus:ring-green-500/20"
+                              className="w-full text-sm font-light bg-offwhite border border-matcha-muted rounded-xl px-3 py-1 focus:outline-none focus:ring-2 focus:ring-matcha/20 text-matcha-foreground"
                               autoFocus
                               onClick={(e) => e.stopPropagation()}
                             />
                           ) : (
-                            <p className="text-sm font-light text-gray-900 truncate">
+                            <p className="text-sm font-light text-matcha-foreground truncate">
                               {chat.title}
                             </p>
                           )}
@@ -188,7 +188,7 @@ export function ModernChatInterface() {
                               e.stopPropagation();
                               startEditingTitle(chat.id, chat.title);
                             }}
-                            className="p-2 hover:bg-green-100/60 rounded-full text-gray-400 hover:text-green-800 transition-all duration-300"
+                            className="p-2 hover:bg-matcha-muted/60 rounded-full text-matcha-foreground/60 hover:text-matcha-dark transition-all duration-300"
                             title="Rename"
                           >
                             <Edit3 className="h-3.5 w-3.5" />
@@ -198,7 +198,7 @@ export function ModernChatInterface() {
                               e.stopPropagation();
                               deleteChat(chat.id);
                             }}
-                            className="p-2 hover:bg-red-100/60 rounded-full text-gray-400 hover:text-red-600 transition-all duration-300"
+                            className="p-2 hover:bg-destructive/20 rounded-full text-matcha-foreground/60 hover:text-destructive transition-all duration-300"
                             title="Delete"
                           >
                             <Trash2 className="h-3.5 w-3.5" />
@@ -214,16 +214,16 @@ export function ModernChatInterface() {
             {/* Main Chat Area */}
             <div className="flex-1 flex flex-col">
               {/* Chat Header */}
-              <div className="p-8 border-b border-green-100/50 bg-white/40 backdrop-blur-sm">
+              <div className="p-8 border-b border-matcha-muted/50 bg-offwhite/70 backdrop-blur-sm">
                 <div className="flex items-center">
-                  <div className="w-12 h-12 bg-gradient-to-br from-green-700 to-green-800 rounded-2xl flex items-center justify-center mr-4 shadow-lg">
-                    <Bot className="h-6 w-6 text-white" />
+                  <div className="w-12 h-12 bg-gradient-to-br from-matcha-dark to-matcha-deep rounded-2xl flex items-center justify-center mr-4 shadow-lg">
+                    <Bot className="h-6 w-6 text-offwhite" />
                   </div>
                   <div>
-                    <h2 className="font-light text-xl text-gray-900">
+                    <h2 className="font-light text-xl text-matcha-deep">
                       CardMatcha AI
                     </h2>
-                    <p className="text-sm text-gray-500 font-light">
+                    <p className="text-sm text-matcha-foreground/70 font-light">
                       Your credit card advisor
                     </p>
                   </div>
@@ -233,14 +233,14 @@ export function ModernChatInterface() {
               {/* Messages */}
               <ScrollArea className="flex-1 p-8">
                 {messages.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center h-full text-center">
-                    <div className="w-20 h-20 bg-gradient-to-br from-green-100 to-green-200 rounded-3xl flex items-center justify-center mb-8 shadow-lg">
-                      <Bot className="h-10 w-10 text-green-800" />
+                  <div className="flex flex-col items-center justify-center h-full text-center text-matcha-foreground">
+                    <div className="w-20 h-20 bg-gradient-to-br from-matcha-muted to-matcha rounded-3xl flex items-center justify-center mb-8 shadow-lg">
+                      <Bot className="h-10 w-10 text-matcha-deep" />
                     </div>
-                    <h3 className="text-3xl font-light text-gray-900 mb-4">
+                    <h3 className="text-3xl font-light text-matcha-deep mb-4">
                       Welcome
                     </h3>
-                    <p className="text-gray-600 mb-12 max-w-md font-light text-lg leading-relaxed">
+                    <p className="text-matcha-foreground/80 mb-12 max-w-md font-light text-lg leading-relaxed">
                       Ask me anything about credit cards, rewards, or finding
                       the perfect card for your lifestyle.
                     </p>
@@ -260,9 +260,9 @@ export function ModernChatInterface() {
                               target: { value: question },
                             } as any)
                           }
-                          className="text-left p-5 bg-gradient-to-r from-green-50/50 to-lime-50/50 hover:from-green-100/60 hover:to-lime-100/60 rounded-2xl border border-green-100/50 transition-all duration-300 shadow-sm hover:shadow-md"
+                          className="text-left p-5 bg-gradient-to-r from-matcha-muted/30 to-matcha/20 hover:from-matcha-muted/50 hover:to-matcha/30 rounded-2xl border border-matcha-muted/60 transition-all duration-300 shadow-sm hover:shadow-md"
                         >
-                          <span className="text-sm text-gray-700 font-light">
+                          <span className="text-sm text-matcha-foreground font-light">
                             {question}
                           </span>
                         </button>
@@ -276,15 +276,15 @@ export function ModernChatInterface() {
                         {/* User Message */}
                         {message.role === "user" && (
                           <div className="flex items-start space-x-4">
-                            <div className="w-9 h-9 bg-gradient-to-br from-gray-200 to-gray-300 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-sm">
-                              <User className="h-4 w-4 text-gray-600" />
+                            <div className="w-9 h-9 bg-gradient-to-br from-offwhite to-matcha-muted rounded-2xl flex items-center justify-center flex-shrink-0 shadow-sm">
+                              <User className="h-4 w-4 text-matcha-dark" />
                             </div>
                             <div className="flex-1">
-                              <p className="text-xs font-light text-gray-500 mb-2">
+                              <p className="text-xs font-light text-matcha-foreground/70 mb-2">
                                 You
                               </p>
-                              <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-3xl p-5 shadow-sm">
-                                <p className="text-gray-800 font-light leading-relaxed">
+                              <div className="bg-gradient-to-r from-offwhite to-matcha-muted/40 rounded-3xl p-5 shadow-sm">
+                                <p className="text-matcha-foreground font-light leading-relaxed">
                                   {message.content}
                                 </p>
                               </div>
@@ -295,51 +295,51 @@ export function ModernChatInterface() {
                         {/* AI Message */}
                         {message.role === "assistant" && (
                           <div className="flex items-start space-x-4">
-                            <div className="w-9 h-9 bg-gradient-to-br from-green-700 to-green-800 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
-                              <Bot className="h-4 w-4 text-white" />
+                            <div className="w-9 h-9 bg-gradient-to-br from-matcha-dark to-matcha-deep rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                              <Bot className="h-4 w-4 text-offwhite" />
                             </div>
                             <div className="flex-1">
-                              <p className="text-xs font-light text-gray-500 mb-2">
+                              <p className="text-xs font-light text-matcha-foreground/70 mb-2">
                                 CardMatcha AI
                               </p>
-                              <div className="bg-white/80 backdrop-blur border border-green-100/50 rounded-3xl p-5 shadow-sm">
+                              <div className="bg-offwhite/85 backdrop-blur border border-matcha-muted/60 rounded-3xl p-5 shadow-sm">
                                 <div className="prose prose-sm max-w-none">
-                                  <p className="text-gray-800 whitespace-pre-wrap leading-relaxed font-light">
+                                  <p className="text-matcha-foreground whitespace-pre-wrap leading-relaxed font-light">
                                     {message.content}
                                   </p>
                                 </div>
 
                                 {/* Message Actions */}
-                                <div className="flex items-center space-x-2 mt-5 pt-4 border-t border-green-100/50">
+                                <div className="flex items-center space-x-2 mt-5 pt-4 border-t border-matcha-muted/50">
                                   <button
-                                    className="p-2 hover:bg-green-50 rounded-xl transition-all duration-300"
+                                    className="p-2 hover:bg-matcha-muted/50 rounded-xl transition-all duration-300"
                                     title="Like"
                                   >
-                                    <ThumbsUp className="h-4 w-4 text-gray-400" />
+                                    <ThumbsUp className="h-4 w-4 text-matcha-foreground/60" />
                                   </button>
                                   <button
-                                    className="p-2 hover:bg-green-50 rounded-xl transition-all duration-300"
+                                    className="p-2 hover:bg-matcha-muted/50 rounded-xl transition-all duration-300"
                                     title="Dislike"
                                   >
-                                    <ThumbsDown className="h-4 w-4 text-gray-400" />
+                                    <ThumbsDown className="h-4 w-4 text-matcha-foreground/60" />
                                   </button>
                                   <button
-                                    className="p-2 hover:bg-green-50 rounded-xl transition-all duration-300"
+                                    className="p-2 hover:bg-matcha-muted/50 rounded-xl transition-all duration-300"
                                     title="Copy"
                                   >
-                                    <Copy className="h-4 w-4 text-gray-400" />
+                                    <Copy className="h-4 w-4 text-matcha-foreground/60" />
                                   </button>
                                   <button
-                                    className="p-2 hover:bg-green-50 rounded-xl transition-all duration-300"
+                                    className="p-2 hover:bg-matcha-muted/50 rounded-xl transition-all duration-300"
                                     title="Regenerate"
                                   >
-                                    <RotateCcw className="h-4 w-4 text-gray-400" />
+                                    <RotateCcw className="h-4 w-4 text-matcha-foreground/60" />
                                   </button>
                                   <button
-                                    className="p-2 hover:bg-green-50 rounded-xl transition-all duration-300 ml-auto"
+                                    className="p-2 hover:bg-matcha-muted/50 rounded-xl transition-all duration-300 ml-auto"
                                     title="More"
                                   >
-                                    <MoreHorizontal className="h-4 w-4 text-gray-400" />
+                                    <MoreHorizontal className="h-4 w-4 text-matcha-foreground/60" />
                                   </button>
                                 </div>
                               </div>
@@ -352,17 +352,17 @@ export function ModernChatInterface() {
                     {/* Loading State */}
                     {isLoading && (
                       <div className="flex items-start space-x-4">
-                        <div className="w-9 h-9 bg-gradient-to-br from-green-700 to-green-800 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
-                          <Bot className="h-4 w-4 text-white" />
+                        <div className="w-9 h-9 bg-gradient-to-br from-matcha-dark to-matcha-deep rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                          <Bot className="h-4 w-4 text-offwhite" />
                         </div>
                         <div className="flex-1">
-                          <p className="text-xs font-light text-gray-500 mb-2">
+                          <p className="text-xs font-light text-matcha-foreground/70 mb-2">
                             CardMatcha AI
                           </p>
-                          <div className="bg-white/80 backdrop-blur border border-green-100/50 rounded-3xl p-5 shadow-sm">
+                          <div className="bg-offwhite/85 backdrop-blur border border-matcha-muted/60 rounded-3xl p-5 shadow-sm">
                             <div className="flex items-center space-x-3">
-                              <Loader2 className="h-4 w-4 animate-spin text-green-800" />
-                              <span className="text-sm text-gray-600 font-light">
+                              <Loader2 className="h-4 w-4 animate-spin text-matcha-dark" />
+                              <span className="text-sm text-matcha-foreground font-light">
                                 Thinking...
                               </span>
                             </div>
@@ -375,7 +375,7 @@ export function ModernChatInterface() {
               </ScrollArea>
 
               {/* Input Area */}
-              <div className="p-8 border-t border-green-100/50 bg-white/40 backdrop-blur-sm">
+              <div className="p-8 border-t border-matcha-muted/50 bg-offwhite/70 backdrop-blur-sm">
                 <form
                   onSubmit={handleSubmit}
                   className="flex items-end space-x-4"
@@ -385,14 +385,14 @@ export function ModernChatInterface() {
                       value={input}
                       onChange={handleInputChange}
                       placeholder="Ask anything about credit cards..."
-                      className="w-full py-4 px-6 border border-green-200/50 rounded-3xl focus:border-green-300 focus:ring-2 focus:ring-green-500/20 resize-none font-light bg-white/80 backdrop-blur transition-all duration-300"
+                      className="w-full py-4 px-6 border border-matcha-muted rounded-3xl focus:border-matcha focus:ring-2 focus:ring-matcha/20 resize-none font-light bg-offwhite/90 backdrop-blur transition-all duration-300 text-matcha-foreground placeholder:text-matcha-foreground/60"
                       disabled={isLoading}
                     />
                   </div>
                   <Button
                     type="submit"
                     disabled={isLoading || !input.trim()}
-                    className="bg-green-800 hover:bg-green-900 text-white p-4 rounded-3xl flex-shrink-0 shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50"
+                    className="bg-matcha text-matcha-foreground hover:bg-matcha-dark/80 p-4 rounded-3xl flex-shrink-0 shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50"
                   >
                     {isLoading ? (
                       <Loader2 className="h-5 w-5 animate-spin" />

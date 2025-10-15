@@ -328,7 +328,7 @@ export default function CardPage({ params }: CardPageProps) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-green-50/30 via-white to-lime-50/20">
+      <div className="min-h-screen bg-gradient-to-b from-offwhite via-matcha-muted/40 to-offwhite">
         <Header />
         <div className="flex items-center justify-center py-12">
           <p>Loading...</p>
@@ -342,7 +342,7 @@ export default function CardPage({ params }: CardPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50/30 via-white to-lime-50/20">
+    <div className="min-h-screen bg-gradient-to-b from-offwhite via-matcha-muted/40 to-offwhite">
       <Header />
 
       {/* Main Content */}
@@ -353,7 +353,7 @@ export default function CardPage({ params }: CardPageProps) {
             <Link href="/">
               <Button
                 variant="ghost"
-                className="text-gray-600 hover:text-gray-900 hover:bg-green-50 rounded-full px-6 transition-all duration-300"
+                className="text-matcha-foreground/80 hover:text-gray-900 hover:bg-matcha-muted/40 rounded-full px-6 transition-all duration-300"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Cards
@@ -384,20 +384,20 @@ export default function CardPage({ params }: CardPageProps) {
                 </CardHeader>
                 <CardContent className="space-y-4 px-6 pb-6">
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600 font-light">Rating</span>
+                    <span className="text-matcha-foreground/80 font-light">Rating</span>
                     <div className="flex items-center">
                       <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-1" />
                       <span className="font-normal">{card.rating}</span>
                     </div>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600 font-light">Annual Fee</span>
+                    <span className="text-matcha-foreground/80 font-light">Annual Fee</span>
                     <span className="font-normal">
                       {card.annual_fee === 0 ? "No Fee" : `$${card.annual_fee}`}
                     </span>
                   </div>
                   {/* <div className="flex justify-between items-center">
-                    <span className="text-gray-600 font-light">
+                    <span className="text-matcha-foreground/80 font-light">
                       Credit Score
                     </span>
                     <span className="font-normal text-sm">
@@ -405,10 +405,10 @@ export default function CardPage({ params }: CardPageProps) {
                     </span>
                   </div> */}
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600 font-light">Category</span>
+                    <span className="text-matcha-foreground/80 font-light">Category</span>
                     <Badge
                       variant="secondary"
-                      className="bg-green-100 text-green-800 border-0 rounded-full font-light"
+                      className="bg-matcha-muted text-matcha-dark border-0 rounded-full font-light"
                     >
                       {card.category}
                     </Badge>
@@ -417,7 +417,7 @@ export default function CardPage({ params }: CardPageProps) {
               </Card>
 
               {/* Apply Button */}
-              <Button className="w-full bg-green-800 hover:bg-green-900 text-white py-6 rounded-full font-light text-base shadow-lg hover:shadow-xl transition-all duration-300">
+              <Button className="w-full bg-matcha text-matcha-foreground hover:bg-matcha-dark/80 py-6 rounded-full font-light text-base shadow-lg hover:shadow-xl transition-all duration-300">
                 Apply Now
               </Button>
             </div>
@@ -428,7 +428,7 @@ export default function CardPage({ params }: CardPageProps) {
                 <h1 className="text-4xl font-light text-gray-900 mb-3 tracking-tight">
                   {card.card_name}
                 </h1>
-                <p className="text-lg text-gray-600 mb-4 font-light">
+                <p className="text-lg text-matcha-foreground/80 mb-4 font-light">
                   {card.issuer}
                 </p>
                 <p className="text-gray-700 font-light leading-relaxed">
@@ -438,17 +438,17 @@ export default function CardPage({ params }: CardPageProps) {
 
               <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
                 <CardHeader className="p-6">
-                  <CardTitle className="flex items-center text-green-800 font-light text-xl">
+                  <CardTitle className="flex items-center text-matcha-dark font-light text-xl">
                     <Gift className="mr-3 h-5 w-5" />
                     Welcome Bonus
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="px-6 pb-6">
-                  <div className="bg-gradient-to-r from-green-50 to-lime-50 border border-green-200/50 rounded-2xl p-6">
-                    <p className="text-lg font-normal text-green-800 mb-2">
+                  <div className="bg-gradient-to-r from-offwhite to-matcha-muted/50 border border-matcha-muted/70 rounded-2xl p-6">
+                    <p className="text-lg font-normal text-matcha-dark mb-2">
                       {card.welcome_bonus}
                     </p>
-                    <p className="text-sm text-green-700/80 font-light">
+                    <p className="text-sm text-matcha-dark/80 font-light">
                       After spending {card.signup_requirement}
                     </p>
                   </div>
@@ -459,7 +459,7 @@ export default function CardPage({ params }: CardPageProps) {
               <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
                 <CardHeader className="p-6">
                   <CardTitle className="flex items-center font-light text-xl">
-                    <DollarSign className="mr-3 h-5 w-5 text-green-800" />
+                    <DollarSign className="mr-3 h-5 w-5 text-matcha-dark" />
                     Rewards Structure
                   </CardTitle>
                 </CardHeader>
@@ -490,19 +490,19 @@ export default function CardPage({ params }: CardPageProps) {
                         return (
                           <div
                             key={reward.id || categoryName}
-                            className="flex items-center justify-between rounded-2xl border border-green-100/50 bg-gradient-to-r from-green-50/50 to-lime-50/50 p-4"
+                            className="flex items-center justify-between rounded-2xl border border-matcha-muted/60 bg-gradient-to-r from-offwhite/60 to-matcha-muted/40 p-4"
                           >
                             <span className="font-light text-gray-900">
                               {categoryName}
                             </span>
-                            <span className="font-medium text-green-800">
+                            <span className="font-medium text-matcha-dark">
                               {rewardRate}
                             </span>
                           </div>
                         );
                       })
                     ) : (
-                      <div className="p-4 bg-white/60 rounded-2xl border border-green-100 text-sm text-gray-600 font-light">
+                      <div className="p-4 bg-offwhite/60 rounded-2xl border border-matcha-muted text-sm text-matcha-foreground/80 font-light">
                         Reward details will be available soon.
                       </div>
                     )}
@@ -513,7 +513,7 @@ export default function CardPage({ params }: CardPageProps) {
               <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
                 <CardHeader className="p-6">
                   <CardTitle className="flex items-center font-light text-xl">
-                    <Shield className="mr-3 h-5 w-5 text-green-800" />
+                    <Shield className="mr-3 h-5 w-5 text-matcha-dark" />
                     Key Benefits
                   </CardTitle>
                 </CardHeader>
@@ -525,7 +525,7 @@ export default function CardPage({ params }: CardPageProps) {
                           key={benefit.id || benefit.description}
                           className="flex items-start space-x-3"
                         >
-                          <CheckCircle className="h-4 w-4 text-green-700 mt-0.5 flex-shrink-0" />
+                          <CheckCircle className="h-4 w-4 text-matcha-dark mt-0.5 flex-shrink-0" />
                           <span className="text-sm text-gray-700 font-light leading-relaxed">
                             {benefit.description || "Benefit details coming soon"}
                           </span>
@@ -533,7 +533,7 @@ export default function CardPage({ params }: CardPageProps) {
                       ))}
                     </div>
                   ) : (
-                    <div className="p-4 bg-white/60 rounded-2xl border border-green-100 text-sm text-gray-600 font-light">
+                    <div className="p-4 bg-offwhite/60 rounded-2xl border border-matcha-muted text-sm text-matcha-foreground/80 font-light">
                       Benefit details will be available soon.
                     </div>
                   )}
@@ -543,7 +543,7 @@ export default function CardPage({ params }: CardPageProps) {
               <div className="grid md:grid-cols-2 gap-6">
                 <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
                   <CardHeader className="p-6">
-                    <CardTitle className="flex items-center text-green-800 font-light text-lg">
+                    <CardTitle className="flex items-center text-matcha-dark font-light text-lg">
                       <CheckCircle className="mr-3 h-5 w-5" />
                       Pros
                     </CardTitle>
@@ -552,7 +552,7 @@ export default function CardPage({ params }: CardPageProps) {
                     <ul className="space-y-3">
                       {card.pros.map((pro: string, index: number) => (
                         <li key={index} className="flex items-start space-x-3">
-                          <div className="w-1.5 h-1.5 bg-green-700 rounded-full mt-2 flex-shrink-0"></div>
+                          <div className="w-1.5 h-1.5 bg-matcha-dark rounded-full mt-2 flex-shrink-0"></div>
                           <span className="text-sm text-gray-700 font-light leading-relaxed">
                             {pro}
                           </span>
@@ -587,7 +587,7 @@ export default function CardPage({ params }: CardPageProps) {
               {/* <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
                 <CardHeader className="p-6">
                   <CardTitle className="flex items-center font-light text-xl">
-                    <AlertCircle className="mr-3 h-5 w-5 text-green-800" />
+                    <AlertCircle className="mr-3 h-5 w-5 text-matcha-dark" />
                     Rates & Fees
                   </CardTitle>
                 </CardHeader>

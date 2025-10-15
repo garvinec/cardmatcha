@@ -5,42 +5,42 @@ const categories = [
     name: "Travel",
     slug: "travel",
     description: "Points and miles",
-    gradient: "from-orange-400/80 to-orange-600/80",
+    gradient: "from-matcha-muted to-matcha",
     icon: "✈️",
   },
   {
     name: "Cash Back",
     slug: "cashback",
     description: "Simple rewards",
-    gradient: "from-green-400/80 to-green-600/80",
+    gradient: "from-offwhite/80 to-matcha",
     icon: "💰",
   },
   {
     name: "Dining",
     slug: "dining",
     description: "Restaurant rewards",
-    gradient: "from-purple-400/80 to-indigo-600/80",
+    gradient: "from-matcha to-matcha-dark/80",
     icon: "🍽️",
   },
   {
     name: "Gas",
     slug: "gas",
     description: "Fuel savings",
-    gradient: "from-teal-400/80 to-teal-600/80",
+    gradient: "from-matcha-muted/90 to-matcha-dark/80",
     icon: "⛽",
   },
   {
     name: "Groceries",
     slug: "groceries",
     description: "Supermarket perks",
-    gradient: "from-cyan-400/80 to-blue-500/80",
+    gradient: "from-offwhite/90 to-matcha-dark/80",
     icon: "🛒",
   },
   {
     name: "Premium",
     slug: "premium",
     description: "Luxury benefits",
-    gradient: "from-yellow-400/80 to-orange-500/80",
+    gradient: "from-matcha to-matcha-deep/80",
     icon: "👑",
   },
 ];
@@ -49,67 +49,67 @@ const issuers = [
   {
     name: "American Express",
     slug: "american-express",
-    gradient: "from-blue-500 to-blue-700",
+    gradient: "from-matcha to-matcha-dark",
     icon: "💳",
   },
   {
     name: "Barclays",
     slug: "barclays",
-    gradient: "from-teal-500 to-cyan-600",
+    gradient: "from-offwhite to-matcha",
     icon: "🏦",
   },
   {
     name: "Bank of America",
     slug: "bank-of-america",
-    gradient: "from-red-500 to-red-700",
+    gradient: "from-matcha-muted to-matcha-dark",
     icon: "🏛️",
   },
   {
     name: "Capital One",
     slug: "capital-one",
-    gradient: "from-orange-500 to-red-600",
+    gradient: "from-matcha to-matcha-deep",
     icon: "💼",
   },
   {
     name: "Chase",
     slug: "chase",
-    gradient: "from-blue-600 to-indigo-700",
+    gradient: "from-matcha-muted/90 to-matcha-dark",
     icon: "🏃",
   },
   {
     name: "Citi",
     slug: "citi",
-    gradient: "from-blue-400 to-blue-600",
+    gradient: "from-offwhite/80 to-matcha",
     icon: "🌆",
   },
   {
     name: "Discover",
     slug: "discover",
-    gradient: "from-orange-400 to-orange-600",
+    gradient: "from-matcha-muted to-matcha",
     icon: "🔍",
   },
   {
     name: "Synchrony",
     slug: "synchrony-bank",
-    gradient: "from-purple-500 to-purple-700",
+    gradient: "from-matcha to-matcha-deep",
     icon: "🔄",
   },
   {
     name: "TD Bank",
     slug: "td-bank",
-    gradient: "from-green-500 to-green-700",
+    gradient: "from-matcha to-matcha-dark",
     icon: "🏢",
   },
   {
     name: "US Bank",
     slug: "us-bank",
-    gradient: "from-red-400 to-red-600",
+    gradient: "from-offwhite/80 to-matcha-dark",
     icon: "🇺🇸",
   },
   {
     name: "Wells Fargo",
     slug: "wells-fargo",
-    gradient: "from-yellow-500 to-red-500",
+    gradient: "from-matcha to-matcha-deep",
     icon: "🐎",
   },
 ];
@@ -118,11 +118,11 @@ export function CategoryGrid() {
   return (
     <section className="py-4">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h3 className="text-4xl md:text-5xl font-light text-green-900 mb-4 tracking-tight">
+        <div className="text-center mb-16 text-matcha-foreground">
+          <h3 className="text-4xl md:text-5xl font-light text-matcha-deep mb-4 tracking-tight">
             Browse by Category
           </h3>
-          <p className="text-lg text-green-800/70 font-light">
+          <p className="text-lg text-matcha-foreground/80 font-light">
             Find cards that match your lifestyle
           </p>
         </div>
@@ -134,17 +134,17 @@ export function CategoryGrid() {
                 className={`relative overflow-hidden rounded-3xl p-8 h-48 bg-gradient-to-br ${category.gradient} hover:scale-105 transition-all duration-500 cursor-pointer group shadow-lg hover:shadow-2xl`}
               >
                 {/* Decorative blur circles */}
-                <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/20 rounded-full blur-2xl"></div>
-                <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+                <div className="absolute -top-10 -right-10 w-32 h-32 bg-offwhite/20 rounded-full blur-2xl"></div>
+                <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-offwhite/10 rounded-full blur-2xl"></div>
 
                 {/* Content */}
                 <div className="relative z-10 h-full flex flex-col justify-between">
                   <div className="text-4xl mb-3">{category.icon}</div>
                   <div>
-                    <h4 className="text-white font-light text-lg mb-1 leading-tight">
+                    <h4 className="text-offwhite font-light text-lg mb-1 leading-tight">
                       {category.name}
                     </h4>
-                    <p className="text-white/90 text-sm font-light leading-tight">
+                    <p className="text-offwhite/80 text-sm font-light leading-tight">
                       {category.description}
                     </p>
                   </div>
@@ -165,11 +165,11 @@ export function IssuerGrid() {
   return (
     <section className="py-4">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h3 className="text-4xl md:text-5xl font-light text-green-900 mb-4 tracking-tight">
+        <div className="text-center mb-16 text-matcha-foreground">
+          <h3 className="text-4xl md:text-5xl font-light text-matcha-deep mb-4 tracking-tight">
             Browse by Card Issuer
           </h3>
-          <p className="text-lg text-green-800/70 font-light">
+          <p className="text-lg text-matcha-foreground/80 font-light">
             Explore cards from your preferred financial institution
           </p>
         </div>
@@ -181,14 +181,14 @@ export function IssuerGrid() {
                 className={`relative overflow-hidden rounded-3xl p-8 h-48 bg-gradient-to-br ${issuer.gradient} hover:scale-105 transition-all duration-500 cursor-pointer group shadow-lg hover:shadow-2xl`}
               >
                 {/* Decorative blur circles */}
-                <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/20 rounded-full blur-2xl"></div>
-                <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+                <div className="absolute -top-10 -right-10 w-32 h-32 bg-offwhite/20 rounded-full blur-2xl"></div>
+                <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-offwhite/10 rounded-full blur-2xl"></div>
 
                 {/* Content */}
                 <div className="relative z-10 h-full flex flex-col justify-between">
                   <div className="text-4xl mb-3">{issuer.icon}</div>
                   <div>
-                    <h4 className="text-white font-light text-lg mb-1 leading-tight">
+                    <h4 className="text-offwhite font-light text-lg mb-1 leading-tight">
                       {issuer.name}
                     </h4>
                   </div>

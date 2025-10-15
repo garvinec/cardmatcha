@@ -10,7 +10,7 @@ interface HeaderProps {
 
 export function Header({ currentPage = "home" }: HeaderProps) {
   return (
-    <header className="bg-white/50 backdrop-blur-md shadow-sm border border-green-100/30 fixed top-0 left-0 right-0 z-50 rounded-full mx-4 mt-4">
+    <header className="bg-offwhite/70 backdrop-blur-md shadow-sm border border-matcha-muted/50 fixed top-0 left-0 right-0 z-50 rounded-full mx-4 mt-4">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-8">
           {/* Logo */}
@@ -38,8 +38,8 @@ export function Header({ currentPage = "home" }: HeaderProps) {
               href="/"
               className={`font-light text-base transition-all duration-300 ${
                 currentPage === "home"
-                  ? "text-green-900"
-                  : "text-gray-600 hover:text-green-700"
+                  ? "text-matcha-deep"
+                  : "text-matcha-foreground/70 hover:text-matcha-dark"
               }`}
             >
               Home
@@ -48,8 +48,8 @@ export function Header({ currentPage = "home" }: HeaderProps) {
               href="/chat"
               className={`font-light text-base transition-all duration-300 ${
                 currentPage === "chat"
-                  ? "text-green-900"
-                  : "text-gray-600 hover:text-green-700"
+                  ? "text-matcha-deep"
+                  : "text-matcha-foreground/70 hover:text-matcha-dark"
               }`}
             >
               Ask AI
@@ -58,8 +58,8 @@ export function Header({ currentPage = "home" }: HeaderProps) {
               href="/profile"
               className={`font-light text-base transition-all duration-300 ${
                 currentPage === "profile"
-                  ? "text-green-900"
-                  : "text-gray-600 hover:text-green-700"
+                  ? "text-matcha-deep"
+                  : "text-matcha-foreground/70 hover:text-matcha-dark"
               }`}
             >
               Profile
