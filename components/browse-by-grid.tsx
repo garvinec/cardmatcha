@@ -12,7 +12,7 @@ const categories = [
     name: "Cash Back",
     slug: "cashback",
     description: "Simple rewards",
-    gradient: "from-green-400/80 to-green-600/80",
+    gradient: "from-matcha-400/80 to-matcha-600/80",
     icon: "💰",
   },
   {
@@ -97,7 +97,7 @@ const issuers = [
   {
     name: "TD Bank",
     slug: "td-bank",
-    gradient: "from-green-500 to-green-700",
+    gradient: "from-matcha-500 to-matcha-700",
     icon: "🏢",
   },
   {
@@ -119,10 +119,10 @@ export function CategoryGrid() {
     <section className="py-4">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h3 className="text-4xl md:text-5xl font-light text-green-900 mb-4 tracking-tight">
+          <h3 className="text-4xl md:text-5xl font-light text-matcha-900 mb-4 tracking-tight">
             Browse by Category
           </h3>
-          <p className="text-lg text-green-800/70 font-light">
+          <p className="text-lg text-matcha-800/80 font-light">
             Find cards that match your lifestyle
           </p>
         </div>
@@ -134,8 +134,8 @@ export function CategoryGrid() {
                 className={`relative overflow-hidden rounded-3xl p-8 h-48 bg-gradient-to-br ${category.gradient} hover:scale-105 transition-all duration-500 cursor-pointer group shadow-lg hover:shadow-2xl`}
               >
                 {/* Decorative blur circles */}
-                <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/20 rounded-full blur-2xl"></div>
-                <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+                <div className="absolute -top-10 -right-10 w-32 h-32 bg-matcha-50/30 rounded-full blur-2xl"></div>
+                <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-matcha-50/20 rounded-full blur-2xl"></div>
 
                 {/* Content */}
                 <div className="relative z-10 h-full flex flex-col justify-between">
@@ -166,10 +166,10 @@ export function IssuerGrid() {
     <section className="py-4">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h3 className="text-4xl md:text-5xl font-light text-green-900 mb-4 tracking-tight">
+          <h3 className="text-4xl md:text-5xl font-light text-matcha-900 mb-4 tracking-tight">
             Browse by Card Issuer
           </h3>
-          <p className="text-lg text-green-800/70 font-light">
+          <p className="text-lg text-matcha-800/80 font-light">
             Explore cards from your preferred financial institution
           </p>
         </div>
@@ -181,8 +181,8 @@ export function IssuerGrid() {
                 className={`relative overflow-hidden rounded-3xl p-8 h-48 bg-gradient-to-br ${issuer.gradient} hover:scale-105 transition-all duration-500 cursor-pointer group shadow-lg hover:shadow-2xl`}
               >
                 {/* Decorative blur circles */}
-                <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/20 rounded-full blur-2xl"></div>
-                <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+                <div className="absolute -top-10 -right-10 w-32 h-32 bg-matcha-50/30 rounded-full blur-2xl"></div>
+                <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-matcha-50/20 rounded-full blur-2xl"></div>
 
                 {/* Content */}
                 <div className="relative z-10 h-full flex flex-col justify-between">
