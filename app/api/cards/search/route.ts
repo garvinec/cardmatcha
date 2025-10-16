@@ -4,6 +4,8 @@ import { createSupabaseClient } from "@/lib/supabase";
 interface CreditCardRecord {
   id: string;
   card_name: string;
+  issuer: string | null;
+  category: string | null;
 }
 
 export async function GET(request: Request) {
@@ -17,7 +19,7 @@ export async function GET(request: Request) {
   const supabase = createSupabaseClient();
   const { data, error } = await supabase
     .from("credit_cards")
-    .select("id, card_name")
+    .select("id, card_name, issuer, category")
     .ilike("card_name", `%${query}%`)
     .limit(25);
 

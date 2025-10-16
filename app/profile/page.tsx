@@ -1,137 +1,95 @@
 "use client";
 import { Header } from "@/components/header";
-import {
-  Trophy,
-  Plus,
-  MoreHorizontal,
-  Edit,
-  Trash2,
-  X,
-  Search,
-  Calculator,
-  Minus,
-} from "lucide-react";
+import { Trophy, Plus, X, Search, Calculator, Minus, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
-import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { useEffect, useRef, useState } from "react";
+import { SignedIn, SignedOut, useUser } from "@clerk/nextjs";
 
-// Mock user data
-const userData = {
-  currentCards: [
-    {
-      id: 1,
-      name: "Chase Sapphire Preferred",
-      issuer: "Chase",
-      since: "Jan 2023",
-      annualFee: 95,
-      primaryCategory: "Travel",
-      monthlySpend: 1200,
-      rewardsEarned: "24,500 points",
-    },
-    {
-      id: 2,
-      name: "Citi Double Cash",
-      issuer: "Citi",
-      since: "Mar 2022",
-      annualFee: 0,
-      primaryCategory: "Cash Back",
-      monthlySpend: 800,
-      rewardsEarned: "$156 cash back",
-    },
-    {
-      id: 3,
-      name: "American Express Gold",
-      issuer: "American Express",
-      since: "Jun 2023",
-      annualFee: 250,
-      primaryCategory: "Dining",
-      monthlySpend: 600,
-      rewardsEarned: "18,200 points",
-    },
-  ],
-  bestCards: {
-    "Grocery stores": {
-      card: "American Express Gold",
-      reason: "4x points at U.S. supermarkets (up to $25k/year)",
-    },
-    "Gas & fuel": {
-      card: "None",
-      reason: "Consider adding a gas-specific rewards card",
-    },
-    "Restaurants & dining": {
-      card: "American Express Gold",
-      reason: "4x points at restaurants worldwide",
-    },
-    "Travel & hotels": {
-      card: "Chase Sapphire Preferred",
-      reason: "2x points on travel, 25% bonus on redemptions",
-    },
-    "Online shopping": {
-      card: "Chase Freedom Unlimited",
-      reason: "1.5% cash back on all purchases including online",
-    },
-    "Everything else": {
-      card: "Citi Double Cash",
-      reason: "2% on all purchases with no categories",
-    },
-  },
-  recommendedActions: [
-    "Consider adding a gas rewards card for 3x-4x earnings",
-    "Your Amex Gold dining credits expire in 2 months",
-    "Chase Sapphire travel credit available: $50 remaining",
-  ],
+interface UserCardSummary {
+  cardId: string;
+  cardName: string;
+  issuer: string | null;
+  category: string | null;
+  annualFee: number | null;
+  highestReward: {
+    category: string | null;
+    rate: number | null;
+    type: string | null;
+    description: string | null;
+  } | null;
+}
+
+interface CardSearchSuggestion {
+  id: string;
+  card_name: string;
+  issuer: string | null;
+  category: string | null;
+}
+
+const formatAnnualFee = (annualFee: number | null | undefined) => {
+  if (annualFee === null || annualFee === undefined) {
+    return "N/A";
+  }
+
+  if (annualFee === 0) {
+    return "No Fee";
+  }
+
+  return `$${annualFee.toLocaleString()}`;
 };
 
-// Mock credit card database for search
-const availableCards = [
-  {
-    id: 101,
-    name: "Chase Sapphire Reserve",
-    issuer: "Chase",
-    category: "Premium Travel",
-  },
-  {
-    id: 102,
-    name: "Chase Freedom Unlimited",
-    issuer: "Chase",
-    category: "Cash Back",
-  },
-  {
-    id: 103,
-    name: "Chase Freedom Flex",
-    issuer: "Chase",
-    category: "Rotating Categories",
-  },
-  {
-    id: 104,
-    name: "Capital One Venture X",
-    issuer: "Capital One",
-    category: "Premium Travel",
-  },
-  {
-    id: 105,
-    name: "Capital One Venture",
-    issuer: "Capital One",
-    category: "Travel",
-  },
-  {
-    id: 106,
-    name: "Capital One Savor",
-    issuer: "Capital One",
-    category: "Dining",
-  },
-];
+const formatRewardRate = (
+  reward: UserCardSummary["highestReward"]
+): string => {
+  if (!reward) {
+    return "N/A";
+  }
+
+  if (reward.description) {
+    return reward.description;
+  }
+
+  if (reward.rate === null || reward.rate === undefined) {
+    return reward.type ?? "N/A";
+  }
+
+  const rateValue = Number.isInteger(reward.rate)
+    ? reward.rate.toString()
+    : reward.rate.toFixed(2);
+
+  if (!reward.type) {
+    return rateValue;
+  }
+
+  const normalizedType = reward.type.toLowerCase();
+
+  if (normalizedType === "percentage") {
+    return `${rateValue}%`;
+  }
+
+  if (normalizedType === "cashback") {
+    return `${rateValue}% cashback`;
+  }
+
+  return `${rateValue}x ${reward.type}`;
+};
 
 export default function ProfilePage() {
-  const [currentCards, setCurrentCards] = useState(userData.currentCards);
+  const { isLoaded, isSignedIn } = useUser();
+  const [currentCards, setCurrentCards] = useState<UserCardSummary[]>([]);
+  const [isLoadingCards, setIsLoadingCards] = useState(false);
+  const [cardsError, setCardsError] = useState<string | null>(null);
   const [showAddModal, setShowAddModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredCards, setFilteredCards] = useState<typeof availableCards>([]);
-  const [activeCardMenu, setActiveCardMenu] = useState<number | null>(null);
+  const [filteredCards, setFilteredCards] = useState<CardSearchSuggestion[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchError, setSearchError] = useState<string | null>(null);
+  const [isSavingCard, setIsSavingCard] = useState(false);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   const [spendingCategories, setSpendingCategories] = useState([
     { id: 1, name: "Grocery stores", rewardRate: "4%", amount: 800 },
@@ -150,6 +108,67 @@ export default function ProfilePage() {
     );
   };
 
+  useEffect(() => {
+    if (!isLoaded) {
+      return;
+    }
+
+    if (!isSignedIn) {
+      setCurrentCards([]);
+      setCardsError(null);
+      setIsLoadingCards(false);
+      return;
+    }
+
+    let isMounted = true;
+
+    const fetchCards = async () => {
+      setIsLoadingCards(true);
+      setCardsError(null);
+
+      try {
+        const response = await fetch("/api/user/cards");
+
+        if (!response.ok) {
+          const payload = await response.json().catch(() => null);
+          const message =
+            typeof payload === "object" && payload && "error" in payload
+              ? (payload.error as string)
+              : "Failed to load saved cards";
+          throw new Error(message);
+        }
+
+        const payload = await response.json();
+
+        if (!isMounted) {
+          return;
+        }
+
+        setCurrentCards(
+          Array.isArray(payload.cards) ? (payload.cards as UserCardSummary[]) : []
+        );
+      } catch (error) {
+        if (!isMounted) {
+          return;
+        }
+
+        setCardsError(
+          error instanceof Error ? error.message : "Failed to load saved cards"
+        );
+      } finally {
+        if (isMounted) {
+          setIsLoadingCards(false);
+        }
+      }
+    };
+
+    fetchCards();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [isLoaded, isSignedIn]);
+
   const totalEstimatedRewards = spendingCategories
     .reduce((total, category) => {
       const rate =
@@ -160,48 +179,159 @@ export default function ProfilePage() {
 
   const handleSearchChange = (value: string) => {
     setSearchQuery(value);
-    if (value.trim()) {
-      const filtered = availableCards.filter(
-        (card) =>
-          card.name.toLowerCase().includes(value.toLowerCase()) ||
-          card.issuer.toLowerCase().includes(value.toLowerCase()) ||
-          card.category.toLowerCase().includes(value.toLowerCase())
-      );
-      setFilteredCards(filtered.slice(0, 5));
-    } else {
-      setFilteredCards([]);
-    }
+    setSearchError(null);
   };
 
-  const addCard = (card: (typeof availableCards)[0]) => {
-    const newCard = {
-      id: Date.now(),
-      name: card.name,
-      issuer: card.issuer,
-      since: new Date().toLocaleDateString("en-US", {
-        month: "short",
-        year: "numeric",
-      }),
-      annualFee: 0,
-      primaryCategory: card.category,
-      monthlySpend: 0,
-      rewardsEarned: "0 points",
+  useEffect(() => {
+    if (!showAddModal) {
+      return;
+    }
+
+    const trimmedQuery = searchQuery.trim();
+
+    if (trimmedQuery.length < 3) {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+        abortControllerRef.current = null;
+      }
+      setIsSearching(false);
+      setFilteredCards([]);
+      return;
+    }
+
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+    setIsSearching(true);
+    setSearchError(null);
+
+    const fetchSuggestions = async () => {
+      try {
+        const response = await fetch(
+          `/api/cards/search?q=${encodeURIComponent(trimmedQuery)}`,
+          { signal: controller.signal }
+        );
+
+        if (!response.ok) {
+          throw new Error("Unable to search cards right now");
+        }
+
+        const payload = await response.json();
+
+        setFilteredCards(
+          Array.isArray(payload.results)
+            ? (payload.results as CardSearchSuggestion[])
+            : []
+        );
+      } catch (error) {
+        if ((error as Error).name === "AbortError") {
+          return;
+        }
+
+        setSearchError(
+          error instanceof Error
+            ? error.message
+            : "Unable to search cards right now"
+        );
+        setFilteredCards([]);
+      } finally {
+        if (abortControllerRef.current === controller) {
+          setIsSearching(false);
+        }
+      }
     };
-    setCurrentCards([...currentCards, newCard]);
+
+    fetchSuggestions();
+
+    return () => {
+      controller.abort();
+    };
+  }, [searchQuery, showAddModal]);
+
+  const closeAddModal = () => {
     setShowAddModal(false);
     setSearchQuery("");
     setFilteredCards([]);
+    setSearchError(null);
+    setIsSearching(false);
+    setIsSavingCard(false);
+
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
   };
 
-  const deleteCard = (cardId: number) => {
-    setCurrentCards(currentCards.filter((card) => card.id !== cardId));
-    setActiveCardMenu(null);
+  const openAddModal = () => {
+    setSearchQuery("");
+    setFilteredCards([]);
+    setSearchError(null);
+    setIsSearching(false);
+    setIsSavingCard(false);
+    setShowAddModal(true);
   };
 
-  const editCard = (cardId: number) => {
-    setActiveCardMenu(null);
-    console.log("Edit card:", cardId);
+  const addCard = async (card: CardSearchSuggestion) => {
+    if (isSavingCard) {
+      return;
+    }
+
+    setIsSavingCard(true);
+    setSearchError(null);
+
+    try {
+      const response = await fetch("/api/user/cards", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ cardId: card.id }),
+      });
+
+      if (response.status === 409) {
+        const payload = await response.json().catch(() => null);
+        const message =
+          typeof payload === "object" && payload && "error" in payload
+            ? (payload.error as string)
+            : "You have already saved this card";
+        setSearchError(message);
+        return;
+      }
+
+      if (!response.ok) {
+        const payload = await response.json().catch(() => null);
+        const message =
+          typeof payload === "object" && payload && "error" in payload
+            ? (payload.error as string)
+            : "Unable to save this card";
+        throw new Error(message);
+      }
+
+      const payload = await response.json();
+      const newCard = payload.card as UserCardSummary | undefined;
+
+      if (newCard) {
+        setCurrentCards((existing) => {
+          if (existing.some((item) => item.cardId === newCard.cardId)) {
+            return existing;
+          }
+          return [...existing, newCard];
+        });
+        closeAddModal();
+      }
+    } catch (error) {
+      setSearchError(
+        error instanceof Error ? error.message : "Unable to save this card"
+      );
+    } finally {
+      setIsSavingCard(false);
+    }
   };
+
+  const trimmedSearchQuery = searchQuery.trim();
 
   const ProfileContent = ({ muted = false }: { muted?: boolean }) => (
     <>
@@ -250,7 +380,7 @@ export default function ProfilePage() {
                   </span>
                 </CardTitle>
                 <Button
-                  onClick={() => setShowAddModal(true)}
+                  onClick={openAddModal}
                   className="bg-matcha-700 hover:bg-matcha-800 text-white rounded-full px-6 py-5 font-light shadow-lg hover:shadow-xl transition-all duration-300"
                 >
                   <Plus className="mr-2 h-4 w-4" />
@@ -260,94 +390,77 @@ export default function ProfilePage() {
             </CardHeader>
             <CardContent className="p-8 pt-0">
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {currentCards.map((card) => (
-                  <div
-                    key={card.id}
-                    className="border border-matcha-200/50 rounded-2xl p-6 bg-gradient-to-br from-matcha-50 to-matcha-100/30 relative shadow-sm hover:shadow-lg transition-all duration-300"
-                  >
-                    <div className="absolute top-4 right-4">
-                      <button
-                        onClick={() =>
-                          setActiveCardMenu(
-                            activeCardMenu === card.id ? null : card.id
-                          )
-                        }
-                        className="p-2 hover:bg-matcha-100/60 rounded-full transition-all duration-300"
-                      >
-                        <MoreHorizontal className="h-4 w-4 text-gray-400" />
-                      </button>
-
-                      {activeCardMenu === card.id && (
-                        <div className="absolute right-0 top-10 bg-matcha-50 border border-matcha-200/50 rounded-2xl shadow-xl py-2 z-10 min-w-[130px]">
-                          <button
-                            onClick={() => editCard(card.id)}
-                            className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-matcha-50 flex items-center font-light transition-colors duration-300"
-                          >
-                            <Edit className="mr-2 h-3 w-3" />
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => deleteCard(card.id)}
-                            className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center font-light transition-colors duration-300"
-                          >
-                            <Trash2 className="mr-2 h-3 w-3" />
-                            Delete
-                          </button>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="flex justify-between items-start mb-4 pr-8">
-                      <div>
-                        <h3 className="font-normal text-gray-900 mb-1">
-                          {card.name}
-                        </h3>
-                        <p className="text-sm text-gray-500 font-light">
-                          {card.issuer}
-                        </p>
-                      </div>
-                      <Badge
-                        variant="outline"
-                        className="border-matcha-300/50 text-matcha-800 rounded-full px-3 py-1 font-light bg-matcha-50"
-                      >
-                        {card.primaryCategory}
-                      </Badge>
-                    </div>
-
-                    <div className="space-y-3 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-gray-500 font-light">Since</span>
-                        <span className="font-normal">{card.since}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-500 font-light">
-                          Annual Fee
-                        </span>
-                        <span className="font-normal">
-                          {card.annualFee === 0
-                            ? "No Fee"
-                            : `$${card.annualFee}`}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-500 font-light">
-                          Monthly Spend
-                        </span>
-                        <span className="font-normal">
-                          ${card.monthlySpend}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-500 font-light">
-                          Rewards Earned
-                        </span>
-                        <span className="font-normal text-matcha-800">
-                          {card.rewardsEarned}
-                        </span>
-                      </div>
-                    </div>
+                {isLoadingCards ? (
+                  <div className="col-span-full flex items-center justify-center py-10 text-matcha-800">
+                    <Loader2 className="mr-3 h-5 w-5 animate-spin" />
+                    <span className="font-light">Loading your cards...</span>
                   </div>
-                ))}
+                ) : cardsError ? (
+                  <div className="col-span-full rounded-2xl border border-red-100 bg-red-50/70 px-6 py-5 text-sm font-light text-red-700">
+                    {cardsError}
+                  </div>
+                ) : currentCards.length === 0 ? (
+                  <div className="col-span-full rounded-2xl border border-dashed border-matcha-200 bg-white/70 px-6 py-10 text-center text-sm font-light text-gray-600">
+                    You haven't saved any cards yet. Add a card to get started.
+                  </div>
+                ) : (
+                  currentCards.map((card) => (
+                    <div
+                      key={card.cardId}
+                      className="border border-matcha-200/50 rounded-2xl p-6 bg-gradient-to-br from-matcha-50 to-matcha-100/30 shadow-sm hover:shadow-lg transition-all duration-300"
+                    >
+                      <div className="flex justify-between items-start mb-4">
+                        <div className="pr-4">
+                          <h3 className="font-normal text-gray-900 mb-1">
+                            {card.cardName}
+                          </h3>
+                          <p className="text-sm text-gray-500 font-light">
+                            {card.issuer ?? "Issuer unavailable"}
+                          </p>
+                        </div>
+                        {card.category ? (
+                          <Badge
+                            variant="outline"
+                            className="border-matcha-300/50 text-matcha-800 rounded-full px-3 py-1 font-light bg-matcha-50"
+                          >
+                            {card.category}
+                          </Badge>
+                        ) : null}
+                      </div>
+
+                      <div className="space-y-4 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-500 font-light">
+                            Annual Fee
+                          </span>
+                          <span className="font-normal">
+                            {formatAnnualFee(card.annualFee)}
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-start">
+                          <span className="text-gray-500 font-light">
+                            Top Reward
+                          </span>
+                          {card.highestReward ? (
+                            <div className="text-right space-y-1">
+                              <p className="font-normal text-matcha-900">
+                                {card.highestReward.category ??
+                                  "Category unavailable"}
+                              </p>
+                              <p className="text-xs text-gray-600 font-light">
+                                {formatRewardRate(card.highestReward)}
+                              </p>
+                            </div>
+                          ) : (
+                            <span className="font-light text-gray-500">
+                              Not available
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </CardContent>
           </Card>
@@ -361,35 +474,8 @@ export default function ProfilePage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="p-8 pt-0">
-              <div className="grid md:grid-cols-2 gap-6">
-                {Object.entries(userData.bestCards).map(([category, info]) => (
-                  <div
-                    key={category}
-                    className="border border-matcha-200/50 rounded-2xl p-6 bg-gradient-to-br from-matcha-50 to-matcha-100/30 shadow-sm hover:shadow-lg transition-all duration-300"
-                  >
-                    <div className="flex justify-between items-start mb-3">
-                      <h3 className="font-normal text-gray-900">{category}</h3>
-                      {info.card !== "None" ? (
-                        <Badge className="bg-matcha-100 text-matcha-800 border-0 rounded-full font-light">
-                          Optimized
-                        </Badge>
-                      ) : (
-                        <Badge
-                          variant="outline"
-                          className="text-orange-600 border-orange-300/50 rounded-full font-light bg-orange-50"
-                        >
-                          Gap
-                        </Badge>
-                      )}
-                    </div>
-                    <p className="text-sm font-normal text-matcha-800 mb-2">
-                      {info.card}
-                    </p>
-                    <p className="text-xs text-gray-600 font-light leading-relaxed">
-                      {info.reason}
-                    </p>
-                  </div>
-                ))}
+              <div className="rounded-2xl border border-dashed border-matcha-200 bg-white/70 px-6 py-10 text-center text-sm font-light text-gray-600">
+                Personalized category insights will appear here as we learn more about your cards.
               </div>
             </CardContent>
           </Card>
@@ -506,18 +592,8 @@ export default function ProfilePage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="p-8 pt-0">
-              <div className="space-y-4">
-                {userData.recommendedActions.map((action, index) => (
-                  <div
-                    key={index}
-                    className="flex items-start space-x-4 p-5 bg-gradient-to-r from-matcha-50/50 to-matcha-100/50 rounded-2xl border border-matcha-200/50"
-                  >
-                    <div className="w-2 h-2 bg-matcha-700 rounded-full mt-2 flex-shrink-0"></div>
-                    <p className="text-sm text-gray-700 font-light leading-relaxed">
-                      {action}
-                    </p>
-                  </div>
-                ))}
+              <div className="rounded-2xl border border-dashed border-matcha-200 bg-white/70 px-6 py-10 text-center text-sm font-light text-gray-600">
+                Your tailored recommendations will be displayed here once we have enough data to analyze your wallet.
               </div>
             </CardContent>
           </Card>
@@ -534,11 +610,7 @@ export default function ProfilePage() {
                   Add Credit Card
                 </h3>
                 <button
-                  onClick={() => {
-                    setShowAddModal(false);
-                    setSearchQuery("");
-                    setFilteredCards([]);
-                  }}
+                  onClick={closeAddModal}
                   className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-300"
                 >
                   <X className="h-5 w-5 text-gray-500" />
@@ -558,50 +630,67 @@ export default function ProfilePage() {
                   />
                 </div>
 
-                {filteredCards.length > 0 && (
+                {isSearching && (
+                  <div className="absolute top-full left-0 right-0 mt-2 bg-matcha-50 border border-gray-200 rounded-2xl shadow-xl z-10 py-5 text-center text-sm font-light text-gray-600">
+                    <div className="flex items-center justify-center gap-2">
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      <span>Searching cards...</span>
+                    </div>
+                  </div>
+                )}
+
+                {!isSearching && searchError && (
+                  <div className="absolute top-full left-0 right-0 mt-2 bg-red-50 border border-red-100 rounded-2xl shadow-xl z-10 px-5 py-4 text-center text-sm font-light text-red-700">
+                    {searchError}
+                  </div>
+                )}
+
+                {!isSearching && !searchError && filteredCards.length > 0 && (
                   <div className="absolute top-full left-0 right-0 mt-2 bg-matcha-50 border border-gray-200 rounded-2xl shadow-xl z-10 max-h-60 overflow-y-auto">
                     {filteredCards.map((card) => (
                       <button
                         key={card.id}
                         onClick={() => addCard(card)}
-                        className="w-full px-5 py-4 text-left hover:bg-matcha-50 border-b border-gray-100 last:border-b-0 transition-colors duration-300"
+                        disabled={isSavingCard}
+                        className="w-full px-5 py-4 text-left hover:bg-matcha-50 border-b border-gray-100 last:border-b-0 transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-60"
                       >
                         <div className="flex justify-between items-start">
                           <div>
                             <p className="font-normal text-gray-900">
-                              {card.name}
+                              {card.card_name}
                             </p>
                             <p className="text-sm text-gray-600 font-light">
-                              {card.issuer}
+                              {card.issuer ?? "Issuer unavailable"}
                             </p>
                           </div>
-                          <Badge
-                            variant="outline"
-                            className="text-xs font-light"
-                          >
-                            {card.category}
-                          </Badge>
+                          {card.category ? (
+                            <Badge
+                              variant="outline"
+                              className="text-xs font-light"
+                            >
+                              {card.category}
+                            </Badge>
+                          ) : null}
                         </div>
                       </button>
                     ))}
                   </div>
                 )}
 
-                {searchQuery && filteredCards.length === 0 && (
-                  <div className="absolute top-full left-0 right-0 mt-2 bg-matcha-50 border border-gray-200 rounded-2xl shadow-xl p-5 text-center text-gray-500 text-sm font-light">
-                    No cards found matching "{searchQuery}"
-                  </div>
-                )}
+                {!isSearching &&
+                  !searchError &&
+                  trimmedSearchQuery.length >= 3 &&
+                  filteredCards.length === 0 && (
+                    <div className="absolute top-full left-0 right-0 mt-2 bg-matcha-50 border border-gray-200 rounded-2xl shadow-xl p-5 text-center text-gray-500 text-sm font-light">
+                      No cards found matching "{trimmedSearchQuery}"
+                    </div>
+                  )}
               </div>
 
               <div className="mt-8 flex justify-end">
                 <Button
                   variant="outline"
-                  onClick={() => {
-                    setShowAddModal(false);
-                    setSearchQuery("");
-                    setFilteredCards([]);
-                  }}
+                  onClick={closeAddModal}
                   className="rounded-full px-6 py-5 font-light"
                 >
                   Cancel
@@ -612,12 +701,6 @@ export default function ProfilePage() {
         </div>
       )}
 
-      {!muted && activeCardMenu && (
-        <div
-          className="fixed inset-0 z-0"
-          onClick={() => setActiveCardMenu(null)}
-        />
-      )}
     </>
   );
 
