@@ -11,11 +11,13 @@ import {
   Calculator,
   Minus,
 } from "lucide-react";
+import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 
 // Mock user data
 const userData = {
@@ -201,29 +203,28 @@ export default function ProfilePage() {
     console.log("Edit card:", cardId);
   };
 
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-matcha-50/40 via-matcha-100 to-matcha-200/40">
-      <Header currentPage="profile" />
-        <style jsx>{`
-          .slider::-webkit-slider-thumb {
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #6d9a51;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(109, 154, 81, 0.3);
-          }
-          .slider::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #6d9a51;
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 2px 8px rgba(109, 154, 81, 0.3);
-          }
-        `}</style>
+  const ProfileContent = ({ muted = false }: { muted?: boolean }) => (
+    <>
+      <style jsx>{`
+        .slider::-webkit-slider-thumb {
+          appearance: none;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: hsl(var(--matcha-600));
+          cursor: pointer;
+          box-shadow: 0 2px 8px hsl(var(--matcha-600) / 0.3);
+        }
+        .slider::-moz-range-thumb {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: hsl(var(--matcha-600));
+          cursor: pointer;
+          border: none;
+          box-shadow: 0 2px 8px hsl(var(--matcha-600) / 0.3);
+        }
+      `}</style>
 
       {/* Main Content */}
       <main className="pt-48 pb-12 px-4 sm:px-6 lg:px-8">
@@ -398,7 +399,7 @@ export default function ProfilePage() {
             <CardHeader className="p-8">
               <CardTitle className="flex items-center text-2xl font-light text-gray-900">
                 <Calculator className="mr-3 h-6 w-6 text-matcha-800" />
-                Estimated Rewards
+                Estimated Monthly Rewards
               </CardTitle>
               <p className="text-sm text-gray-600 font-light mt-2">
                 Customize your monthly spending to see potential rewards
@@ -460,11 +461,11 @@ export default function ProfilePage() {
                             }
                             className="w-full h-2 bg-matcha-200/50 rounded-full appearance-none cursor-pointer slider"
                             style={{
-                              background: `linear-gradient(to right, #6d9a51 0%, #6d9a51 ${
+                              background: `linear-gradient(to right, hsl(var(--matcha-600)) 0%, hsl(var(--matcha-600)) ${
                                 (category.amount / 2000) * 100
-                              }%, #d3ddc5 ${
+                              }%, hsl(var(--matcha-200)) ${
                                 (category.amount / 2000) * 100
-                              }%, #d3ddc5 100%)`,
+                              }%, hsl(var(--matcha-200)) 100%)`,
                             }}
                           />
                         </div>
@@ -524,7 +525,7 @@ export default function ProfilePage() {
       </main>
 
       {/* Add Card Modal */}
-      {showAddModal && (
+      {!muted && showAddModal && (
         <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-matcha-50 rounded-3xl shadow-2xl w-full max-w-md">
             <div className="p-8">
@@ -611,12 +612,64 @@ export default function ProfilePage() {
         </div>
       )}
 
-      {activeCardMenu && (
+      {!muted && activeCardMenu && (
         <div
           className="fixed inset-0 z-0"
           onClick={() => setActiveCardMenu(null)}
         />
       )}
-    </div>
+    </>
+  );
+
+  return (
+    <>
+      <SignedIn>
+        <div className="min-h-screen bg-gradient-to-b from-matcha-50/30 via-white to-matcha-50/20 flex flex-col">
+          <Header currentPage="profile" />
+          <div className="flex-1">
+            <ProfileContent />
+          </div>
+        </div>
+      </SignedIn>
+      <SignedOut>
+        <div className="relative min-h-screen bg-gradient-to-b from-matcha-50/30 via-white to-matcha-50/20 overflow-hidden">
+          <div className="pointer-events-none absolute inset-0 select-none opacity-40 blur-sm">
+            <div className="h-full overflow-hidden">
+              <ProfileContent muted />
+            </div>
+          </div>
+          <Header currentPage="profile" />
+          <div className="relative z-10 flex min-h-screen flex-col">
+            <div className="flex flex-1 flex-col items-center justify-center gap-8 bg-white/70 px-6 pb-16 pt-40 text-center backdrop-blur-sm">
+              <div className="max-w-xl space-y-4">
+                <h1 className="text-3xl font-semibold text-matcha-900 sm:text-4xl">
+                  Sign In to Maximize CardMatcha!
+                </h1>
+                <p className="text-base text-matcha-900/80">
+                  You're getting a preview of the insights waiting once you sign
+                  in. Bring your personalized dashboard to life with a secure
+                  account.
+                </p>
+              </div>
+              <div className="flex flex-col gap-4 sm:flex-row">
+                <Button
+                  asChild
+                  variant="secondary"
+                  className="rounded-full px-8 py-5 text-base font-medium text-matcha-900 shadow-sm transition-colors duration-300 hover:bg-[#ede8de] hover:text-matcha-900"
+                >
+                  <Link href="/sign-in">Sign In</Link>
+                </Button>
+                <Button
+                  asChild
+                  className="rounded-full px-8 py-5 text-base font-medium bg-matcha-600 text-white shadow-sm transition-colors duration-300 hover:bg-matcha-700"
+                >
+                  <Link href="/sign-up">Sign Up</Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </SignedOut>
+    </>
   );
 }

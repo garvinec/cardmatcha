@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { HeaderSearch } from "./header-search";
+import { SignedIn, UserButton } from "@clerk/nextjs";
 
 interface HeaderProps {
   currentPage?: string;
@@ -64,6 +65,9 @@ export function Header({ currentPage = "home" }: HeaderProps) {
             >
               Profile
             </Link>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
           </nav>
         </div>
       </div>
