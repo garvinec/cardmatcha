@@ -230,7 +230,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50/30 via-white to-lime-50/20">
+    <div className="min-h-screen bg-gradient-to-b from-matcha-50/40 via-matcha-100 to-matcha-200/40">
       <Header />
 
       <main className="py-12 px-4 sm:px-6 lg:px-8">
@@ -240,7 +240,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             <Link href="/">
               <Button
                 variant="ghost"
-                className="text-gray-600 hover:text-gray-900 hover:bg-green-50 rounded-full px-6 transition-all duration-300"
+                className="text-gray-600 hover:text-gray-900 hover:bg-matcha-50 rounded-full px-6 transition-all duration-300"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Home
@@ -254,13 +254,13 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             <h1 className="text-5xl font-light text-gray-900 mb-6 tracking-tight">
               {category.name}
             </h1>
-            <p className="text-xl text-green-800/70 max-w-3xl mx-auto font-light leading-relaxed">
+            <p className="text-xl text-matcha-800/80 max-w-3xl mx-auto font-light leading-relaxed">
               {category.description}
             </p>
             <div className="mt-8">
               <Badge
                 variant="secondary"
-                className="bg-green-100 text-green-800 text-sm px-6 py-2 rounded-full border-0"
+                className="bg-matcha-100 text-matcha-800 text-sm px-6 py-2 rounded-full border-0"
               >
                 {categoryCards.length}{" "}
                 {categoryCards.length === 1 ? "Card" : "Cards"} Available
@@ -277,7 +277,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             </div>
           ) : (
             <div className="text-center py-20">
-              <div className="w-24 h-24 bg-gradient-to-br from-green-100 to-green-200 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-lg">
+              <div className="w-24 h-24 bg-gradient-to-br from-matcha-100 to-matcha-200 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-lg">
                 <div className="text-5xl">🔍</div>
               </div>
               <h3 className="text-3xl font-light text-gray-900 mb-6">
@@ -289,7 +289,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               </p>
               <Button
                 asChild
-                className="bg-green-800 hover:bg-green-900 text-white rounded-full px-8 py-6 font-light shadow-lg hover:shadow-xl transition-all duration-300"
+                className="bg-matcha-700 hover:bg-matcha-800 text-white rounded-full px-8 py-6 font-light shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 <Link href="/chat">Ask Our AI for Recommendations</Link>
               </Button>

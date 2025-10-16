@@ -46,7 +46,20 @@ const config: Config = {
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
-  			chart: {
+                        matcha: {
+                                DEFAULT: 'hsl(var(--matcha-500))',
+                                50: 'hsl(var(--matcha-50))',
+                                100: 'hsl(var(--matcha-100))',
+                                200: 'hsl(var(--matcha-200))',
+                                300: 'hsl(var(--matcha-300))',
+                                400: 'hsl(var(--matcha-400))',
+                                500: 'hsl(var(--matcha-500))',
+                                600: 'hsl(var(--matcha-600))',
+                                700: 'hsl(var(--matcha-700))',
+                                800: 'hsl(var(--matcha-800))',
+                                900: 'hsl(var(--matcha-900))'
+                        },
+                        chart: {
   				'1': 'hsl(var(--chart-1))',
   				'2': 'hsl(var(--chart-2))',
   				'3': 'hsl(var(--chart-3))',

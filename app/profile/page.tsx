@@ -1,7 +1,4 @@
 "use client";
-import { useState } from "react";
-import Link from "next/link";
-import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { Header } from "@/components/header";
 import {
   Trophy,
@@ -14,10 +11,13 @@ import {
   Calculator,
   Minus,
 } from "lucide-react";
+import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 
 // Mock user data
 const userData = {
@@ -211,18 +211,18 @@ export default function ProfilePage() {
           width: 20px;
           height: 20px;
           border-radius: 50%;
-          background: #15803d;
+          background: #6d9a51;
           cursor: pointer;
-          box-shadow: 0 2px 8px rgba(21, 128, 61, 0.3);
+          box-shadow: 0 2px 8px rgba(109, 154, 81, 0.3);
         }
         .slider::-moz-range-thumb {
           width: 20px;
           height: 20px;
           border-radius: 50%;
-          background: #15803d;
+          background: #6d9a51;
           cursor: pointer;
           border: none;
-          box-shadow: 0 2px 8px rgba(21, 128, 61, 0.3);
+          box-shadow: 0 2px 8px rgba(109, 154, 81, 0.3);
         }
       `}</style>
 
@@ -231,27 +231,27 @@ export default function ProfilePage() {
         <div className="max-w-6xl mx-auto space-y-10">
           {/* Page Title */}
           <div className="text-center mb-12">
-            <h1 className="text-5xl font-light text-green-900 mb-4 tracking-tight">
+            <h1 className="text-5xl font-light text-matcha-900 mb-4 tracking-tight">
               Your Profile
             </h1>
-            <p className="text-lg text-green-800/70 font-light">
+            <p className="text-lg text-matcha-800/80 font-light">
               Manage your cards and optimize your rewards
             </p>
           </div>
 
           {/* Current Credit Cards */}
-          <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
+          <Card className="border-0 shadow-xl rounded-3xl bg-matcha-50/80 backdrop-blur overflow-hidden">
             <CardHeader className="p-8">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-2xl font-light text-gray-900">
                   My Cards{" "}
-                  <span className="text-green-700">
+                  <span className="text-matcha-700">
                     ({currentCards.length})
                   </span>
                 </CardTitle>
                 <Button
                   onClick={() => setShowAddModal(true)}
-                  className="bg-green-800 hover:bg-green-900 text-white rounded-full px-6 py-5 font-light shadow-lg hover:shadow-xl transition-all duration-300"
+                  className="bg-matcha-700 hover:bg-matcha-800 text-white rounded-full px-6 py-5 font-light shadow-lg hover:shadow-xl transition-all duration-300"
                 >
                   <Plus className="mr-2 h-4 w-4" />
                   Add Card
@@ -263,7 +263,7 @@ export default function ProfilePage() {
                 {currentCards.map((card) => (
                   <div
                     key={card.id}
-                    className="border border-green-100/50 rounded-2xl p-6 bg-gradient-to-br from-white to-green-50/30 relative shadow-sm hover:shadow-lg transition-all duration-300"
+                    className="border border-matcha-200/50 rounded-2xl p-6 bg-gradient-to-br from-matcha-50 to-matcha-100/30 relative shadow-sm hover:shadow-lg transition-all duration-300"
                   >
                     <div className="absolute top-4 right-4">
                       <button
@@ -272,16 +272,16 @@ export default function ProfilePage() {
                             activeCardMenu === card.id ? null : card.id
                           )
                         }
-                        className="p-2 hover:bg-green-100/60 rounded-full transition-all duration-300"
+                        className="p-2 hover:bg-matcha-100/60 rounded-full transition-all duration-300"
                       >
                         <MoreHorizontal className="h-4 w-4 text-gray-400" />
                       </button>
 
                       {activeCardMenu === card.id && (
-                        <div className="absolute right-0 top-10 bg-white border border-green-200/50 rounded-2xl shadow-xl py-2 z-10 min-w-[130px]">
+                        <div className="absolute right-0 top-10 bg-matcha-50 border border-matcha-200/50 rounded-2xl shadow-xl py-2 z-10 min-w-[130px]">
                           <button
                             onClick={() => editCard(card.id)}
-                            className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-green-50 flex items-center font-light transition-colors duration-300"
+                            className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-matcha-50 flex items-center font-light transition-colors duration-300"
                           >
                             <Edit className="mr-2 h-3 w-3" />
                             Edit
@@ -308,7 +308,7 @@ export default function ProfilePage() {
                       </div>
                       <Badge
                         variant="outline"
-                        className="border-green-300/50 text-green-800 rounded-full px-3 py-1 font-light bg-green-50"
+                        className="border-matcha-300/50 text-matcha-800 rounded-full px-3 py-1 font-light bg-matcha-50"
                       >
                         {card.primaryCategory}
                       </Badge>
@@ -341,7 +341,7 @@ export default function ProfilePage() {
                         <span className="text-gray-500 font-light">
                           Rewards Earned
                         </span>
-                        <span className="font-normal text-green-800">
+                        <span className="font-normal text-matcha-800">
                           {card.rewardsEarned}
                         </span>
                       </div>
@@ -353,10 +353,10 @@ export default function ProfilePage() {
           </Card>
 
           {/* Best Cards by Category */}
-          <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
+          <Card className="border-0 shadow-xl rounded-3xl bg-matcha-50/80 backdrop-blur overflow-hidden">
             <CardHeader className="p-8">
               <CardTitle className="flex items-center text-2xl font-light text-gray-900">
-                <Trophy className="mr-3 h-6 w-6 text-green-800" />
+                <Trophy className="mr-3 h-6 w-6 text-matcha-800" />
                 Best Cards by Category
               </CardTitle>
             </CardHeader>
@@ -365,12 +365,12 @@ export default function ProfilePage() {
                 {Object.entries(userData.bestCards).map(([category, info]) => (
                   <div
                     key={category}
-                    className="border border-green-100/50 rounded-2xl p-6 bg-gradient-to-br from-white to-green-50/30 shadow-sm hover:shadow-lg transition-all duration-300"
+                    className="border border-matcha-200/50 rounded-2xl p-6 bg-gradient-to-br from-matcha-50 to-matcha-100/30 shadow-sm hover:shadow-lg transition-all duration-300"
                   >
                     <div className="flex justify-between items-start mb-3">
                       <h3 className="font-normal text-gray-900">{category}</h3>
                       {info.card !== "None" ? (
-                        <Badge className="bg-green-100 text-green-800 border-0 rounded-full font-light">
+                        <Badge className="bg-matcha-100 text-matcha-800 border-0 rounded-full font-light">
                           Optimized
                         </Badge>
                       ) : (
@@ -382,7 +382,7 @@ export default function ProfilePage() {
                         </Badge>
                       )}
                     </div>
-                    <p className="text-sm font-normal text-green-800 mb-2">
+                    <p className="text-sm font-normal text-matcha-800 mb-2">
                       {info.card}
                     </p>
                     <p className="text-xs text-gray-600 font-light leading-relaxed">
@@ -395,56 +395,63 @@ export default function ProfilePage() {
           </Card>
 
           {/* Estimated Savings */}
-          <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
+          <Card className="border-0 shadow-xl rounded-3xl bg-matcha-50/80 backdrop-blur overflow-hidden">
             <CardHeader className="p-8">
               <CardTitle className="flex items-center text-2xl font-light text-gray-900">
-                <Calculator className="mr-3 h-6 w-6 text-green-800" />
+                <Calculator className="mr-3 h-6 w-6 text-matcha-800" />
                 Estimated Monthly Rewards
               </CardTitle>
+              <p className="text-sm text-gray-600 font-light mt-2">
+                Customize your monthly spending to see potential rewards
+              </p>
             </CardHeader>
             <CardContent className="p-8 pt-0">
-              <div className="grid lg:grid-cols-2 gap-8">
-                <div className="rounded-3xl bg-gradient-to-br from-green-50 via-white to-lime-50 p-6 border border-green-100/50 shadow-inner">
-                  <div className="flex justify-between items-center mb-6">
-                    <div>
-                      <p className="text-sm text-gray-500 font-light">
-                        Estimated Monthly Rewards
-                      </p>
-                      <p className="text-4xl font-light text-green-900">
-                        ${totalEstimatedRewards}
-                      </p>
-                    </div>
-                    <Badge className="bg-green-100 text-green-800 border-0 rounded-full font-light">
-                      +18% vs last month
-                    </Badge>
-                  </div>
+              <div className="space-y-8">
+                <div className="flex justify-between items-center pb-3 border-b border-gray-200">
+                  <span className="text-sm font-light text-gray-600">
+                    Category
+                  </span>
+                  <span className="text-sm font-light text-gray-600">
+                    Monthly amount
+                  </span>
+                </div>
 
-                  <div className="space-y-4">
-                    {spendingCategories.map((category) => (
-                      <div
-                        key={category.id}
-                        className="bg-white/80 border border-green-100/50 rounded-2xl p-4 shadow-sm backdrop-blur"
-                      >
-                        <div className="flex justify-between items-center mb-3">
-                          <div>
-                            <p className="text-sm font-normal text-gray-900">
-                              {category.name}
-                            </p>
-                            <p className="text-xs text-gray-500 font-light">
-                              {category.rewardRate} rewards rate
-                            </p>
-                          </div>
-                          <Badge className="bg-green-50 text-green-700 border-0 rounded-full font-light">
-                            ${category.amount}
-                          </Badge>
+                <div className="space-y-6">
+                  {spendingCategories.map((category) => (
+                    <div key={category.id} className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-xs text-matcha-800 font-light mb-1">
+                            Earn {category.rewardRate}
+                          </p>
+                          <p className="text-sm font-normal text-gray-900">
+                            {category.name}
+                          </p>
                         </div>
+                        <div className="text-xl font-light text-matcha-800">
+                          ${category.amount}
+                        </div>
+                      </div>
 
-                        <div className="flex items-center gap-4">
-                          <Minus className="h-4 w-4 text-green-700" />
+                      <div className="flex items-center space-x-4">
+                        <button
+                          onClick={() =>
+                            updateSpending(
+                              category.id,
+                              Math.max(0, category.amount - 50)
+                            )
+                          }
+                          className="w-9 h-9 rounded-full border-2 border-matcha-600/50 flex items-center justify-center hover:bg-matcha-50 transition-all duration-300 shadow-sm"
+                        >
+                          <Minus className="h-4 w-4 text-matcha-700" />
+                        </button>
+
+                        <div className="flex-1 relative">
                           <input
                             type="range"
                             min="0"
-                            max="1500"
+                            max="2000"
+                            step="50"
                             value={category.amount}
                             onChange={(e) =>
                               updateSpending(
@@ -452,141 +459,49 @@ export default function ProfilePage() {
                                 Number.parseInt(e.target.value)
                               )
                             }
-                            className="flex-1 slider accent-green-800"
+                            className="w-full h-2 bg-matcha-200/50 rounded-full appearance-none cursor-pointer slider"
+                            style={{
+                              background: `linear-gradient(to right, #6d9a51 0%, #6d9a51 ${
+                                (category.amount / 2000) * 100
+                              }%, #d3ddc5 ${
+                                (category.amount / 2000) * 100
+                              }%, #d3ddc5 100%)`,
+                            }}
                           />
-                          <Plus className="h-4 w-4 text-green-700" />
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
 
-                <div className="space-y-6">
-                  <Card className="border border-green-100/50 rounded-3xl bg-white/70 backdrop-blur">
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-lg font-light text-gray-900">
-                        Monthly Summary
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-gray-500 font-light">
-                          Total Spend in Trackers
-                        </span>
-                        <span className="font-normal text-gray-900">
-                          $
-                          {spendingCategories
-                            .reduce(
-                              (total, category) => total + category.amount,
-                              0
+                        <button
+                          onClick={() =>
+                            updateSpending(
+                              category.id,
+                              Math.min(2000, category.amount + 50)
                             )
-                            .toLocaleString()}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-500 font-light">
-                          Optimized Categories
-                        </span>
-                        <span className="font-normal text-green-800">
-                          4 / 6
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-500 font-light">
-                          Potential Missed Rewards
-                        </span>
-                        <span className="font-normal text-orange-500">$34</span>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card className="border border-green-100/50 rounded-3xl bg-white/70 backdrop-blur">
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-lg font-light text-gray-900">
-                        Recommended Actions
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                      {userData.recommendedActions.map((action, index) => (
-                        <div
-                          key={index}
-                          className="flex items-start gap-3 p-4 bg-gradient-to-r from-green-50/70 to-lime-50/70 rounded-2xl border border-green-100/50"
+                          }
+                          className="w-9 h-9 rounded-full border-2 border-matcha-600/50 flex items-center justify-center hover:bg-matcha-50 transition-all duration-300 shadow-sm"
                         >
-                          <div className="w-2 h-2 bg-green-700 rounded-full mt-2 flex-shrink-0" />
-                          <p className="text-sm text-gray-700 font-light leading-relaxed">
-                            {action}
-                          </p>
-                        </div>
-                      ))}
-                    </CardContent>
-                  </Card>
+                          <Plus className="h-4 w-4 text-matcha-700" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="bg-gradient-to-r from-matcha-700 to-matcha-600 text-white rounded-2xl p-6 text-center shadow-lg">
+                  <p className="text-sm font-light mb-1 opacity-90">
+                    Estimated monthly rewards
+                  </p>
+                  <p className="text-3xl font-light">
+                    ${totalEstimatedRewards}
+                  </p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Card Search */}
-          <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
+          {/* Recommended Actions */}
+          <Card className="border-0 shadow-xl rounded-3xl bg-matcha-50/80 backdrop-blur overflow-hidden">
             <CardHeader className="p-8">
-              <CardTitle className="flex items-center text-2xl font-light text-gray-900">
-                <Search className="mr-3 h-6 w-6 text-green-800" />
-                Find New Cards
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-8 pt-0">
-              <div className="relative max-w-2xl mx-auto">
-                <Search className="absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-                <Input
-                  type="text"
-                  placeholder="Search for credit cards..."
-                  value={searchQuery}
-                  onChange={(e) => handleSearchChange(e.target.value)}
-                  className="pl-12 pr-4 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-green-500/20 font-light"
-                />
-
-                {filteredCards.length > 0 && (
-                  <div className="absolute top-full left-0 right-0 mt-3 bg-white border border-gray-200 rounded-2xl shadow-xl z-10 max-h-60 overflow-y-auto">
-                    {filteredCards.map((card) => (
-                      <button
-                        key={card.id}
-                        onClick={() => addCard(card)}
-                        className="w-full px-5 py-4 text-left hover:bg-green-50 border-b border-gray-100 last:border-b-0 transition-colors duration-300"
-                      >
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <p className="font-normal text-gray-900">
-                              {card.name}
-                            </p>
-                            <p className="text-sm text-gray-600 font-light">
-                              {card.issuer}
-                            </p>
-                          </div>
-                          <Badge
-                            variant="outline"
-                            className="text-xs font-light"
-                          >
-                            {card.category}
-                          </Badge>
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                )}
-
-                {searchQuery && filteredCards.length === 0 && (
-                  <div className="absolute top-full left-0 right-0 mt-3 bg-white border border-gray-200 rounded-2xl shadow-xl p-5 text-center text-gray-500 text-sm font-light">
-                    No cards found matching "{searchQuery}"
-                  </div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Recommendations */}
-          <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
-            <CardHeader className="p-8">
-              <CardTitle className="flex items-center text-2xl font-light text-gray-900">
-                <Trophy className="mr-3 h-6 w-6 text-green-800" />
+              <CardTitle className="text-2xl font-light text-gray-900">
                 Recommendations
               </CardTitle>
             </CardHeader>
@@ -595,9 +510,9 @@ export default function ProfilePage() {
                 {userData.recommendedActions.map((action, index) => (
                   <div
                     key={index}
-                    className="flex items-start space-x-4 p-5 bg-gradient-to-r from-green-50/50 to-lime-50/50 rounded-2xl border border-green-100/50"
+                    className="flex items-start space-x-4 p-5 bg-gradient-to-r from-matcha-50/50 to-matcha-100/50 rounded-2xl border border-matcha-200/50"
                   >
-                    <div className="w-2 h-2 bg-green-700 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-2 h-2 bg-matcha-700 rounded-full mt-2 flex-shrink-0"></div>
                     <p className="text-sm text-gray-700 font-light leading-relaxed">
                       {action}
                     </p>
@@ -609,9 +524,10 @@ export default function ProfilePage() {
         </div>
       </main>
 
+      {/* Add Card Modal */}
       {!muted && showAddModal && (
         <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md">
+          <div className="bg-matcha-50 rounded-3xl shadow-2xl w-full max-w-md">
             <div className="p-8">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl font-light text-gray-900">
@@ -637,18 +553,18 @@ export default function ProfilePage() {
                     placeholder="Search for credit cards..."
                     value={searchQuery}
                     onChange={(e) => handleSearchChange(e.target.value)}
-                    className="pl-11 pr-4 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-green-500/20 font-light"
+                    className="pl-11 pr-4 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-matcha-500/20 font-light"
                     autoFocus
                   />
                 </div>
 
                 {filteredCards.length > 0 && (
-                  <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-2xl shadow-xl z-10 max-h-60 overflow-y-auto">
+                  <div className="absolute top-full left-0 right-0 mt-2 bg-matcha-50 border border-gray-200 rounded-2xl shadow-xl z-10 max-h-60 overflow-y-auto">
                     {filteredCards.map((card) => (
                       <button
                         key={card.id}
                         onClick={() => addCard(card)}
-                        className="w-full px-5 py-4 text-left hover:bg-green-50 border-b border-gray-100 last:border-b-0 transition-colors duration-300"
+                        className="w-full px-5 py-4 text-left hover:bg-matcha-50 border-b border-gray-100 last:border-b-0 transition-colors duration-300"
                       >
                         <div className="flex justify-between items-start">
                           <div>
@@ -672,7 +588,7 @@ export default function ProfilePage() {
                 )}
 
                 {searchQuery && filteredCards.length === 0 && (
-                  <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-2xl shadow-xl p-5 text-center text-gray-500 text-sm font-light">
+                  <div className="absolute top-full left-0 right-0 mt-2 bg-matcha-50 border border-gray-200 rounded-2xl shadow-xl p-5 text-center text-gray-500 text-sm font-light">
                     No cards found matching "{searchQuery}"
                   </div>
                 )}
