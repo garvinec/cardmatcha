@@ -57,6 +57,49 @@ export const getCardsByCategory = async (category: string) => {
   return data;
 };
 
+type CategoryRecord = {
+  id?: string;
+  slug?: string;
+  name?: string | null;
+  category_name?: string | null;
+  description?: string | null;
+  summary?: string | null;
+  icon?: string | null;
+  emoji?: string | null;
+};
+
+export const getCategoryWithCards = async (
+  slug: string
+): Promise<{ category: CategoryRecord | null; cards: any[] }> => {
+  const supabase = createSupabaseClient();
+
+  const [{ data: category, error: categoryError }, { data: cards, error: cardsError }]
+    = await Promise.all([
+      supabase
+        .from("card_categories")
+        .select("*")
+        .eq("slug", slug)
+        .maybeSingle(),
+      supabase
+        .from("credit_cards")
+        .select("*")
+        .eq("category_slug", slug),
+    ]);
+
+  if (categoryError && categoryError.code !== "PGRST116") {
+    throw new Error(categoryError.message);
+  }
+
+  if (cardsError) {
+    throw new Error(cardsError.message);
+  }
+
+  return {
+    category: (category as CategoryRecord | null) ?? null,
+    cards: cards ?? [],
+  };
+};
+
 export const getCardsByIssuer = async (issuer_code: string) => {
   const supabase = createSupabaseClient();
   const { data, error } = await supabase
