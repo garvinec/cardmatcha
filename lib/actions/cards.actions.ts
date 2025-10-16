@@ -35,8 +35,6 @@ export const getMostPopularCards = async () => {
   let query = supabase.from("credit_cards").select().limit(5);
 
   const { data, error } = await query;
-  console.log(data);
-  console.log(error);
 
   if (error) {
     throw new Error(error.message);

@@ -200,7 +200,6 @@ export default function ProfilePage() {
 
   const editCard = (cardId: number) => {
     setActiveCardMenu(null);
-    console.log("Edit card:", cardId);
   };
 
   const ProfileContent = ({ muted = false }: { muted?: boolean }) => (
