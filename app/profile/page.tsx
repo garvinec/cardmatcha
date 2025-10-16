@@ -245,7 +245,9 @@ export default function ProfilePage() {
               <div className="flex items-center justify-between">
                 <CardTitle className="text-2xl font-light text-gray-900">
                   My Cards{" "}
-                  <span className="text-green-700">({currentCards.length})</span>
+                  <span className="text-green-700">
+                    ({currentCards.length})
+                  </span>
                 </CardTitle>
                 <Button
                   onClick={() => setShowAddModal(true)}
@@ -322,14 +324,18 @@ export default function ProfilePage() {
                           Annual Fee
                         </span>
                         <span className="font-normal">
-                          {card.annualFee === 0 ? "No Fee" : `$${card.annualFee}`}
+                          {card.annualFee === 0
+                            ? "No Fee"
+                            : `$${card.annualFee}`}
                         </span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-500 font-light">
                           Monthly Spend
                         </span>
-                        <span className="font-normal">${card.monthlySpend}</span>
+                        <span className="font-normal">
+                          ${card.monthlySpend}
+                        </span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-500 font-light">
@@ -470,7 +476,10 @@ export default function ProfilePage() {
                         <span className="font-normal text-gray-900">
                           $
                           {spendingCategories
-                            .reduce((total, category) => total + category.amount, 0)
+                            .reduce(
+                              (total, category) => total + category.amount,
+                              0
+                            )
                             .toLocaleString()}
                         </span>
                       </div>
@@ -478,7 +487,9 @@ export default function ProfilePage() {
                         <span className="text-gray-500 font-light">
                           Optimized Categories
                         </span>
-                        <span className="font-normal text-green-800">4 / 6</span>
+                        <span className="font-normal text-green-800">
+                          4 / 6
+                        </span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-500 font-light">
@@ -550,7 +561,10 @@ export default function ProfilePage() {
                               {card.issuer}
                             </p>
                           </div>
-                          <Badge variant="outline" className="text-xs font-light">
+                          <Badge
+                            variant="outline"
+                            className="text-xs font-light"
+                          >
                             {card.category}
                           </Badge>
                         </div>
@@ -638,10 +652,17 @@ export default function ProfilePage() {
                       >
                         <div className="flex justify-between items-start">
                           <div>
-                            <p className="font-normal text-gray-900">{card.name}</p>
-                            <p className="text-sm text-gray-600 font-light">{card.issuer}</p>
+                            <p className="font-normal text-gray-900">
+                              {card.name}
+                            </p>
+                            <p className="text-sm text-gray-600 font-light">
+                              {card.issuer}
+                            </p>
                           </div>
-                          <Badge variant="outline" className="text-xs font-light">
+                          <Badge
+                            variant="outline"
+                            className="text-xs font-light"
+                          >
                             {card.category}
                           </Badge>
                         </div>
@@ -681,7 +702,6 @@ export default function ProfilePage() {
           onClick={() => setActiveCardMenu(null)}
         />
       )}
-
     </>
   );
 
@@ -710,7 +730,9 @@ export default function ProfilePage() {
                   Sign In to Maximize CardMatcha!
                 </h1>
                 <p className="text-base text-green-900/80">
-                  You're getting a preview of the insights waiting once you sign in. Bring your personalized dashboard to life with a secure account.
+                  You're getting a preview of the insights waiting once you sign
+                  in. Bring your personalized dashboard to life with a secure
+                  account.
                 </p>
               </div>
               <div className="flex flex-col gap-4 sm:flex-row">
