@@ -211,18 +211,18 @@ export default function ProfilePage() {
           width: 20px;
           height: 20px;
           border-radius: 50%;
-          background: #6d9a51;
+          background: hsl(var(--matcha-600));
           cursor: pointer;
-          box-shadow: 0 2px 8px rgba(109, 154, 81, 0.3);
+          box-shadow: 0 2px 8px hsl(var(--matcha-600) / 0.3);
         }
         .slider::-moz-range-thumb {
           width: 20px;
           height: 20px;
           border-radius: 50%;
-          background: #6d9a51;
+          background: hsl(var(--matcha-600));
           cursor: pointer;
           border: none;
-          box-shadow: 0 2px 8px rgba(109, 154, 81, 0.3);
+          box-shadow: 0 2px 8px hsl(var(--matcha-600) / 0.3);
         }
       `}</style>
 
@@ -461,11 +461,11 @@ export default function ProfilePage() {
                             }
                             className="w-full h-2 bg-matcha-200/50 rounded-full appearance-none cursor-pointer slider"
                             style={{
-                              background: `linear-gradient(to right, #6d9a51 0%, #6d9a51 ${
+                              background: `linear-gradient(to right, hsl(var(--matcha-600)) 0%, hsl(var(--matcha-600)) ${
                                 (category.amount / 2000) * 100
-                              }%, #d3ddc5 ${
+                              }%, hsl(var(--matcha-200)) ${
                                 (category.amount / 2000) * 100
-                              }%, #d3ddc5 100%)`,
+                              }%, hsl(var(--matcha-200)) 100%)`,
                             }}
                           />
                         </div>
@@ -624,7 +624,7 @@ export default function ProfilePage() {
   return (
     <>
       <SignedIn>
-        <div className="min-h-screen bg-gradient-to-b from-green-50/30 via-white to-lime-50/20 flex flex-col">
+        <div className="min-h-screen bg-gradient-to-b from-matcha-50/30 via-white to-matcha-50/20 flex flex-col">
           <Header currentPage="profile" />
           <div className="flex-1">
             <ProfileContent />
@@ -632,7 +632,7 @@ export default function ProfilePage() {
         </div>
       </SignedIn>
       <SignedOut>
-        <div className="relative min-h-screen bg-gradient-to-b from-green-50/30 via-white to-lime-50/20 overflow-hidden">
+        <div className="relative min-h-screen bg-gradient-to-b from-matcha-50/30 via-white to-matcha-50/20 overflow-hidden">
           <div className="pointer-events-none absolute inset-0 select-none opacity-40 blur-sm">
             <div className="h-full overflow-hidden">
               <ProfileContent muted />
@@ -642,10 +642,10 @@ export default function ProfilePage() {
           <div className="relative z-10 flex min-h-screen flex-col">
             <div className="flex flex-1 flex-col items-center justify-center gap-8 bg-white/70 px-6 pb-16 pt-40 text-center backdrop-blur-sm">
               <div className="max-w-xl space-y-4">
-                <h1 className="text-3xl font-semibold text-green-900 sm:text-4xl">
+                <h1 className="text-3xl font-semibold text-matcha-900 sm:text-4xl">
                   Sign In to Maximize CardMatcha!
                 </h1>
-                <p className="text-base text-green-900/80">
+                <p className="text-base text-matcha-900/80">
                   You're getting a preview of the insights waiting once you sign
                   in. Bring your personalized dashboard to life with a secure
                   account.
@@ -655,13 +655,13 @@ export default function ProfilePage() {
                 <Button
                   asChild
                   variant="secondary"
-                  className="rounded-full px-8 py-5 text-base font-medium text-green-900 shadow-sm transition-colors duration-300 hover:bg-[#ede8de] hover:text-green-900"
+                  className="rounded-full px-8 py-5 text-base font-medium text-matcha-900 shadow-sm transition-colors duration-300 hover:bg-[#ede8de] hover:text-matcha-900"
                 >
                   <Link href="/sign-in">Sign In</Link>
                 </Button>
                 <Button
                   asChild
-                  className="rounded-full px-8 py-5 text-base font-medium bg-[#4f8a4b] text-white shadow-sm transition-colors duration-300 hover:bg-[#3f7240]"
+                  className="rounded-full px-8 py-5 text-base font-medium bg-matcha-600 text-white shadow-sm transition-colors duration-300 hover:bg-matcha-700"
                 >
                   <Link href="/sign-up">Sign Up</Link>
                 </Button>
