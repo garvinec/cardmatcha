@@ -8,43 +8,6 @@ import { ChevronLeft, ChevronRight, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { getCards } from "@/lib/actions/cards.actions";
 
-// Mock data - replace with actual API call
-const mockCards = Array.from({ length: 47 }, (_, i) => ({
-  id: i + 1,
-  name: `Credit Card ${i + 1}`,
-  issuer: [
-    "Chase",
-    "American Express",
-    "Capital One",
-    "Citi",
-    "Bank of America",
-  ][i % 5],
-  image: `/api/placeholder/300/200?text=Card${i + 1}`,
-  annualFee: i % 3 === 0 ? 0 : Math.floor(Math.random() * 500) + 95,
-  signupBonus: `$${Math.floor(Math.random() * 500) + 200} bonus`,
-  signupRequirement: `$${Math.floor(Math.random() * 3000) + 1000} in ${
-    Math.floor(Math.random() * 3) + 3
-  } months`,
-  rewards: [
-    `${Math.floor(Math.random() * 5) + 1}% cashback on all purchases`,
-    `${Math.floor(Math.random() * 3) + 2}% on bonus categories`,
-  ],
-  benefits: [
-    "No foreign transaction fees",
-    "Purchase protection",
-    "Extended warranty",
-  ],
-  category: ["Travel", "Cash Back", "Business", "Student", "Rewards"][i % 5],
-  rating: Math.round((Math.random() * 1.5 + 3.5) * 10) / 10,
-  bestFor: [
-    "Everyday spending",
-    "Travel enthusiasts",
-    "Business expenses",
-    "Students building credit",
-    "Maximizing rewards",
-  ][i % 5],
-}));
-
 const CARDS_PER_PAGE = 15;
 const INITIAL_PAGE = 1;
 
