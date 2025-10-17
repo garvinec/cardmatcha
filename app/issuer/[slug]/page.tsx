@@ -49,19 +49,19 @@ const issuerData = {
       "Rotating categories and cash back with excellent customer service and unique cashback matching.",
     icon: "🔍",
   },
-  synchrony: {
+  "synchrony-bank": {
     name: "Synchrony",
     description:
       "Store cards and financing options with promotional financing and retail partnerships.",
     icon: "🔄",
   },
-  td: {
+  "td-bank": {
     name: "TD Bank",
     description:
       "Simple rewards and low fees with straightforward earning and convenient banking integration.",
     icon: "🏢",
   },
-  usbank: {
+  "us-bank": {
     name: "US Bank",
     description:
       "FlexPerks and cash back rewards with solid earning rates and practical redemption options.",
@@ -96,13 +96,14 @@ export default async function IssuerPage({ params }: IssuerPageProps) {
     notFound();
   }
 
-  const { data: initialCards, totalCount, issuerName } = await getCardsByIssuer(
-    slug,
-    {
-      pageNumber: 1,
-      cardsPerPage: CARDS_PER_PAGE,
-    }
-  );
+  const {
+    data: initialCards,
+    totalCount,
+    issuerName,
+  } = await getCardsByIssuer(slug, {
+    pageNumber: 1,
+    cardsPerPage: CARDS_PER_PAGE,
+  });
 
   if (!initialCards || initialCards.length === 0) {
     notFound();
