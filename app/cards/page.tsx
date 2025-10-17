@@ -1,145 +1,127 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Header } from "@/components/header";
 import { CreditCardComponent } from "@/components/credit-card";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, ArrowLeft } from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { getCards } from "@/lib/actions/cards.actions";
-
-// Mock data - replace with actual API call
-const mockCards = Array.from({ length: 47 }, (_, i) => ({
-  id: i + 1,
-  name: `Credit Card ${i + 1}`,
-  issuer: [
-    "Chase",
-    "American Express",
-    "Capital One",
-    "Citi",
-    "Bank of America",
-  ][i % 5],
-  image: `/api/placeholder/300/200?text=Card${i + 1}`,
-  annualFee: i % 3 === 0 ? 0 : Math.floor(Math.random() * 500) + 95,
-  signupBonus: `$${Math.floor(Math.random() * 500) + 200} bonus`,
-  signupRequirement: `$${Math.floor(Math.random() * 3000) + 1000} in ${
-    Math.floor(Math.random() * 3) + 3
-  } months`,
-  rewards: [
-    `${Math.floor(Math.random() * 5) + 1}% cashback on all purchases`,
-    `${Math.floor(Math.random() * 3) + 2}% on bonus categories`,
-  ],
-  benefits: [
-    "No foreign transaction fees",
-    "Purchase protection",
-    "Extended warranty",
-  ],
-  category: ["Travel", "Cash Back", "Business", "Student", "Rewards"][i % 5],
-  rating: Math.round((Math.random() * 1.5 + 3.5) * 10) / 10,
-  bestFor: [
-    "Everyday spending",
-    "Travel enthusiasts",
-    "Business expenses",
-    "Students building credit",
-    "Maximizing rewards",
-  ][i % 5],
-}));
 
 const CARDS_PER_PAGE = 15;
 const INITIAL_PAGE = 1;
 
 export default function AllCardsPage() {
-  const [currentPage, setCurrentPage] = useState(INITIAL_PAGE);
-  // TODO: Change the type later
   const [cards, setCards] = useState<any[]>([]);
+  const [currentPage, setCurrentPage] = useState(INITIAL_PAGE);
+  const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [totalPages, setTotalPages] = useState(0);
-  const [totalCount, setTotalCount] = useState(0);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchCards = async () => {
-      const { data: initialCards, totalCount } = await getCards({
-        pageNumber: INITIAL_PAGE,
-        cardsPerPage: CARDS_PER_PAGE,
-      });
-      setCards(initialCards || []);
-      setTotalPages(Math.ceil(totalCount / CARDS_PER_PAGE));
-      setTotalCount(totalCount);
-    };
-    fetchCards();
-  }, []);
+    let isMounted = true;
 
-  useEffect(() => {
     const fetchCards = async () => {
-      const { data: returnedCards } = await getCards({
-        pageNumber: currentPage,
-        cardsPerPage: CARDS_PER_PAGE,
-      });
-      setCards(returnedCards || []);
+      try {
+        setLoading(true);
+        setError(null);
+
+        const { data, totalCount } = await getCards({
+          pageNumber: currentPage,
+          cardsPerPage: CARDS_PER_PAGE,
+        });
+
+        if (!isMounted) {
+          return;
+        }
+
+        setCards(data ?? []);
+        if (typeof totalCount === "number") {
+          setCount(totalCount);
+        }
+      } catch (err) {
+        if (!isMounted) {
+          return;
+        }
+        setError("Unable to load cards right now. Please try again later.");
+      } finally {
+        if (!isMounted) {
+          return;
+        }
+        setLoading(false);
+        if (currentPage !== INITIAL_PAGE) {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }
     };
+
     fetchCards();
+
+    return () => {
+      isMounted = false;
+    };
   }, [currentPage]);
 
+  const totalPages = useMemo(
+    () => Math.max(1, Math.ceil(count / CARDS_PER_PAGE)),
+    [count]
+  );
+
   const startIndex = (currentPage - 1) * CARDS_PER_PAGE;
-  const endIndex = startIndex + CARDS_PER_PAGE;
+  const endIndex = Math.min(startIndex + CARDS_PER_PAGE, count);
 
   const handlePageChange = (page: number) => {
-    setLoading(true);
+    if (page < 1 || page > totalPages || page === currentPage || loading) {
+      return;
+    }
     setCurrentPage(page);
-    // Simulate loading delay
-    setTimeout(() => setLoading(false), 300);
-    // Scroll to top of the page
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const generatePageNumbers = () => {
-    const pages = [];
+    const pages: (number | "...")[] = [];
     const maxVisiblePages = 5;
 
     if (totalPages <= maxVisiblePages) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
       }
-    } else {
-      if (currentPage <= 3) {
-        for (let i = 1; i <= 4; i++) {
-          pages.push(i);
-        }
-        pages.push("...");
-        pages.push(totalPages);
-      } else if (currentPage >= totalPages - 2) {
-        pages.push(1);
-        pages.push("...");
-        for (let i = totalPages - 3; i <= totalPages; i++) {
-          pages.push(i);
-        }
-      } else {
-        pages.push(1);
-        pages.push("...");
-        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
-          pages.push(i);
-        }
-        pages.push("...");
-        pages.push(totalPages);
+    } else if (currentPage <= 3) {
+      for (let i = 1; i <= 4; i++) {
+        pages.push(i);
       }
+      pages.push("...");
+      pages.push(totalPages);
+    } else if (currentPage >= totalPages - 2) {
+      pages.push(1);
+      pages.push("...");
+      for (let i = totalPages - 3; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      pages.push(1);
+      pages.push("...");
+      for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+        pages.push(i);
+      }
+      pages.push("...");
+      pages.push(totalPages);
     }
 
     return pages;
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      <Header currentPage="cards" />
+    <div className="min-h-screen bg-gradient-to-b from-matcha-50/40 via-matcha-100 to-matcha-200/40">
+      <Header />
 
-      {/* Page Header */}
-      <section className="pt-48 pb-8 px-4 sm:px-6 lg:px-8">
+      <main className="py-12 px-4 sm:px-6 lg:px-8 pt-48">
         <div className="max-w-7xl mx-auto">
-          {/* Back Button */}
-          <div className="mb-6">
+          <div className="mb-8">
             <Link href="/">
               <Button
                 variant="ghost"
-                className="text-gray-600 hover:text-gray-900"
+                className="text-gray-600 hover:text-gray-900 hover:bg-matcha-50 rounded-full px-6 transition-all duration-300"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Home
@@ -147,36 +129,46 @@ export default function AllCardsPage() {
             </Link>
           </div>
 
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-16">
+            <h1 className="text-5xl font-light text-gray-900 mb-6 tracking-tight">
               All Credit Cards
             </h1>
-            <p className="text-lg text-gray-600 mb-6">
-              Browse our complete collection of {cards.length} credit cards
+            <p className="text-xl text-matcha-800/80 max-w-3xl mx-auto font-light leading-relaxed">
+              Explore every card in the CardMatcha collection to find rewards,
+              perks, and benefits that fit the way you live and spend.
             </p>
-            <div className="text-sm text-gray-500">
-              Showing {startIndex + 1}-{Math.min(endIndex, totalCount)} of{" "}
-              {totalCount} cards
+            <div className="mt-8">
+              <Badge
+                variant="secondary"
+                className="bg-matcha-100 text-matcha-800 text-sm px-6 py-2 rounded-full border-0"
+              >
+                {count} {count === 1 ? "Card" : "Cards"} Available
+              </Badge>
             </div>
           </div>
 
-          {/* Cards Grid */}
-          <div id="cards-grid" className="mb-12">
-            {loading ? (
-              <div className="flex justify-center items-center py-20">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {cards.map((card) => (
-                  <CreditCardComponent key={card.id} card={card} />
-                ))}
-              </div>
-            )}
+          <div className="text-center mb-12">
+            <div className="text-sm text-gray-500">
+              Showing {count === 0 ? 0 : startIndex + 1}-{endIndex} of {count}{" "}
+              cards
+            </div>
           </div>
 
-          {/* Pagination */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          {error ? (
+            <div className="text-center py-20 text-red-600">{error}</div>
+          ) : loading ? (
+            <div className="flex justify-center items-center py-20">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-matcha-600"></div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {cards.map((card) => (
+                <CreditCardComponent key={card.id} card={card} />
+              ))}
+            </div>
+          )}
+
+          <div className="mt-12 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="text-sm text-gray-600">
               Page {currentPage} of {totalPages}
             </div>
@@ -186,7 +178,7 @@ export default function AllCardsPage() {
                 variant="outline"
                 size="sm"
                 onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
+                disabled={currentPage === 1 || loading}
                 className="flex items-center gap-1"
               >
                 <ChevronLeft className="h-4 w-4" />
@@ -195,7 +187,7 @@ export default function AllCardsPage() {
 
               <div className="flex items-center gap-1">
                 {generatePageNumbers().map((page, index) => (
-                  <div key={index}>
+                  <div key={`${page}-${index}`}>
                     {page === "..." ? (
                       <span className="px-3 py-2 text-gray-500">...</span>
                     ) : (
@@ -203,10 +195,11 @@ export default function AllCardsPage() {
                         variant={currentPage === page ? "default" : "outline"}
                         size="sm"
                         onClick={() => handlePageChange(page as number)}
+                        disabled={loading}
                         className={`min-w-[40px] ${
                           currentPage === page
-                            ? "bg-blue-600 text-white"
-                            : "hover:bg-blue-50"
+                            ? "bg-matcha-700 text-white"
+                            : "hover:bg-matcha-50"
                         }`}
                       >
                         {page}
@@ -220,7 +213,7 @@ export default function AllCardsPage() {
                 variant="outline"
                 size="sm"
                 onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
+                disabled={currentPage === totalPages || loading}
                 className="flex items-center gap-1"
               >
                 Next
@@ -229,7 +222,7 @@ export default function AllCardsPage() {
             </div>
           </div>
         </div>
-      </section>
+      </main>
     </div>
   );
 }

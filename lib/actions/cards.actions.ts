@@ -43,18 +43,31 @@ export const getMostPopularCards = async () => {
   return data;
 };
 
-export const getCardsByCategory = async (category: string) => {
+export const getCardsByCategory = async (
+  category: string,
+  {
+    pageNumber = 1,
+    cardsPerPage = 15,
+  }: { pageNumber?: number; cardsPerPage?: number } = {}
+) => {
   const supabase = createSupabaseClient();
-  const { data, error } = await supabase
+  const from = (pageNumber - 1) * cardsPerPage;
+  const to = from + cardsPerPage - 1;
+
+  const { data, error, count } = await supabase
     .from("credit_cards")
-    .select("*")
-    .eq("category", category);
+    .select("*", { count: "exact" })
+    .eq("category", category)
+    .range(from, to);
 
   if (error) {
     throw new Error(error.message);
   }
 
-  return data;
+  return {
+    data: data ?? [],
+    totalCount: count ?? 0,
+  };
 };
 
 type CategoryRecord = {
@@ -100,20 +113,31 @@ export const getCategoryWithCards = async (
   };
 };
 
-export const getCardsByIssuer = async (issuer_code: string) => {
+export const getCardsByIssuer = async (
+  issuer_code: string,
+  {
+    pageNumber = 1,
+    cardsPerPage = 15,
+  }: { pageNumber?: number; cardsPerPage?: number } = {}
+) => {
   const supabase = createSupabaseClient();
-  const { data, error } = await supabase
+
+  const from = (pageNumber - 1) * cardsPerPage;
+  const to = from + cardsPerPage - 1;
+
+  const { data, error, count } = await supabase
     .from("credit_cards")
-    .select("*")
-    .eq("issuer_code", issuer_code);
+    .select("*", { count: "exact" })
+    .eq("issuer_code", issuer_code)
+    .range(from, to);
 
   if (error) {
     throw new Error(error.message);
   }
 
-  if (!data || data.length === 0) {
-    return { cardsByIssuer: [], issuerName: "" };
-  }
-
-  return { cardsByIssuer: data, issuerName: data[0].issuer };
+  return {
+    data: data ?? [],
+    totalCount: count ?? 0,
+    issuerName: data?.[0]?.issuer ?? null,
+  };
 };

@@ -1,43 +1,87 @@
 import { Header } from "@/components/header";
-import { CreditCardComponent } from "@/components/credit-card";
-import { Badge } from "@/components/ui/badge";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getCategoryWithCards } from "@/lib/actions/cards.actions";
+import { getCardsByCategory } from "@/lib/actions/cards.actions";
+import { CategoryCardsSection } from "./category-cards-section";
+
+const categoryData = {
+  travel: {
+    name: "Travel Rewards",
+    description:
+      "Earn points and miles on travel purchases, with bonus rewards for flights, hotels, and travel-related expenses.",
+    icon: "✈️",
+    category_tag: "Travel",
+  },
+  shopping: {
+    name: "Shopping Rewards",
+    description:
+      "Earn points on shopping purchases, with bonus rewards for online shopping, retail stores, and department stores.",
+    icon: "🛍️",
+    category_tag: "Shopping",
+  },
+  dining: {
+    name: "Dining & Food",
+    description:
+      "Maximum rewards at restaurants, food delivery, and dining experiences worldwide.",
+    icon: "🍽️",
+    category_tag: "Dining & Food Delivery",
+  },
+  gas: {
+    name: "Gas & Fuel",
+    description:
+      "Save money at gas stations and fuel purchases with specialized rewards programs.",
+    icon: "⛽",
+    category_tag: "Gas & Transit",
+  },
+  groceries: {
+    name: "Groceries",
+    description:
+      "Earn more on supermarket and grocery shopping with enhanced reward rates.",
+    icon: "🛒",
+    category_tag: "Groceries & Supermarkets",
+  },
+  entertainment: {
+    name: "Entertainment Rewards",
+    description:
+      "Earn points on entertainment purchases, with bonus rewards for streaming services, movies, and concerts.",
+    icon: "🎥",
+    category_tag: "Entertainment",
+  },
+};
 
 interface CategoryPageProps {
   params: Promise<{ slug: string }>;
 }
 
-const formatSlug = (value: string) =>
-  value
-    .split("-")
-    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
-    .join(" ");
+const CARDS_PER_PAGE = 15;
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const { slug } = await params;
-  const { category, cards: categoryCards } = await getCategoryWithCards(slug);
+  const categoryParam = categoryData[slug as keyof typeof categoryData];
 
-  if (!category && categoryCards.length === 0) {
+  if (!categoryParam) {
     notFound();
   }
 
-  const categoryName =
-    category?.name ?? category?.category_name ?? formatSlug(slug);
-  const categoryDescription =
-    category?.description ??
-    category?.summary ??
-    `Discover top ${categoryName.toLowerCase()} credit cards curated to maximize your rewards.`;
-  const categoryIcon = category?.icon ?? category?.emoji ?? "💳";
+  const { data: initialCards, totalCount } = await getCardsByCategory(
+    categoryParam.category_tag,
+    {
+      pageNumber: 1,
+      cardsPerPage: CARDS_PER_PAGE,
+    }
+  );
+
+  if (!initialCards || initialCards.length === 0) {
+    notFound();
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-matcha-50/40 via-matcha-100 to-matcha-200/40">
       <Header />
 
-      <main className="py-12 px-4 sm:px-6 lg:px-8">
+      <main className="py-12 px-4 sm:px-6 lg:px-8 pt-48">
         <div className="max-w-7xl mx-auto">
           {/* Back Button */}
           <div className="mb-8">
@@ -54,51 +98,21 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
           {/* Category Header */}
           <div className="text-center mb-16">
-            <div className="text-7xl mb-6">{categoryIcon}</div>
+            <div className="text-7xl mb-6">{categoryParam.icon}</div>
             <h1 className="text-5xl font-light text-gray-900 mb-6 tracking-tight">
-              {categoryName}
+              {categoryParam.name}
             </h1>
-            <p className="text-xl text-matcha-800/80 max-w-3xl mx-auto font-light leading-relaxed">
-              {categoryDescription}
-            </p>
-            <div className="mt-8">
-              <Badge
-                variant="secondary"
-                className="bg-matcha-100 text-matcha-800 text-sm px-6 py-2 rounded-full border-0"
-              >
-                {categoryCards.length}{" "}
-                {categoryCards.length === 1 ? "Card" : "Cards"} Available
-              </Badge>
-            </div>
           </div>
 
-          {/* Cards Grid */}
-          {categoryCards.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {categoryCards.map((card) => (
-                <CreditCardComponent key={card.id} card={card} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-20">
-              <div className="w-24 h-24 bg-gradient-to-br from-matcha-100 to-matcha-200 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-lg">
-                <div className="text-5xl">🔍</div>
-              </div>
-              <h3 className="text-3xl font-light text-gray-900 mb-6">
-                Coming Soon
-              </h3>
-              <p className="text-gray-600 mb-10 font-light text-lg max-w-md mx-auto leading-relaxed">
-                We're curating the best {categoryName.toLowerCase()} cards for
-                you.
-              </p>
-              <Button
-                asChild
-                className="bg-matcha-700 hover:bg-matcha-800 text-white rounded-full px-8 py-6 font-light shadow-lg hover:shadow-xl transition-all duration-300"
-              >
-                <Link href="/chat">Ask Our AI for Recommendations</Link>
-              </Button>
-            </div>
-          )}
+          <CategoryCardsSection
+            initialCards={initialCards}
+            totalCount={totalCount}
+            cardsPerPage={CARDS_PER_PAGE}
+            category={{
+              ...categoryParam,
+              slug,
+            }}
+          />
         </div>
       </main>
     </div>
