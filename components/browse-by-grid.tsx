@@ -2,28 +2,28 @@ import Link from "next/link";
 
 const categories = [
   {
-    name: "Travel",
+    name: "Travel Rewards",
     slug: "travel",
     description: "Points and miles",
     gradient: "from-orange-400/80 to-orange-600/80",
     icon: "✈️",
   },
   {
-    name: "Cash Back",
-    slug: "cashback",
-    description: "Simple rewards",
+    name: "Shopping Rewards",
+    slug: "shopping",
+    description: "Shopping rewards",
     gradient: "from-matcha-400/80 to-matcha-600/80",
-    icon: "💰",
+    icon: "🛍️",
   },
   {
-    name: "Dining",
+    name: "Dining & Food",
     slug: "dining",
     description: "Restaurant rewards",
     gradient: "from-purple-400/80 to-indigo-600/80",
     icon: "🍽️",
   },
   {
-    name: "Gas",
+    name: "Gas & Fuel",
     slug: "gas",
     description: "Fuel savings",
     gradient: "from-teal-400/80 to-teal-600/80",
@@ -37,11 +37,11 @@ const categories = [
     icon: "🛒",
   },
   {
-    name: "Premium",
-    slug: "premium",
-    description: "Luxury benefits",
+    name: "Entertainment Rewards",
+    slug: "entertainment",
+    description: "Entertainment rewards",
     gradient: "from-yellow-400/80 to-orange-500/80",
-    icon: "👑",
+    icon: "🎥",
   },
 ];
 
