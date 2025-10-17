@@ -6,8 +6,16 @@ import { TopPopularCards } from "@/components/most-popular-cards";
 import { CategoryGrid, IssuerGrid } from "@/components/browse-by-grid";
 import Link from "next/link";
 import Image from "next/image";
+import { getCards } from "@/lib/actions/cards.actions";
+import type { CreditCardType } from "@/components/credit-card";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const { data } = await getCards({ cardsPerPage: 6 });
+  const featuredCards = ((data ?? []) as CreditCardType[]).map((card) => ({
+    ...card,
+    id: String(card.id),
+  }));
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-matcha-50/40 via-matcha-100 to-matcha-200/40 overflow-x-hidden">
       <Header currentPage="home" />
@@ -87,7 +95,7 @@ export default function HomePage() {
               Curated selections for mindful spending
             </p>
           </div>
-          <CreditCardGrid />
+          <CreditCardGrid cards={featuredCards} />
           <div className="text-center mt-12">
             <Button
               size="lg"
