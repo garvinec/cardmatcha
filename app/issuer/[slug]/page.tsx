@@ -7,7 +7,7 @@ import { getCardsByIssuer } from "@/lib/actions/cards.actions";
 import { IssuerCardsSection } from "./issuer-cards-section";
 
 const issuerData = {
-  "american-express": {
+  amex: {
     name: "American Express",
     description:
       "Premium rewards and exclusive benefits with world-class customer service and unique card perks.",
@@ -19,13 +19,13 @@ const issuerData = {
       "Travel and lifestyle rewards cards with competitive benefits and flexible redemption options.",
     icon: "🏦",
   },
-  "bank-of-america": {
+  bofa: {
     name: "Bank of America",
     description:
       "Cash back and travel rewards with relationship banking benefits and customizable rewards.",
     icon: "🏛️",
   },
-  "capital-one": {
+  capitalone: {
     name: "Capital One",
     description:
       "No foreign fees and flexible rewards with innovative technology and straightforward earning structures.",
@@ -49,25 +49,25 @@ const issuerData = {
       "Rotating categories and cash back with excellent customer service and unique cashback matching.",
     icon: "🔍",
   },
-  "synchrony-bank": {
+  synchrony: {
     name: "Synchrony",
     description:
       "Store cards and financing options with promotional financing and retail partnerships.",
     icon: "🔄",
   },
-  "td-bank": {
+  td: {
     name: "TD Bank",
     description:
       "Simple rewards and low fees with straightforward earning and convenient banking integration.",
     icon: "🏢",
   },
-  "us-bank": {
+  usbank: {
     name: "US Bank",
     description:
       "FlexPerks and cash back rewards with solid earning rates and practical redemption options.",
     icon: "🇺🇸",
   },
-  "wells-fargo": {
+  wellsfargo: {
     name: "Wells Fargo",
     description:
       "Go Far rewards and cash back with relationship banking benefits and diverse card options.",
