@@ -48,7 +48,7 @@ const categories = [
 const issuers = [
   {
     name: "American Express",
-    slug: "american-express",
+    slug: "amex",
     gradient: "from-blue-500 to-blue-700",
     icon: "💳",
   },
@@ -60,13 +60,13 @@ const issuers = [
   },
   {
     name: "Bank of America",
-    slug: "bank-of-america",
+    slug: "bofa",
     gradient: "from-red-500 to-red-700",
     icon: "🏛️",
   },
   {
     name: "Capital One",
-    slug: "capital-one",
+    slug: "capitalone",
     gradient: "from-orange-500 to-red-600",
     icon: "💼",
   },
@@ -90,25 +90,25 @@ const issuers = [
   },
   {
     name: "Synchrony",
-    slug: "synchrony-bank",
+    slug: "synchrony",
     gradient: "from-purple-500 to-purple-700",
     icon: "🔄",
   },
   {
     name: "TD Bank",
-    slug: "td-bank",
+    slug: "td",
     gradient: "from-matcha-500 to-matcha-700",
     icon: "🏢",
   },
   {
     name: "US Bank",
-    slug: "us-bank",
+    slug: "usbank",
     gradient: "from-red-400 to-red-600",
     icon: "🇺🇸",
   },
   {
     name: "Wells Fargo",
-    slug: "wells-fargo",
+    slug: "wellsfargo",
     gradient: "from-yellow-500 to-red-500",
     icon: "🐎",
   },
