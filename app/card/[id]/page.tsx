@@ -1,7 +1,3 @@
-"use client";
-
-import { use, useEffect, useState } from "react";
-
 import { Header } from "@/components/header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -12,7 +8,6 @@ import {
   DollarSign,
   Gift,
   Shield,
-  AlertCircle,
   CheckCircle,
   XCircle,
 } from "lucide-react";
@@ -22,33 +17,25 @@ import { getCardById } from "@/lib/actions/card.actions";
 
 interface CardPageProps {
   params: Promise<{ id: string }>;
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }
 
-export default function CardPage({ params }: CardPageProps) {
-  const { id } = use(params);
-  const [card, setCard] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchCards = async () => {
-      setIsLoading(true);
-      const cardData = await getCardById(id);
-      setCard(cardData || null);
-      setIsLoading(false);
-    };
-    fetchCards();
-  }, [id]);
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-matcha-50/40 via-matcha-100 to-matcha-200/40">
-        <Header />
-        <div className="flex items-center justify-center py-12">
-          <p>Loading...</p>
-        </div>
-      </div>
-    );
-  }
+export default async function CardPage({
+  params,
+  searchParams,
+}: CardPageProps) {
+  const { id } = await params;
+  const resolvedSearchParams =
+    (searchParams ? await searchParams : undefined) ?? {};
+  const fromParam = resolvedSearchParams.from;
+  const from =
+    typeof fromParam === "string"
+      ? fromParam
+      : Array.isArray(fromParam)
+        ? fromParam[0]
+        : undefined;
+  const backHref = from === "profile" ? "/profile" : "/";
+  const card = await getCardById(id);
 
   if (!card) {
     notFound();
@@ -63,13 +50,13 @@ export default function CardPage({ params }: CardPageProps) {
         <div className="max-w-6xl mx-auto">
           {/* Back Button */}
           <div className="mb-8">
-            <Link href="/">
+            <Link href={backHref}>
               <Button
                 variant="ghost"
                 className="text-gray-600 hover:text-gray-900 hover:bg-matcha-50 rounded-full px-6 transition-all duration-300"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Cards
+                Back
               </Button>
             </Link>
           </div>
@@ -81,8 +68,8 @@ export default function CardPage({ params }: CardPageProps) {
               <Card className="border-0 shadow-xl rounded-3xl bg-matcha-50/80 backdrop-blur overflow-hidden">
                 <CardContent className="p-8">
                   <img
-                    src={card.image || "/placeholder.svg"}
-                    alt={card.name}
+                    src={card.image_url || "/placeholder.svg"}
+                    alt={card.card_name}
                     className="w-full rounded-2xl shadow-lg"
                   />
                 </CardContent>
@@ -130,8 +117,13 @@ export default function CardPage({ params }: CardPageProps) {
               </Card>
 
               {/* Apply Button */}
-              <Button className="w-full bg-matcha-700 hover:bg-matcha-800 text-white py-6 rounded-full font-light text-base shadow-lg hover:shadow-xl transition-all duration-300">
-                Apply Now
+              <Button
+                asChild
+                className="w-full bg-matcha-700 hover:bg-matcha-800 text-white py-6 rounded-full font-light text-base shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                <a href={card.url} target="_blank" rel="noopener noreferrer">
+                  Apply Now
+                </a>
               </Button>
             </div>
 
@@ -159,10 +151,7 @@ export default function CardPage({ params }: CardPageProps) {
                 <CardContent className="px-6 pb-6">
                   <div className="bg-gradient-to-r from-matcha-50 to-matcha-100 border border-matcha-200/50 rounded-2xl p-6">
                     <p className="text-lg font-normal text-matcha-800 mb-2">
-                      {card.welcome_bonus}
-                    </p>
-                    <p className="text-sm text-matcha-700/80 font-light">
-                      After spending {card.signup_requirement}
+                      {card.welcome_bonus || "No Welcome Bonus Available"}
                     </p>
                   </div>
                 </CardContent>

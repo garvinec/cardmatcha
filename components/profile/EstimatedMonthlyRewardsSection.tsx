@@ -3,6 +3,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calculator, Minus, Plus } from 'lucide-react';
 
+const MAX_CATEGORY_SPEND = 8000;
+
 export type SpendingCategory = {
   id: number;
   name: string;
@@ -105,7 +107,7 @@ export function EstimatedMonthlyRewardsSection({
                       <input
                         type="range"
                         min="0"
-                        max="2000"
+                        max={MAX_CATEGORY_SPEND}
                         step="50"
                         value={category.amount}
                         onChange={(event) =>
@@ -117,9 +119,9 @@ export function EstimatedMonthlyRewardsSection({
                         className="matcha-slider w-full h-2 bg-matcha-200/50 rounded-full appearance-none cursor-pointer slider"
                         style={{
                           background: `linear-gradient(to right, hsl(var(--matcha-600)) 0%, hsl(var(--matcha-600)) ${
-                            (category.amount / 2000) * 100
+                            (category.amount / MAX_CATEGORY_SPEND) * 100
                           }%, hsl(var(--matcha-200)) ${
-                            (category.amount / 2000) * 100
+                            (category.amount / MAX_CATEGORY_SPEND) * 100
                           }%, hsl(var(--matcha-200)) 100%)`,
                         }}
                       />
@@ -129,7 +131,7 @@ export function EstimatedMonthlyRewardsSection({
                       onClick={() =>
                         onUpdateCategory(
                           category.id,
-                          Math.min(2000, category.amount + 50),
+                          Math.min(MAX_CATEGORY_SPEND, category.amount + 50),
                         )
                       }
                       className="w-9 h-9 rounded-full border-2 border-matcha-600/50 flex items-center justify-center hover:bg-matcha-50 transition-all duration-300 shadow-sm"

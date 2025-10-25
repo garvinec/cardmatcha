@@ -1,6 +1,7 @@
 "use client";
 
 import type { UserCardWithDetails } from "@/lib/actions/profile.actions";
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -96,52 +97,60 @@ export function MyCardsSection({
                 typeof rawAnnualFee === "number"
                   ? rawAnnualFee
                   : rawAnnualFee
-                  ? Number.parseFloat(String(rawAnnualFee))
-                  : 0;
+                    ? Number.parseFloat(String(rawAnnualFee))
+                    : 0;
               const annualFee = formatAnnualFee(annualFeeValue);
+              const cardDetailPath = `/card/${card?.id ?? entry.cardId}`;
 
               return (
-                <div
-                  key={card?.id}
-                  className="border border-matcha-200/50 rounded-2xl p-6 bg-gradient-to-br from-matcha-50 to-matcha-100/30 relative shadow-sm hover:shadow-lg transition-all duration-300"
-                >
+                <div key={card?.id ?? entry.cardId} className="relative group">
                   <div className="absolute top-4 right-4">
                     <button
+                      type="button"
                       onClick={() => onRemoveCardClick(entry)}
-                      className="p-2 hover:bg-matcha-100/60 rounded-full transition-all duration-300"
+                      className="p-2 hover:bg-matcha-100/60 rounded-full transition-all duration-300 z-10"
                       aria-label={`Remove ${cardName}`}
                     >
                       <Trash2 className="h-4 w-4 text-gray-500" />
                     </button>
                   </div>
 
-                  <div className="flex justify-between items-start mb-4 pr-8">
-                    <div>
-                      <h3 className="font-normal text-gray-900 mb-1">
-                        {cardName}
-                      </h3>
-                      <p className="text-sm text-gray-500 font-light">
-                        {issuer}
-                      </p>
+                  <Link
+                    href={{
+                      pathname: cardDetailPath,
+                      query: { from: "profile" },
+                    }}
+                    className="block h-full border border-matcha-200/50 rounded-2xl p-6 bg-gradient-to-br from-matcha-50 to-matcha-100/30 shadow-sm hover:shadow-lg transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-matcha-500/40"
+                    aria-label={`View details for ${cardName}`}
+                  >
+                    <div className="flex justify-between items-start mb-4 pr-8">
+                      <div>
+                        <h3 className="font-normal text-gray-900 mb-1">
+                          {cardName}
+                        </h3>
+                        <p className="text-sm text-gray-500 font-light">
+                          {issuer}
+                        </p>
+                      </div>
+                      {category && (
+                        <Badge
+                          variant="outline"
+                          className="border-matcha-300/50 text-matcha-800 rounded-full px-3 py-1 font-light bg-matcha-50"
+                        >
+                          {category}
+                        </Badge>
+                      )}
                     </div>
-                    {category && (
-                      <Badge
-                        variant="outline"
-                        className="border-matcha-300/50 text-matcha-800 rounded-full px-3 py-1 font-light bg-matcha-50"
-                      >
-                        {category}
-                      </Badge>
-                    )}
-                  </div>
 
-                  <div className="space-y-3 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-gray-500 font-light">
-                        Annual Fee
-                      </span>
-                      <span className="font-normal">{annualFee}</span>
+                    <div className="space-y-3 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-gray-500 font-light">
+                          Annual Fee
+                        </span>
+                        <span className="font-normal">{annualFee}</span>
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 </div>
               );
             })}

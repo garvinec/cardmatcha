@@ -19,6 +19,7 @@ import {
   addCardToUser,
   getCardsByUser,
   removeCardFromUser,
+  bestUserCardsByCategory,
   type UserCardWithDetails,
 } from "@/lib/actions/profile.actions";
 import { SignedIn, useUser } from "@clerk/nextjs";
@@ -38,31 +39,19 @@ type CardSuggestion = {
   issuer?: string | null;
 };
 
-const DEFAULT_BEST_CARDS: Record<string, BestCardRecommendation> = {
-  "Grocery stores": {
-    card: "American Express Gold",
-    reason: "4x points at U.S. supermarkets (up to $25k/year)",
-  },
-  "Gas & fuel": {
-    card: "None",
-    reason: "Consider adding a gas-specific rewards card",
-  },
-  "Restaurants & dining": {
-    card: "American Express Gold",
-    reason: "4x points at restaurants worldwide",
-  },
-  "Travel & hotels": {
-    card: "Chase Sapphire Preferred",
-    reason: "2x points on travel, 25% bonus on redemptions",
-  },
-  "Online shopping": {
-    card: "Chase Freedom Unlimited",
-    reason: "1.5% cash back on all purchases including online",
-  },
-  "Everything else": {
-    card: "Citi Double Cash",
-    reason: "2% on all purchases with no categories",
-  },
+const formatRewardRate = (rate: number) => {
+  if (!Number.isFinite(rate)) {
+    return "0x";
+  }
+
+  if (Number.isInteger(rate)) {
+    return `${rate}x`;
+  }
+
+  const decimals = Math.abs(rate) < 1 ? 2 : 1;
+  const formatted = Number.parseFloat(rate.toFixed(decimals));
+
+  return `${formatted}x`;
 };
 
 const DEFAULT_RECOMMENDATIONS = [
@@ -72,12 +61,12 @@ const DEFAULT_RECOMMENDATIONS = [
 ];
 
 const DEFAULT_SPENDING_CATEGORIES: SpendingCategory[] = [
-  { id: 1, name: "Grocery stores", rewardRate: "4%", amount: 800 },
+  { id: 1, name: "Everything else", rewardRate: "1%", amount: 300 },
   { id: 2, name: "Gas & fuel", rewardRate: "3%", amount: 300 },
-  { id: 3, name: "Restaurants & dining", rewardRate: "4%", amount: 400 },
-  { id: 4, name: "Travel & hotels", rewardRate: "2%", amount: 200 },
-  { id: 5, name: "Online shopping", rewardRate: "2%", amount: 150 },
-  { id: 6, name: "Everything else", rewardRate: "1%", amount: 300 },
+  { id: 3, name: "Grocery stores", rewardRate: "4%", amount: 800 },
+  { id: 4, name: "Online shopping", rewardRate: "2%", amount: 150 },
+  { id: 5, name: "Restaurants & dining", rewardRate: "4%", amount: 400 },
+  { id: 6, name: "Travel & hotels", rewardRate: "2%", amount: 200 },
 ];
 
 export default function ProfilePage() {
@@ -86,6 +75,10 @@ export default function ProfilePage() {
   const [userCards, setUserCards] = useState<UserCardWithDetails[]>([]);
   const [isCardsLoading, setIsCardsLoading] = useState(true);
   const [cardsError, setCardsError] = useState<string | null>(null);
+
+  const [bestCardsByCategory, setBestCardsByCategory] = useState<
+    Record<string, BestCardRecommendation[]>
+  >({});
 
   const [spendingCategories, setSpendingCategories] = useState<
     SpendingCategory[]
@@ -101,12 +94,59 @@ export default function ProfilePage() {
   const [isSavingCard, setIsSavingCard] = useState(false);
 
   const [cardToRemove, setCardToRemove] = useState<UserCardWithDetails | null>(
-    null
+    null,
   );
   const [removeCardError, setRemoveCardError] = useState<string | null>(null);
   const [isRemovingCard, setIsRemovingCard] = useState(false);
 
   const searchAbortController = useRef<AbortController | null>(null);
+
+  const buildBestCardRecommendations = useCallback(
+    (
+      bestCards: Awaited<ReturnType<typeof bestUserCardsByCategory>>,
+    ): Record<string, BestCardRecommendation[]> => {
+      const mapped: Record<string, BestCardRecommendation[]> = {};
+
+      for (const [category, cardEntries] of Object.entries(bestCards ?? {})) {
+        if (!Array.isArray(cardEntries) || cardEntries.length === 0) {
+          mapped[category] = [];
+          continue;
+        }
+
+        mapped[category] = cardEntries.map((info) => {
+          const numericRate =
+            typeof info.rewardRate === "number"
+              ? info.rewardRate
+              : Number.parseFloat(String(info.rewardRate ?? 0));
+          const hasValidRate = Number.isFinite(numericRate) && numericRate > 0;
+          const formattedRate = hasValidRate
+            ? formatRewardRate(numericRate)
+            : null;
+          const cardLabel = info.cardIssuer
+            ? `${info.cardName} (${info.cardIssuer})`
+            : info.cardName;
+          const rewardDescription = info.rewardDescription?.trim();
+
+          const fallbackReason = formattedRate
+            ? `Earns ${formattedRate} on ${category}.`
+            : `Earn rewards on ${category}.`;
+
+          return {
+            card: cardLabel,
+            reason:
+              rewardDescription && rewardDescription.length > 0
+                ? rewardDescription
+                : fallbackReason,
+            formattedRewardRate: formattedRate,
+            rewardRate: hasValidRate ? numericRate : null,
+          };
+        });
+      }
+
+      return mapped;
+    },
+    [],
+  );
 
   useEffect(() => {
     if (!user?.id) {
@@ -141,6 +181,97 @@ export default function ProfilePage() {
       isCancelled = true;
     };
   }, [user?.id]);
+
+  useEffect(() => {
+    if (!user?.id) {
+      setBestCardsByCategory({});
+      return;
+    }
+
+    let isCancelled = false;
+
+    const loadBestCards = async () => {
+      try {
+        const bestCards = await bestUserCardsByCategory(user.id);
+        if (!isCancelled) {
+          setBestCardsByCategory(buildBestCardRecommendations(bestCards ?? {}));
+        }
+      } catch (error) {
+        if (!isCancelled) {
+          console.error(error);
+        }
+      }
+    };
+
+    void loadBestCards();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [buildBestCardRecommendations, user?.id]);
+
+  useEffect(() => {
+    setSpendingCategories((currentCategories) => {
+      const currentByName = new Map(
+        currentCategories.map((category) => [category.name, category]),
+      );
+      const defaultByName = new Map(
+        DEFAULT_SPENDING_CATEGORIES.map((category) => [category.name, category]),
+      );
+
+      const bestCategoryNames = Object.keys(bestCardsByCategory);
+      const categoryNames =
+        bestCategoryNames.length > 0
+          ? bestCategoryNames
+          : DEFAULT_SPENDING_CATEGORIES.map((category) => category.name);
+
+      const sortedNames = Array.from(new Set(categoryNames)).sort((a, b) =>
+        a.localeCompare(b),
+      );
+
+      let hasChanges = false;
+
+      const updatedCategories = sortedNames.map((categoryName, index) => {
+        const recommendations = bestCardsByCategory[categoryName] ?? [];
+        const existing = currentByName.get(categoryName);
+        const defaultCategory = defaultByName.get(categoryName);
+
+        const derivedRewardRate =
+          recommendations[0]?.formattedRewardRate ??
+          existing?.rewardRate ??
+          defaultCategory?.rewardRate ??
+          "—";
+
+        const amount = existing?.amount ?? defaultCategory?.amount ?? 0;
+
+        if (
+          !existing ||
+          existing.id !== index + 1 ||
+          existing.rewardRate !== derivedRewardRate ||
+          existing.amount !== amount
+        ) {
+          hasChanges = true;
+        }
+
+        return {
+          id: index + 1,
+          name: categoryName,
+          rewardRate: derivedRewardRate,
+          amount,
+        };
+      });
+
+      if (updatedCategories.length !== currentCategories.length) {
+        hasChanges = true;
+      }
+
+      if (!hasChanges) {
+        return currentCategories;
+      }
+
+      return updatedCategories;
+    });
+  }, [bestCardsByCategory]);
 
   useEffect(() => {
     if (!showAddModal) {
@@ -184,7 +315,7 @@ export default function ProfilePage() {
       try {
         const response = await fetch(
           `/api/cards/search?q=${encodeURIComponent(trimmedQuery)}`,
-          { signal: controller.signal }
+          { signal: controller.signal },
         );
 
         if (!response.ok) {
@@ -193,7 +324,7 @@ export default function ProfilePage() {
 
         const data = await response.json();
         setCardSearchSuggestions(
-          Array.isArray(data.results) ? data.results : []
+          Array.isArray(data.results) ? data.results : [],
         );
         setCardSearchError(null);
       } catch (error) {
@@ -203,7 +334,7 @@ export default function ProfilePage() {
         console.error(error);
         setCardSearchSuggestions([]);
         setCardSearchError(
-          "We couldn't load card suggestions. Please try again."
+          "We couldn't load card suggestions. Please try again.",
         );
       }
     };
@@ -215,6 +346,19 @@ export default function ProfilePage() {
     };
   }, [cardSearchQuery, showAddModal]);
 
+  const refreshBestCards = useCallback(async () => {
+    if (!user?.id) {
+      return;
+    }
+
+    try {
+      const bestCards = await bestUserCardsByCategory(user.id);
+      setBestCardsByCategory(buildBestCardRecommendations(bestCards ?? {}));
+    } catch (error) {
+      console.error(error);
+    }
+  }, [buildBestCardRecommendations, user?.id]);
+
   const refreshCards = useCallback(async () => {
     if (!user?.id) {
       return;
@@ -224,36 +368,41 @@ export default function ProfilePage() {
       const { data } = await getCardsByUser(user.id);
       setUserCards(data);
       setCardsError(null);
+      await refreshBestCards();
     } catch (error) {
       console.error(error);
       setCardsError("We couldn't load your cards. Please try again.");
     }
-  }, [user?.id]);
+  }, [refreshBestCards, user?.id]);
 
   const ownedCardIds = useMemo(
     () => new Set(userCards.map((card) => card.cardId)),
-    [userCards]
+    [userCards],
   );
 
   const availableSuggestions = useMemo(() => {
     return cardSearchSuggestions.filter(
-      (suggestion) => !ownedCardIds.has(suggestion.id)
+      (suggestion) => !ownedCardIds.has(suggestion.id),
     );
   }, [cardSearchSuggestions, ownedCardIds]);
 
   const updateSpending = (categoryId: number, newAmount: number) => {
     setSpendingCategories((categories) =>
       categories.map((cat) =>
-        cat.id === categoryId ? { ...cat, amount: newAmount } : cat
-      )
+        cat.id === categoryId ? { ...cat, amount: newAmount } : cat,
+      ),
     );
   };
 
   const totalEstimatedRewards = useMemo(() => {
     return spendingCategories
       .reduce((total, category) => {
-        const rate =
-          Number.parseFloat(category.rewardRate.replace("%", "")) / 100;
+        const numericPortion = category.rewardRate
+          ? Number.parseFloat(category.rewardRate.replace(/[^0-9.]/g, ""))
+          : 0;
+        const rate = Number.isFinite(numericPortion)
+          ? numericPortion / 100
+          : 0;
         return total + category.amount * rate;
       }, 0)
       .toFixed(0);
@@ -276,7 +425,7 @@ export default function ProfilePage() {
       setAddCardError(
         error instanceof Error
           ? error.message
-          : "Unable to add this card right now."
+          : "Unable to add this card right now.",
       );
     } finally {
       setIsSavingCard(false);
@@ -304,13 +453,13 @@ export default function ProfilePage() {
         setRemoveCardError(
           error instanceof Error
             ? error.message
-            : "Unable to remove this card right now."
+            : "Unable to remove this card right now.",
         );
       } finally {
         setIsRemovingCard(false);
       }
     },
-    [cardToRemove, isRemovingCard, refreshCards, user?.id]
+    [cardToRemove, isRemovingCard, refreshCards, user?.id],
   );
 
   const handleRetryLoadCards = async () => {
@@ -377,7 +526,7 @@ export default function ProfilePage() {
                   onRemoveCardClick={setCardToRemove}
                 />
 
-                <BestCardsByCategorySection bestCards={DEFAULT_BEST_CARDS} />
+                <BestCardsByCategorySection bestCards={bestCardsByCategory} />
 
                 <EstimatedMonthlyRewardsSection
                   categories={spendingCategories}
