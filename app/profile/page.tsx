@@ -531,7 +531,7 @@ export default function ProfilePage() {
                   onUpdateCategory={updateSpending}
                   totalEstimatedRewards={totalEstimatedRewards}
                 />
-
+                {/* Implement later */}
                 {/* <RecommendationsSection
                   recommendations={DEFAULT_RECOMMENDATIONS}
                 /> */}
