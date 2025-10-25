@@ -94,7 +94,7 @@ export default function ProfilePage() {
   const [isSavingCard, setIsSavingCard] = useState(false);
 
   const [cardToRemove, setCardToRemove] = useState<UserCardWithDetails | null>(
-    null,
+    null
   );
   const [removeCardError, setRemoveCardError] = useState<string | null>(null);
   const [isRemovingCard, setIsRemovingCard] = useState(false);
@@ -103,7 +103,7 @@ export default function ProfilePage() {
 
   const buildBestCardRecommendations = useCallback(
     (
-      bestCards: Awaited<ReturnType<typeof bestUserCardsByCategory>>,
+      bestCards: Awaited<ReturnType<typeof bestUserCardsByCategory>>
     ): Record<string, BestCardRecommendation[]> => {
       const mapped: Record<string, BestCardRecommendation[]> = {};
 
@@ -145,7 +145,7 @@ export default function ProfilePage() {
 
       return mapped;
     },
-    [],
+    []
   );
 
   useEffect(() => {
@@ -213,10 +213,10 @@ export default function ProfilePage() {
   useEffect(() => {
     setSpendingCategories((currentCategories) => {
       const currentByName = new Map(
-        currentCategories.map((category) => [category.name, category]),
+        currentCategories.map((category) => [category.name, category])
       );
       const defaultByName = new Map(
-        DEFAULT_SPENDING_CATEGORIES.map((category) => [category.name, category]),
+        DEFAULT_SPENDING_CATEGORIES.map((category) => [category.name, category])
       );
 
       const bestCategoryNames = Object.keys(bestCardsByCategory);
@@ -226,7 +226,7 @@ export default function ProfilePage() {
           : DEFAULT_SPENDING_CATEGORIES.map((category) => category.name);
 
       const sortedNames = Array.from(new Set(categoryNames)).sort((a, b) =>
-        a.localeCompare(b),
+        a.localeCompare(b)
       );
 
       let hasChanges = false;
@@ -315,7 +315,7 @@ export default function ProfilePage() {
       try {
         const response = await fetch(
           `/api/cards/search?q=${encodeURIComponent(trimmedQuery)}`,
-          { signal: controller.signal },
+          { signal: controller.signal }
         );
 
         if (!response.ok) {
@@ -324,7 +324,7 @@ export default function ProfilePage() {
 
         const data = await response.json();
         setCardSearchSuggestions(
-          Array.isArray(data.results) ? data.results : [],
+          Array.isArray(data.results) ? data.results : []
         );
         setCardSearchError(null);
       } catch (error) {
@@ -334,7 +334,7 @@ export default function ProfilePage() {
         console.error(error);
         setCardSearchSuggestions([]);
         setCardSearchError(
-          "We couldn't load card suggestions. Please try again.",
+          "We couldn't load card suggestions. Please try again."
         );
       }
     };
@@ -377,20 +377,20 @@ export default function ProfilePage() {
 
   const ownedCardIds = useMemo(
     () => new Set(userCards.map((card) => card.cardId)),
-    [userCards],
+    [userCards]
   );
 
   const availableSuggestions = useMemo(() => {
     return cardSearchSuggestions.filter(
-      (suggestion) => !ownedCardIds.has(suggestion.id),
+      (suggestion) => !ownedCardIds.has(suggestion.id)
     );
   }, [cardSearchSuggestions, ownedCardIds]);
 
   const updateSpending = (categoryId: number, newAmount: number) => {
     setSpendingCategories((categories) =>
       categories.map((cat) =>
-        cat.id === categoryId ? { ...cat, amount: newAmount } : cat,
-      ),
+        cat.id === categoryId ? { ...cat, amount: newAmount } : cat
+      )
     );
   };
 
@@ -400,9 +400,7 @@ export default function ProfilePage() {
         const numericPortion = category.rewardRate
           ? Number.parseFloat(category.rewardRate.replace(/[^0-9.]/g, ""))
           : 0;
-        const rate = Number.isFinite(numericPortion)
-          ? numericPortion / 100
-          : 0;
+        const rate = Number.isFinite(numericPortion) ? numericPortion / 100 : 0;
         return total + category.amount * rate;
       }, 0)
       .toFixed(0);
@@ -425,7 +423,7 @@ export default function ProfilePage() {
       setAddCardError(
         error instanceof Error
           ? error.message
-          : "Unable to add this card right now.",
+          : "Unable to add this card right now."
       );
     } finally {
       setIsSavingCard(false);
@@ -453,13 +451,13 @@ export default function ProfilePage() {
         setRemoveCardError(
           error instanceof Error
             ? error.message
-            : "Unable to remove this card right now.",
+            : "Unable to remove this card right now."
         );
       } finally {
         setIsRemovingCard(false);
       }
     },
-    [cardToRemove, isRemovingCard, refreshCards, user?.id],
+    [cardToRemove, isRemovingCard, refreshCards, user?.id]
   );
 
   const handleRetryLoadCards = async () => {
@@ -534,9 +532,9 @@ export default function ProfilePage() {
                   totalEstimatedRewards={totalEstimatedRewards}
                 />
 
-                <RecommendationsSection
+                {/* <RecommendationsSection
                   recommendations={DEFAULT_RECOMMENDATIONS}
-                />
+                /> */}
               </div>
             </main>
 
