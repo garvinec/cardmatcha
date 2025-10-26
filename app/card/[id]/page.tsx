@@ -12,6 +12,7 @@ import {
   XCircle,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getCardById } from "@/lib/actions/card.actions";
 
@@ -67,9 +68,11 @@ export default async function CardPage({
               {/* Card Image */}
               <Card className="border-0 shadow-xl rounded-3xl bg-matcha-50/80 backdrop-blur overflow-hidden">
                 <CardContent className="p-8">
-                  <img
+                  <Image
                     src={card.image_url || "/placeholder.svg"}
                     alt={card.card_name}
+                    width={400}
+                    height={250}
                     className="w-full rounded-2xl shadow-lg"
                   />
                 </CardContent>

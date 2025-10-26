@@ -20,8 +20,9 @@ const SignInPage = () => {
               Sign In to Maximize CardMatcha!
             </h1>
             <p className="text-base text-matcha-900/80">
-              You're getting a preview of the insights waiting once you sign in.
-              Bring your personalized dashboard to life with a secure account.
+              You&apos;re getting a preview of the insights waiting once you
+              sign in. Bring your personalized dashboard to life with a secure
+              account.
             </p>
           </div>
           <div className="flex flex-col gap-4 sm:flex-row">
