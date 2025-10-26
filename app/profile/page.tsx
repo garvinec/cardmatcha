@@ -32,6 +32,7 @@ import {
   useState,
   type FormEvent,
 } from "react";
+import { Footer } from "@/components/footer";
 
 type CardSuggestion = {
   id: string;
@@ -471,234 +472,227 @@ export default function ProfilePage() {
   }
 
   if (!isSignedIn) {
-    return <SignInPage />;
+    return (
+      <div>
+        <SignInPage />
+        {/* Footer */}
+        <Footer />
+      </div>
+    );
   }
 
   return (
-    <SignedIn>
-      <div className="min-h-screen bg-gradient-to-b from-matcha-50/30 via-white to-matcha-50/20 flex flex-col">
-        <Header currentPage="profile" />
-        <div className="flex-1">
-          <>
-            <style jsx>{`
-              .slider::-webkit-slider-thumb {
-                appearance: none;
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                background: hsl(var(--matcha-600));
-                cursor: pointer;
-                box-shadow: 0 2px 8px hsl(var(--matcha-600) / 0.3);
-              }
-              .slider::-moz-range-thumb {
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                background: hsl(var(--matcha-600));
-                cursor: pointer;
-                border: none;
-                box-shadow: 0 2px 8px hsl(var(--matcha-600) / 0.3);
-              }
-            `}</style>
-
-            <main className="pt-48 pb-12 px-4 sm:px-6 lg:px-8">
-              <div className="max-w-6xl mx-auto space-y-10">
-                <div className="text-center mb-12">
-                  <h1 className="text-5xl font-light text-matcha-900 mb-4 tracking-tight">
-                    Your Profile
-                  </h1>
-                  <p className="text-lg text-matcha-800/80 font-light">
-                    Manage your cards and optimize your rewards
-                  </p>
+    <div>
+      <SignedIn>
+        <div className="min-h-screen bg-gradient-to-b from-matcha-50/30 via-white to-matcha-50/20 flex flex-col">
+          <Header currentPage="profile" />
+          <div className="flex-1">
+            <>
+              <style jsx>{`
+                .slider::-webkit-slider-thumb {
+                  appearance: none;
+                  width: 20px;
+                  height: 20px;
+                  border-radius: 50%;
+                  background: hsl(var(--matcha-600));
+                  cursor: pointer;
+                  box-shadow: 0 2px 8px hsl(var(--matcha-600) / 0.3);
+                }
+                .slider::-moz-range-thumb {
+                  width: 20px;
+                  height: 20px;
+                  border-radius: 50%;
+                  background: hsl(var(--matcha-600));
+                  cursor: pointer;
+                  border: none;
+                  box-shadow: 0 2px 8px hsl(var(--matcha-600) / 0.3);
+                }
+              `}</style>
+              <main className="pt-48 pb-12 px-4 sm:px-6 lg:px-8">
+                <div className="max-w-6xl mx-auto space-y-10">
+                  <div className="text-center mb-12">
+                    <h1 className="text-5xl font-light text-matcha-900 mb-4 tracking-tight">
+                      Your Profile
+                    </h1>
+                    <p className="text-lg text-matcha-800/80 font-light">
+                      Manage your cards and optimize your rewards
+                    </p>
+                  </div>
+                  <MyCardsSection
+                    cards={userCards}
+                    isLoading={isCardsLoading}
+                    error={cardsError}
+                    onRetry={handleRetryLoadCards}
+                    onAddCardClick={() => {
+                      setShowAddModal(true);
+                      setAddCardError(null);
+                    }}
+                    onRemoveCardClick={setCardToRemove}
+                  />
+                  <BestCardsByCategorySection bestCards={bestCardsByCategory} />
+                  <EstimatedMonthlyRewardsSection
+                    categories={spendingCategories}
+                    onUpdateCategory={updateSpending}
+                    totalEstimatedRewards={totalEstimatedRewards}
+                  />
+                  {/* Implement later */}
+                  {/* <RecommendationsSection
+                    recommendations={DEFAULT_RECOMMENDATIONS}
+                  /> */}
                 </div>
-
-                <MyCardsSection
-                  cards={userCards}
-                  isLoading={isCardsLoading}
-                  error={cardsError}
-                  onRetry={handleRetryLoadCards}
-                  onAddCardClick={() => {
-                    setShowAddModal(true);
-                    setAddCardError(null);
-                  }}
-                  onRemoveCardClick={setCardToRemove}
-                />
-
-                <BestCardsByCategorySection bestCards={bestCardsByCategory} />
-
-                <EstimatedMonthlyRewardsSection
-                  categories={spendingCategories}
-                  onUpdateCategory={updateSpending}
-                  totalEstimatedRewards={totalEstimatedRewards}
-                />
-                {/* Implement later */}
-                {/* <RecommendationsSection
-                  recommendations={DEFAULT_RECOMMENDATIONS}
-                /> */}
-              </div>
-            </main>
-
-            {showAddModal && (
-              <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-                <div className="bg-matcha-50 rounded-3xl shadow-2xl w-full max-w-md">
-                  <div className="p-8">
-                    <div className="flex items-center justify-between mb-6">
-                      <h3 className="text-xl font-light text-gray-900">
-                        Add Credit Card
-                      </h3>
-                      <button
-                        onClick={() => setShowAddModal(false)}
-                        className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-300"
-                        aria-label="Close add card modal"
-                      >
-                        <X className="h-5 w-5 text-gray-500" />
-                      </button>
-                    </div>
-
-                    <div className="relative">
-                      <div className="relative">
-                        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                        <Input
-                          type="text"
-                          placeholder="Search for credit cards..."
-                          value={cardSearchQuery}
-                          onChange={(event) =>
-                            setCardSearchQuery(event.target.value)
-                          }
-                          className="pl-11 pr-4 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-matcha-500/20 font-light"
-                          autoFocus
-                        />
+              </main>
+              {showAddModal && (
+                <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+                  <div className="bg-matcha-50 rounded-3xl shadow-2xl w-full max-w-md">
+                    <div className="p-8">
+                      <div className="flex items-center justify-between mb-6">
+                        <h3 className="text-xl font-light text-gray-900">
+                          Add Credit Card
+                        </h3>
+                        <button
+                          onClick={() => setShowAddModal(false)}
+                          className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-300"
+                          aria-label="Close add card modal"
+                        >
+                          <X className="h-5 w-5 text-gray-500" />
+                        </button>
                       </div>
-
-                      {availableSuggestions.length > 0 && (
-                        <div className="absolute top-full left-0 right-0 mt-2 bg-matcha-50 border border-gray-200 rounded-2xl shadow-xl z-10 max-h-60 overflow-y-auto">
-                          {availableSuggestions.map((suggestion) => (
-                            <button
-                              key={suggestion.id}
-                              onClick={() =>
-                                handleAddCardFromSuggestion(suggestion)
-                              }
-                              className="w-full px-5 py-4 text-left hover:bg-matcha-50 border-b border-gray-100 last:border-b-0 transition-colors duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
-                              disabled={isSavingCard}
-                            >
-                              <div className="flex justify-between items-start">
-                                <div>
-                                  <p className="font-normal text-gray-900">
-                                    {suggestion.card_name}
-                                  </p>
-                                  {suggestion.issuer && (
-                                    <p className="text-sm text-gray-600 font-light">
-                                      {suggestion.issuer}
-                                    </p>
-                                  )}
-                                </div>
-                              </div>
-                            </button>
-                          ))}
+                      <div className="relative">
+                        <div className="relative">
+                          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                          <Input
+                            type="text"
+                            placeholder="Search for credit cards..."
+                            value={cardSearchQuery}
+                            onChange={(event) =>
+                              setCardSearchQuery(event.target.value)
+                            }
+                            className="pl-11 pr-4 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-matcha-500/20 font-light"
+                            autoFocus
+                          />
                         </div>
-                      )}
-
-                      {cardSearchQuery.trim().length >= 3 &&
-                        availableSuggestions.length === 0 &&
-                        !cardSearchError && (
-                          <div className="absolute top-full left-0 right-0 mt-2 bg-matcha-50 border border-gray-200 rounded-2xl shadow-xl p-5 text-center text-gray-500 text-sm font-light">
-                            {cardSearchSuggestions.length > 0
-                              ? "You've already added these cards."
-                              : `No cards found matching "${cardSearchQuery.trim()}"`}
+                        {availableSuggestions.length > 0 && (
+                          <div className="absolute top-full left-0 right-0 mt-2 bg-matcha-50 border border-gray-200 rounded-2xl shadow-xl z-10 max-h-60 overflow-y-auto">
+                            {availableSuggestions.map((suggestion) => (
+                              <button
+                                key={suggestion.id}
+                                onClick={() =>
+                                  handleAddCardFromSuggestion(suggestion)
+                                }
+                                className="w-full px-5 py-4 text-left hover:bg-matcha-50 border-b border-gray-100 last:border-b-0 transition-colors duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
+                                disabled={isSavingCard}
+                              >
+                                <div className="flex justify-between items-start">
+                                  <div>
+                                    <p className="font-normal text-gray-900">
+                                      {suggestion.card_name}
+                                    </p>
+                                    {suggestion.issuer && (
+                                      <p className="text-sm text-gray-600 font-light">
+                                        {suggestion.issuer}
+                                      </p>
+                                    )}
+                                  </div>
+                                </div>
+                              </button>
+                            ))}
                           </div>
                         )}
-
-                      {cardSearchQuery.trim().length < 3 && (
-                        <div className="absolute top-full left-0 right-0 mt-2 bg-matcha-50 border border-gray-200 rounded-2xl shadow-xl p-5 text-center text-gray-500 text-sm font-light">
-                          Type at least 3 characters to search.
-                        </div>
+                        {cardSearchQuery.trim().length >= 3 &&
+                          availableSuggestions.length === 0 &&
+                          !cardSearchError && (
+                            <div className="absolute top-full left-0 right-0 mt-2 bg-matcha-50 border border-gray-200 rounded-2xl shadow-xl p-5 text-center text-gray-500 text-sm font-light">
+                              {cardSearchSuggestions.length > 0
+                                ? "You've already added these cards."
+                                : `No cards found matching "${cardSearchQuery.trim()}"`}
+                            </div>
+                          )}
+                        {cardSearchQuery.trim().length < 3 && (
+                          <div className="absolute top-full left-0 right-0 mt-2 bg-matcha-50 border border-gray-200 rounded-2xl shadow-xl p-5 text-center text-gray-500 text-sm font-light">
+                            Type at least 3 characters to search.
+                          </div>
+                        )}
+                        {cardSearchError && (
+                          <div className="absolute top-full left-0 right-0 mt-2 bg-red-50 border border-red-200 rounded-2xl shadow-xl p-5 text-center text-red-600 text-sm font-light">
+                            {cardSearchError}
+                          </div>
+                        )}
+                      </div>
+                      {addCardError && (
+                        <p className="mt-6 text-sm text-red-600 font-light">
+                          {addCardError}
+                        </p>
                       )}
-
-                      {cardSearchError && (
-                        <div className="absolute top-full left-0 right-0 mt-2 bg-red-50 border border-red-200 rounded-2xl shadow-xl p-5 text-center text-red-600 text-sm font-light">
-                          {cardSearchError}
-                        </div>
-                      )}
-                    </div>
-
-                    {addCardError && (
-                      <p className="mt-6 text-sm text-red-600 font-light">
-                        {addCardError}
-                      </p>
-                    )}
-
-                    <div className="mt-8 flex justify-end">
-                      <Button
-                        variant="outline"
-                        onClick={() => setShowAddModal(false)}
-                        className="rounded-full px-6 py-5 font-light"
-                        disabled={isSavingCard}
-                      >
-                        Cancel
-                      </Button>
+                      <div className="mt-8 flex justify-end">
+                        <Button
+                          variant="outline"
+                          onClick={() => setShowAddModal(false)}
+                          className="rounded-full px-6 py-5 font-light"
+                          disabled={isSavingCard}
+                        >
+                          Cancel
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            )}
-
-            {cardToRemove && (
-              <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-                <div className="bg-matcha-50 rounded-3xl shadow-2xl w-full max-w-md">
-                  <form className="p-8" onSubmit={handleRemoveCard}>
-                    <div className="flex items-center justify-between mb-6">
-                      <h3 className="text-xl font-light text-gray-900">
-                        Remove Card
-                      </h3>
-                      <button
-                        type="button"
-                        onClick={() => setCardToRemove(null)}
-                        className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-300"
-                        aria-label="Close remove card modal"
-                      >
-                        <X className="h-5 w-5 text-gray-500" />
-                      </button>
-                    </div>
-
-                    <p className="text-sm text-gray-700 font-light leading-relaxed mb-6">
-                      Are you sure you want to remove{" "}
-                      <span className="font-normal text-gray-900">
-                        {cardToRemove.card?.card_name ?? "this card"}
-                      </span>{" "}
-                      from your wallet?
-                    </p>
-
-                    {removeCardError && (
-                      <p className="mb-4 text-sm text-red-600 font-light">
-                        {removeCardError}
+              )}
+              {cardToRemove && (
+                <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+                  <div className="bg-matcha-50 rounded-3xl shadow-2xl w-full max-w-md">
+                    <form className="p-8" onSubmit={handleRemoveCard}>
+                      <div className="flex items-center justify-between mb-6">
+                        <h3 className="text-xl font-light text-gray-900">
+                          Remove Card
+                        </h3>
+                        <button
+                          type="button"
+                          onClick={() => setCardToRemove(null)}
+                          className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-300"
+                          aria-label="Close remove card modal"
+                        >
+                          <X className="h-5 w-5 text-gray-500" />
+                        </button>
+                      </div>
+                      <p className="text-sm text-gray-700 font-light leading-relaxed mb-6">
+                        Are you sure you want to remove{" "}
+                        <span className="font-normal text-gray-900">
+                          {cardToRemove.card?.card_name ?? "this card"}
+                        </span>{" "}
+                        from your wallet?
                       </p>
-                    )}
-
-                    <div className="mt-8 flex justify-end gap-3">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        onClick={() => setCardToRemove(null)}
-                        className="rounded-full px-6 py-5 font-light"
-                        disabled={isRemovingCard}
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        type="submit"
-                        className="rounded-full px-6 py-5 font-light bg-red-600 hover:bg-red-700 text-white"
-                        disabled={isRemovingCard}
-                      >
-                        {isRemovingCard ? "Removing..." : "Yes"}
-                      </Button>
-                    </div>
-                  </form>
+                      {removeCardError && (
+                        <p className="mb-4 text-sm text-red-600 font-light">
+                          {removeCardError}
+                        </p>
+                      )}
+                      <div className="mt-8 flex justify-end gap-3">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={() => setCardToRemove(null)}
+                          className="rounded-full px-6 py-5 font-light"
+                          disabled={isRemovingCard}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          type="submit"
+                          className="rounded-full px-6 py-5 font-light bg-red-600 hover:bg-red-700 text-white"
+                          disabled={isRemovingCard}
+                        >
+                          {isRemovingCard ? "Removing..." : "Yes"}
+                        </Button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
-              </div>
-            )}
-          </>
+              )}
+            </>
+          </div>
         </div>
-      </div>
-    </SignedIn>
+      </SignedIn>
+      <Footer />
+    </div>
   );
 }

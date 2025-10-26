@@ -1,5 +1,6 @@
 import { CreditCardGrid } from "@/components/credit-card-grid";
 import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, ArrowRight, Search } from "lucide-react";
 import { TopPopularCards } from "@/components/most-popular-cards";
@@ -123,23 +124,7 @@ export default async function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-matcha-900 text-white py-16 mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="flex items-center justify-center space-x-2 mb-6">
-              <span className="text-2xl font-light tracking-wide">
-                CardMatcha
-              </span>
-            </div>
-            <p className="text-matcha-200/80 mb-6 font-light text-lg">
-              Mindful credit, maximized rewards.
-            </p>
-            <p className="text-sm text-matcha-200/70 font-light">
-              © 2025 CardMatcha. Credit card offers subject to approval.
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
