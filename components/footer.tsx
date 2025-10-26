@@ -15,8 +15,8 @@ export function Footer() {
               <Image
                 src="/cardmatcha_logo_transparent.png"
                 alt="CardMatcha Logo"
-                width={120}
-                height={40}
+                width={384}
+                height={128}
                 className="h-32 w-auto"
               />
             </Link>
