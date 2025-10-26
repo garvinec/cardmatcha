@@ -28,15 +28,15 @@ export function Footer() {
               CardMatcha strives to keep its information accurate and up to
               date. However, this information may be different than what you see
               when you visit a financial institution, service provider or
-              specific product's site. We strongly encourage you to conduct your
-              own research and verify all details directly on the product's
-              official website to ensure you have the most current and accurate
-              information. All financial products, shopping products and
-              services are presented without warranty. When evaluating offers,
-              please review the financial institution's Terms and Conditions.
-              Pre-qualified offers are not binding. If you find discrepancies
-              with your credit score or information from your credit report,
-              please contact TransUnion directly.
+              specific product&apos;s site. We strongly encourage you to conduct
+              your own research and verify all details directly on the
+              product&apos;s official website to ensure you have the most
+              current and accurate information. All financial products, shopping
+              products and services are presented without warranty. When
+              evaluating offers, please review the financial institution&apos;s
+              Terms and Conditions. Pre-qualified offers are not binding. If you
+              find discrepancies with your credit score or information from your
+              credit report, please contact TransUnion directly.
             </p>
           </div>
 
