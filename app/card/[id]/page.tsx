@@ -32,8 +32,8 @@ export default async function CardPage({
     typeof fromParam === "string"
       ? fromParam
       : Array.isArray(fromParam)
-        ? fromParam[0]
-        : undefined;
+      ? fromParam[0]
+      : undefined;
   const backHref = from === "profile" ? "/profile" : "/";
   const card = await getCardById(id);
 
@@ -290,71 +290,6 @@ export default async function CardPage({
                   </CardContent>
                 </Card>
               </div>
-
-              {/* <Card className="border-0 shadow-xl rounded-3xl bg-white/80 backdrop-blur overflow-hidden">
-                <CardHeader className="p-6">
-                  <CardTitle className="flex items-center font-light text-xl">
-                    <AlertCircle className="mr-3 h-5 w-5 text-matcha-800" />
-                    Rates & Fees
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="px-6 pb-6">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-4">
-                      <div>
-                        <p className="text-sm font-light text-gray-500 mb-1">
-                          Regular APR
-                        </p>
-                        <p className="text-sm text-gray-800 font-normal">
-                          {card.regularAPR}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-sm font-light text-gray-500 mb-1">
-                          Intro APR
-                        </p>
-                        <p className="text-sm text-gray-800 font-normal">
-                          {card.introAPR}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-sm font-light text-gray-500 mb-1">
-                          Balance Transfer APR
-                        </p>
-                        <p className="text-sm text-gray-800 font-normal">
-                          {card.balanceTransferAPR}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="space-y-4">
-                      <div>
-                        <p className="text-sm font-light text-gray-500 mb-1">
-                          Cash Advance APR
-                        </p>
-                        <p className="text-sm text-gray-800 font-normal">
-                          {card.cashAdvanceAPR}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-sm font-light text-gray-500 mb-1">
-                          Late Payment Fee
-                        </p>
-                        <p className="text-sm text-gray-800 font-normal">
-                          {card.latePaymentFee}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-sm font-light text-gray-500 mb-1">
-                          Foreign Transaction Fee
-                        </p>
-                        <p className="text-sm text-gray-800 font-normal">
-                          {card.foreignTransactionFee}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card> */}
             </div>
           </div>
         </div>
