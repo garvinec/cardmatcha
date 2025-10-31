@@ -1,6 +1,6 @@
 "use server";
 
-import { createSupabaseClient } from "../supabase";
+import { createSupabaseClient } from "@/utils/supabase/client";
 
 export type UserCardWithDetails = {
   cardId: string;
@@ -40,7 +40,7 @@ export const getCardsByUser = async (user_id: string) => {
           image_url
         )
       `,
-      { count: "exact" },
+      { count: "exact" }
     )
     .eq("user_id", user_id);
 
@@ -54,8 +54,8 @@ export const getCardsByUser = async (user_id: string) => {
         userId: entry.user_id,
         cardId: entry.card_id,
         card: Array.isArray(entry.credit_cards)
-          ? (entry.credit_cards[0] ?? null)
-          : (entry.credit_cards ?? null),
+          ? entry.credit_cards[0] ?? null
+          : entry.credit_cards ?? null,
         created_at: entry.created_at ?? null,
       })) ?? [],
     totalCount: count ?? 0,
@@ -100,7 +100,7 @@ export const removeCardFromUser = async (userId: string, cardId: string) => {
   return { success: true };
 };
 
-type BestUserCardsByCategory = Record<
+export type BestUserCardsByCategory = Record<
   string,
   Array<{
     cardName: string;
@@ -110,11 +110,24 @@ type BestUserCardsByCategory = Record<
   }>
 >;
 
+type RewardQueryResult = {
+  reward_rate: number | null;
+  reward_description: string | null;
+  card_id: string;
+  credit_cards: {
+    card_name: string;
+    issuer: string | null;
+  } | null;
+  reward_categories: {
+    category_name: string;
+  } | null;
+};
+
 /**
  * Returns the highest earning card per reward category for the supplied user.
  */
 export const bestUserCardsByCategory = async (
-  userId: string,
+  userId: string
 ): Promise<BestUserCardsByCategory> => {
   if (!userId) {
     throw new Error("A user id is required to compute category insights.");
@@ -162,7 +175,7 @@ export const bestUserCardsByCategory = async (
   }
 
   const cardIds = Array.from(
-    new Set((userCards ?? []).map((entry) => entry.card_id).filter(Boolean)),
+    new Set((userCards ?? []).map((entry) => entry.card_id).filter(Boolean))
   );
 
   if (cardIds.length === 0) {
@@ -183,7 +196,7 @@ export const bestUserCardsByCategory = async (
         reward_categories:category_id (
           category_name
         )
-      `,
+      `
     )
     .in("card_id", cardIds);
 
@@ -191,7 +204,9 @@ export const bestUserCardsByCategory = async (
     throw new Error(rewardsError.message);
   }
 
-  for (const reward of rewards ?? []) {
+  const typedRewards = (rewards ?? []) as unknown as RewardQueryResult[];
+
+  for (const reward of typedRewards) {
     const categoryName = reward.reward_categories?.category_name;
     const cardName = reward.credit_cards?.card_name;
     const cardIssuer = reward.credit_cards?.issuer ?? null;
@@ -231,7 +246,7 @@ export const bestUserCardsByCategory = async (
 
   for (const [categoryName, cards] of Object.entries(categoryCardMap)) {
     const sorted = Array.from(cards.values()).sort(
-      (a, b) => b.rewardRate - a.rewardRate,
+      (a, b) => b.rewardRate - a.rewardRate
     );
 
     bestByCategory[categoryName] = sorted.slice(0, 3);
