@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createSupabaseClient } from "@/lib/supabase";
+import { createSupabaseClient } from "@/utils/supabase/client";
 
 interface CreditCardRecord {
   id: string;
@@ -30,8 +30,8 @@ export async function GET(request: Request) {
   }
 
   const normalizedQuery = query.toLowerCase();
-  const sortedResults = (data as CreditCardRecord[] | null)?.
-    map((card) => {
+  const sortedResults = (data as CreditCardRecord[] | null)
+    ?.map((card) => {
       const lowerName = card.card_name.toLowerCase();
       return {
         ...card,

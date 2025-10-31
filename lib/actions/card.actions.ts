@@ -1,4 +1,4 @@
-import { createSupabaseClient } from "../supabase";
+import { createSupabaseClient } from "@/utils/supabase/client";
 
 export const getCardById = async (id: string) => {
   const supabase = createSupabaseClient();

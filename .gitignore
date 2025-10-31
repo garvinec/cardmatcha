@@ -95,5 +95,3 @@ jspm_packages/
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-# clerk configuration (can include secrets)
-/.clerk/

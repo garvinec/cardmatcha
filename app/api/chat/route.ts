@@ -1,8 +1,8 @@
-import { streamText } from "ai"
-import { openai } from "@ai-sdk/openai"
+import { streamText } from "ai";
+import { openai } from "@ai-sdk/openai";
 
 export async function POST(req: Request) {
-  const { messages } = await req.json()
+  const { messages } = await req.json();
 
   const result = await streamText({
     model: openai("gpt-4o"),
@@ -27,7 +27,7 @@ Popular card categories to know:
 
 Always provide balanced advice considering both benefits and potential drawbacks.`,
     messages,
-  })
+  });
 
-  return result.toDataStreamResponse()
+  return result.toTextStreamResponse();
 }
