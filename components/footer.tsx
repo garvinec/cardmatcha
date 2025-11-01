@@ -55,7 +55,7 @@ export function Footer() {
               Feedback
             </Link>
             <Link
-              href="/missing-card"
+              href="/submit-missing-card"
               className="text-sm text-matcha-200 hover:text-white transition-colors font-light"
             >
               Missing Card? Let us know!
