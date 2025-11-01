@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 
-import { createSupabaseServerClient } from "../supabase";
+import { createSupabaseServerClient } from "@/utils/supabase/server";
 
 export async function submitMissingCard(formData: FormData) {
   const cardName = formData.get("card_name");
@@ -17,9 +17,8 @@ export async function submitMissingCard(formData: FormData) {
     redirect("/submit-missing-card?error=missing-fields");
   }
 
-  const supabase = createSupabaseServerClient();
-
-  const { error } = await supabase.from("missing_card").insert({
+  const supabaseServer = await createSupabaseServerClient();
+  const { error } = await supabaseServer.from("missing_card").insert({
     card_name: trimmedCardName,
     card_issuer: trimmedCardIssuer,
   });
