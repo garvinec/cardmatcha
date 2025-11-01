@@ -21,6 +21,9 @@ export function Header({ currentPage = "home" }: HeaderProps) {
                 height={40}
                 className="h-20 w-auto"
                 priority
+                fetchPriority="high"
+                quality={90}
+                sizes="150px"
               />
             </Link>
           </div>

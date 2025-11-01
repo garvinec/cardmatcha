@@ -73,6 +73,9 @@ export default async function HomePage() {
                   height={750}
                   className="w-full h-auto lg:scale-125 lg:translate-x-12"
                   priority
+                  fetchPriority="high"
+                  quality={85}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </div>
             </div>
