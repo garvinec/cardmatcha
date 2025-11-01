@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { useFormState, useFormStatus } from "react-dom";
+import { useEffect, useRef, useActionState, useState } from "react";
 
-import { submitFeedback, type FeedbackFormState } from "@/lib/actions/feedback.actions";
+import {
+  submitFeedback,
+  type FeedbackFormState,
+} from "@/lib/actions/feedback.actions";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -12,9 +14,11 @@ const initialState: FeedbackFormState = {
   message: "",
 };
 
-const SubmitButton = () => {
-  const { pending } = useFormStatus();
+type SubmitButtonProps = {
+  pending: boolean;
+};
 
+const SubmitButton = ({ pending }: SubmitButtonProps) => {
   return (
     <Button
       type="submit"
@@ -32,20 +36,25 @@ type FeedbackFormProps = {
 
 export function FeedbackForm({ userEmail }: FeedbackFormProps) {
   const formRef = useRef<HTMLFormElement | null>(null);
-  const [state, formAction] = useFormState(submitFeedback, initialState);
+  const [state, formAction] = useActionState(submitFeedback, initialState);
+  const [pending, setPending] = useState(false);
 
   useEffect(() => {
     if (state.status === "success") {
       formRef.current?.reset();
+      setPending(false);
+    } else if (state.status === "error") {
+      setPending(false);
     }
   }, [state.status]);
 
+  const handleSubmit = async (formData: FormData) => {
+    setPending(true);
+    await formAction(formData);
+  };
+
   return (
-    <form
-      ref={formRef}
-      action={formAction}
-      className="w-full space-y-6"
-    >
+    <form ref={formRef} action={handleSubmit} className="w-full space-y-6">
       <div className="space-y-2">
         <label
           htmlFor="feedback-content"
@@ -68,7 +77,7 @@ export function FeedbackForm({ userEmail }: FeedbackFormProps) {
       </div>
 
       <div className="space-y-3">
-        <SubmitButton />
+        <SubmitButton pending={pending} />
         {state.status === "success" ? (
           <p className="rounded-md border border-green-200 bg-green-50 px-3 py-2 text-sm text-green-700">
             {state.message}

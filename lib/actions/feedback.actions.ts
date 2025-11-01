@@ -1,9 +1,7 @@
 "use server";
 
-import { currentUser } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
-
-import { createSupabaseClient } from "../supabase";
+import { createSupabaseServerClient } from "@/utils/supabase/server";
 
 export type FeedbackFormState = {
   status: "idle" | "success" | "error";
@@ -12,7 +10,7 @@ export type FeedbackFormState = {
 
 export const submitFeedback = async (
   _prevState: FeedbackFormState,
-  formData: FormData,
+  formData: FormData
 ): Promise<FeedbackFormState> => {
   const content = String(formData.get("content") ?? "").trim();
 
@@ -23,31 +21,29 @@ export const submitFeedback = async (
     };
   }
 
-  const user = await currentUser();
+  const supabaseServer = await createSupabaseServerClient();
+  const { data, error: authError } = await supabaseServer.auth.getUser();
 
-  if (!user) {
+  if (authError || !data?.user) {
     return {
       status: "error",
       message: "You must be signed in to submit feedback.",
     };
   }
 
-  const primaryEmail =
-    user.emailAddresses?.find(
-      (emailAddress) => emailAddress.id === user.primaryEmailAddressId,
-    )?.emailAddress ?? user.emailAddresses?.[0]?.emailAddress ?? null;
+  const user = data.user;
+  const email = user.email;
 
-  if (!primaryEmail) {
+  if (!email) {
     return {
       status: "error",
       message: "We couldn't determine your email address to save the feedback.",
     };
   }
 
-  const supabase = createSupabaseClient();
-  const { error } = await supabase.from("feedback").insert({
+  const { error } = await supabaseServer.from("feedback").insert({
     content,
-    email: primaryEmail,
+    email,
     user_id: user.id,
   });
 
