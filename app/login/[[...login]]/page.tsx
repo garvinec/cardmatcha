@@ -10,10 +10,12 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
+import { CheckCircle2 } from "lucide-react";
 
 export default async function LoginPage({
   searchParams,
@@ -29,6 +31,8 @@ export default async function LoginPage({
   }
 
   const errorParam = ((await searchParams)?.error as string) || "";
+  const signupSuccess = ((await searchParams)?.signup as string) === "success";
+  const signupEmail = ((await searchParams)?.email as string) || "";
   const passwordErrorMessage =
     errorParam === "empty_password"
       ? "Password is required."
@@ -48,6 +52,20 @@ export default async function LoginPage({
             <CardDescription>Sign in to continue to CardMatcha</CardDescription>
           </CardHeader>
           <CardContent>
+            {signupSuccess && (
+              <Alert className="mb-6 border-matcha-200 bg-matcha-50">
+                <CheckCircle2 className="h-4 w-4 text-matcha-600" />
+                <AlertTitle className="text-matcha-900">
+                  Check your email
+                </AlertTitle>
+                <AlertDescription className="text-matcha-700">
+                  We&apos;ve sent a confirmation email to{" "}
+                  <span className="font-semibold">{signupEmail}</span>. Please
+                  click the link in the email to confirm your account, then come
+                  back here to log in.
+                </AlertDescription>
+              </Alert>
+            )}
             <form className="space-y-6">
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
