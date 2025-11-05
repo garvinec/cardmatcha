@@ -73,7 +73,7 @@ export async function signupWithEmail(formData: FormData) {
       emailRedirectTo: `${origin}/auth/confirm?next=/profile`,
     },
   });
-  console.log(error);
+
   if (error) {
     redirect("/error");
   }
