@@ -29,18 +29,77 @@ export const getCards = async ({
   return { data, totalCount };
 };
 
-// TODO: Add popularity logic later. popularity logic based on how many users own the card.
 export const getMostPopularCards = async () => {
   const supabase = createSupabaseClient();
-  let query = supabase.from("credit_cards").select().limit(5);
 
-  const { data, error } = await query;
+  // Query to get the 6 most popular cards based on user ownership count
+  // Fetches all user_cards entries, groups by card_id, counts distinct users,
+  // joins with credit_cards, orders by count descending, and limits to 6
+  const { data, error } = await supabase.from("user_cards").select(
+    `
+      card_id,
+      user_id,
+      credit_cards:card_id (
+        id,
+        card_name,
+        issuer,
+        annual_fee,
+        welcome_bonus,
+        url,
+        image_url,
+        category,
+        issuer_code,
+        last_updated_at
+      )
+    `
+  );
 
   if (error) {
     throw new Error(error.message);
   }
 
-  return data;
+  // Group by card_id and count distinct user_ids (each entry = one user owns the card)
+  const cardCountMap = new Map<
+    string,
+    { count: number; userIds: Set<string>; card: any }
+  >();
+
+  if (data) {
+    for (const entry of data) {
+      const cardId = entry.card_id;
+      const userId = entry.user_id;
+      const card = Array.isArray(entry.credit_cards)
+        ? entry.credit_cards[0]
+        : entry.credit_cards;
+
+      if (!card || !cardId) continue;
+
+      if (cardCountMap.has(cardId)) {
+        const existing = cardCountMap.get(cardId)!;
+        // Only count distinct users
+        if (userId && !existing.userIds.has(userId)) {
+          existing.userIds.add(userId);
+          existing.count += 1;
+        }
+      } else {
+        const userIdSet = new Set<string>();
+        if (userId) userIdSet.add(userId);
+        cardCountMap.set(cardId, {
+          count: userId ? 1 : 0,
+          userIds: userIdSet,
+          card,
+        });
+      }
+    }
+  }
+
+  // Convert to array, sort by count descending, and take top 6
+  const popularCards = Array.from(cardCountMap.values())
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 6)
+    .map((item) => item.card);
+
+  return popularCards;
 };
 
 export const getCardsByCategory = async (
