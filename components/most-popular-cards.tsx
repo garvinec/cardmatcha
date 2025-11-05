@@ -1,8 +1,9 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Star, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { getMostPopularCards } from "@/lib/actions/cards.actions";
 
 function getRankIcon(rank: number) {
   switch (rank) {
@@ -33,43 +34,20 @@ function getRankIcon(rank: number) {
   }
 }
 
-const topCards = [
-  {
-    id: 1,
-    rank: 1,
-    name: "Chase Sapphire Preferred",
-    issuer: "Chase",
-    rating: 4.8,
-    category: "Travel",
-    annualFee: 95,
-    signupBonus: "60,000 points",
-    popularityScore: 98,
-  },
-  {
-    id: 4,
-    rank: 2,
-    name: "Capital One Venture X",
-    issuer: "Capital One",
-    rating: 4.9,
-    category: "Premium Travel",
-    annualFee: 395,
-    signupBonus: "75,000 miles",
-    popularityScore: 95,
-  },
-  {
-    id: 2,
-    rank: 3,
-    name: "Citi Double Cash",
-    issuer: "Citi",
-    rating: 4.6,
-    category: "Cash Back",
-    annualFee: 0,
-    signupBonus: "$200 cash back",
-    popularityScore: 92,
-  },
-];
+export async function TopPopularCards() {
+  const popularCards = await getMostPopularCards();
 
-export function TopPopularCards() {
+  // Get the top 3 cards and map to the format expected by the UI
+  const topCards = popularCards.slice(0, 3).map((card, index) => ({
+    id: card.id,
+    rank: index + 1,
+    name: card.card_name,
+    issuer: card.issuer || "Unknown",
+    category: card.category || "General",
+    annualFee: card.annual_fee ? parseFloat(card.annual_fee.toString()) : 0,
+    signupBonus: card.welcome_bonus || "No bonus available",
+  }));
+
   return (
     <section className="py-4">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -78,7 +56,7 @@ export function TopPopularCards() {
             Most Popular
           </h3>
           <p className="text-lg text-matcha-800/80 font-light">
-            Cards chosen by thousands
+            Cards chosen by CardMatcha users
           </p>
         </div>
 
@@ -113,11 +91,6 @@ export function TopPopularCards() {
                         {card.issuer}
                       </p>
                       <div className="flex items-center space-x-6 text-sm text-gray-600">
-                        <div className="flex items-center">
-                          <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-2" />
-                          <span className="font-light">{card.rating}</span>
-                        </div>
-                        <span className="text-gray-300">•</span>
                         <span className="font-light">
                           {card.annualFee === 0
                             ? "No Annual Fee"

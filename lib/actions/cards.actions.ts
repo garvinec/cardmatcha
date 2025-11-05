@@ -29,7 +29,7 @@ export const getCards = async ({
   return { data, totalCount };
 };
 
-export const getMostPopularCards = async () => {
+export const getMostPopularCards = async (top: number = 6) => {
   const supabase = createSupabaseClient();
 
   // Query to get the 6 most popular cards based on user ownership count
@@ -96,7 +96,7 @@ export const getMostPopularCards = async () => {
   // Convert to array, sort by count descending, and take top 6
   const popularCards = Array.from(cardCountMap.values())
     .sort((a, b) => b.count - a.count)
-    .slice(0, 6)
+    .slice(0, top)
     .map((item) => item.card);
 
   return popularCards;
