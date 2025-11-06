@@ -69,6 +69,71 @@ const nextConfig = {
         hostname: "**.chase.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "**.wellsfargo.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "**.capitalone.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "cards.barclaycardus.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "www.td.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "www.synchrony.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "www.walgreens.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "**.scene7.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "www.paypalobjects.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "images.ctfassets.net",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "www.jcrew.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "www.chevrontexacocards.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "mattressfirm.brightspotcdn.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "www.carecredit.com",
+        pathname: "/**",
+      },
     ],
   },
   // Enable compression
