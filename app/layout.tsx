@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { MobileBlock } from "@/components/mobile-block";
 import { MobileContentWrapper } from "@/components/mobile-content-wrapper";
@@ -30,6 +31,7 @@ export default async function RootLayout({
         <MobileContentWrapper initialIsMobile={initialIsMobile}>
           {children}
           <SpeedInsights />
+          <Analytics />
         </MobileContentWrapper>
       </body>
     </html>
