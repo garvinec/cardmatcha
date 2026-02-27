@@ -1,6 +1,6 @@
 "use server";
 
-import { createSupabaseClient } from "@/utils/supabase/client";
+import { createSupabaseServerClient } from "@/utils/supabase/server";
 
 interface getCardsProps {
   pageNumber?: number;
@@ -11,7 +11,7 @@ export const getCards = async ({
   pageNumber = 1,
   cardsPerPage = 15,
 }: getCardsProps) => {
-  const supabase = createSupabaseClient();
+  const supabase = await createSupabaseServerClient();
   let query = supabase.from("credit_cards").select("*", { count: "exact" });
 
   const { count } = await query;
@@ -30,7 +30,7 @@ export const getCards = async ({
 };
 
 export const getMostPopularCards = async (top: number = 6) => {
-  const supabase = createSupabaseClient();
+  const supabase = await createSupabaseServerClient();
 
   // Query to get the 6 most popular cards based on user ownership count
   // Fetches all user_cards entries, groups by card_id, counts distinct users,
@@ -109,7 +109,7 @@ export const getCardsByCategory = async (
     cardsPerPage = 15,
   }: { pageNumber?: number; cardsPerPage?: number } = {}
 ) => {
-  const supabase = createSupabaseClient();
+  const supabase = await createSupabaseServerClient();
   const from = (pageNumber - 1) * cardsPerPage;
   const to = from + cardsPerPage - 1;
 
@@ -147,7 +147,7 @@ export const getCardsByIssuer = async (
     cardsPerPage = 15,
   }: { pageNumber?: number; cardsPerPage?: number } = {}
 ) => {
-  const supabase = createSupabaseClient();
+  const supabase = await createSupabaseServerClient();
 
   const from = (pageNumber - 1) * cardsPerPage;
   const to = from + cardsPerPage - 1;
