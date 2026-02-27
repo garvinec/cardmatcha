@@ -11,39 +11,32 @@ export const getCards = async ({
   pageNumber = 1,
   cardsPerPage = 15,
 }: getCardsProps) => {
-  try {
-    const supabase = await createSupabaseServerClient();
-    let query = supabase.from("credit_cards").select("*", { count: "exact" });
+  const supabase = await createSupabaseServerClient();
+  let query = supabase.from("credit_cards").select("*", { count: "exact" });
 
-    const { count } = await query;
-    const totalCount = count || 0;
+  const { count } = await query;
+  const totalCount = count || 0;
 
-    const { data, error } = await query.range(
-      (pageNumber - 1) * cardsPerPage,
-      pageNumber * cardsPerPage - 1
-    );
+  const { data, error } = await query.range(
+    (pageNumber - 1) * cardsPerPage,
+    pageNumber * cardsPerPage - 1
+  );
 
-    if (error) {
-      console.error("Supabase error in getCards:", error.message);
-      return { data: [], totalCount: 0 };
-    }
-
-    return { data, totalCount };
-  } catch (error) {
-    console.error("Error in getCards:", error);
-    return { data: [], totalCount: 0 };
+  if (error) {
+    throw new Error(error.message);
   }
+
+  return { data, totalCount };
 };
 
 export const getMostPopularCards = async (top: number = 6) => {
-  try {
-    const supabase = await createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
 
-    // Query to get the 6 most popular cards based on user ownership count
-    // Fetches all user_cards entries, groups by card_id, counts distinct users,
-    // joins with credit_cards, orders by count descending, and limits to 6
-    const { data, error } = await supabase.from("user_cards").select(
-      `
+  // Query to get the 6 most popular cards based on user ownership count
+  // Fetches all user_cards entries, groups by card_id, counts distinct users,
+  // joins with credit_cards, orders by count descending, and limits to 6
+  const { data, error } = await supabase.from("user_cards").select(
+    `
       card_id,
       user_id,
       credit_cards:card_id (
@@ -59,12 +52,11 @@ export const getMostPopularCards = async (top: number = 6) => {
         last_updated_at
       )
     `
-    );
+  );
 
-    if (error) {
-      console.error("Supabase error in getMostPopularCards:", error.message);
-      return [];
-    }
+  if (error) {
+    throw new Error(error.message);
+  }
 
   // Group by card_id and count distinct user_ids (each entry = one user owns the card)
   const cardCountMap = new Map<
@@ -101,17 +93,13 @@ export const getMostPopularCards = async (top: number = 6) => {
     }
   }
 
-    // Convert to array, sort by count descending, and take top 6
-    const popularCards = Array.from(cardCountMap.values())
-      .sort((a, b) => b.count - a.count)
-      .slice(0, top)
-      .map((item) => item.card);
+  // Convert to array, sort by count descending, and take top 6
+  const popularCards = Array.from(cardCountMap.values())
+    .sort((a, b) => b.count - a.count)
+    .slice(0, top)
+    .map((item) => item.card);
 
-    return popularCards;
-  } catch (error) {
-    console.error("Error in getMostPopularCards:", error);
-    return [];
-  }
+  return popularCards;
 };
 
 export const getCardsByCategory = async (
@@ -121,36 +109,24 @@ export const getCardsByCategory = async (
     cardsPerPage = 15,
   }: { pageNumber?: number; cardsPerPage?: number } = {}
 ) => {
-  try {
-    const supabase = await createSupabaseServerClient();
-    const from = (pageNumber - 1) * cardsPerPage;
-    const to = from + cardsPerPage - 1;
+  const supabase = await createSupabaseServerClient();
+  const from = (pageNumber - 1) * cardsPerPage;
+  const to = from + cardsPerPage - 1;
 
-    const { data, error, count } = await supabase
-      .from("credit_cards")
-      .select("*", { count: "exact" })
-      .eq("category", category)
-      .range(from, to);
+  const { data, error, count } = await supabase
+    .from("credit_cards")
+    .select("*", { count: "exact" })
+    .eq("category", category)
+    .range(from, to);
 
-    if (error) {
-      console.error("Supabase error in getCardsByCategory:", error.message);
-      return {
-        data: [],
-        totalCount: 0,
-      };
-    }
-
-    return {
-      data: data ?? [],
-      totalCount: count ?? 0,
-    };
-  } catch (error) {
-    console.error("Error in getCardsByCategory:", error);
-    return {
-      data: [],
-      totalCount: 0,
-    };
+  if (error) {
+    throw new Error(error.message);
   }
+
+  return {
+    data: data ?? [],
+    totalCount: count ?? 0,
+  };
 };
 
 type CategoryRecord = {
@@ -171,38 +147,24 @@ export const getCardsByIssuer = async (
     cardsPerPage = 15,
   }: { pageNumber?: number; cardsPerPage?: number } = {}
 ) => {
-  try {
-    const supabase = await createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
 
-    const from = (pageNumber - 1) * cardsPerPage;
-    const to = from + cardsPerPage - 1;
+  const from = (pageNumber - 1) * cardsPerPage;
+  const to = from + cardsPerPage - 1;
 
-    const { data, error, count } = await supabase
-      .from("credit_cards")
-      .select("*", { count: "exact" })
-      .eq("issuer_code", issuer_code)
-      .range(from, to);
+  const { data, error, count } = await supabase
+    .from("credit_cards")
+    .select("*", { count: "exact" })
+    .eq("issuer_code", issuer_code)
+    .range(from, to);
 
-    if (error) {
-      console.error("Supabase error in getCardsByIssuer:", error.message);
-      return {
-        data: [],
-        totalCount: 0,
-        issuerName: null,
-      };
-    }
-
-    return {
-      data: data ?? [],
-      totalCount: count ?? 0,
-      issuerName: data?.[0]?.issuer ?? null,
-    };
-  } catch (error) {
-    console.error("Error in getCardsByIssuer:", error);
-    return {
-      data: [],
-      totalCount: 0,
-      issuerName: null,
-    };
+  if (error) {
+    throw new Error(error.message);
   }
+
+  return {
+    data: data ?? [],
+    totalCount: count ?? 0,
+    issuerName: data?.[0]?.issuer ?? null,
+  };
 };
