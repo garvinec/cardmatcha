@@ -28,3 +28,18 @@
 ## Environment & Security Notes
 - Keep Supabase and Clerk keys in `.env.local`; never commit secrets or staged samples.
 - Align route protection with `middleware.ts` and avoid logging sensitive Supabase payloads outside server actions.
+
+## Cursor Cloud specific instructions
+
+### Service overview
+CardMatcha is a single Next.js 15 application (no separate backend). All data comes from a remote Supabase (PostgreSQL) instance; no local database is needed.
+
+### Running the dev server
+- `npm run dev` starts the server on port 3000. Standard commands are in `package.json` scripts and the README.
+- The app requires `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in `.env.local`. Without real Supabase credentials, the UI renders but data-dependent sections show empty states or error boundaries. This is expected.
+- `OPENAI_API_KEY` is optional (only needed for the `/chat` AI advisor, which is currently a "Coming Soon" placeholder).
+
+### Gotchas
+- When killing the dev server, ensure all child processes are terminated (the `next dev` process spawns a `next-server` child). Use `lsof -t -i:3000` to find PIDs and kill them individually. Failing to do so causes port conflicts on restart.
+- The server actions in `lib/actions/` use the browser Supabase client (`createSupabaseClient` from `utils/supabase/client.ts`). This works at runtime because Next.js server actions run in the Node.js environment where `createBrowserClient` still functions, but Supabase queries will fail with placeholder credentials.
+- No automated test suite exists; validation is lint-only (`npm run lint`) plus manual QA.
