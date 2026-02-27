@@ -1,9 +1,7 @@
-"use server";
-
-import { createSupabaseServerClient } from "@/utils/supabase/server";
+import { createSupabaseClient } from "@/utils/supabase/client";
 
 export const getCardById = async (id: string) => {
-  const supabase = await createSupabaseServerClient();
+  const supabase = createSupabaseClient();
   const { data, error } = await supabase
     .from("credit_cards")
     .select(
@@ -31,7 +29,7 @@ export const getCardById = async (id: string) => {
 };
 
 export const getCardByName = async (cardName: string) => {
-  const supabase = await createSupabaseServerClient();
+  const supabase = createSupabaseClient();
   const { data, error } = await supabase
     .from("credit_cards")
     .select("*")

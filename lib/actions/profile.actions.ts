@@ -1,6 +1,6 @@
 "use server";
 
-import { createSupabaseServerClient } from "@/utils/supabase/server";
+import { createSupabaseClient } from "@/utils/supabase/client";
 
 export type UserCardWithDetails = {
   cardId: string;
@@ -21,7 +21,7 @@ export const getCardsByUser = async (user_id: string) => {
     throw new Error("A user id is required to fetch cards.");
   }
 
-  const supabase = await createSupabaseServerClient();
+  const supabase = createSupabaseClient();
 
   const { data, error, count } = await supabase
     .from("user_cards")
@@ -67,7 +67,7 @@ export const addCardToUser = async (userId: string, cardId: string) => {
     throw new Error("Both userId and cardId are required to add a card.");
   }
 
-  const supabase = await createSupabaseServerClient();
+  const supabase = createSupabaseClient();
 
   const { error } = await supabase
     .from("user_cards")
@@ -85,7 +85,7 @@ export const removeCardFromUser = async (userId: string, cardId: string) => {
     throw new Error("Both userId and cardId are required to remove a card.");
   }
 
-  const supabase = await createSupabaseServerClient();
+  const supabase = createSupabaseClient();
 
   const { error } = await supabase
     .from("user_cards")
@@ -133,7 +133,7 @@ export const bestUserCardsByCategory = async (
     throw new Error("A user id is required to compute category insights.");
   }
 
-  const supabase = await createSupabaseServerClient();
+  const supabase = createSupabaseClient();
 
   const { data: rewardCategories, error: rewardCategoriesError } =
     await supabase.from("reward_categories").select("category_name");
